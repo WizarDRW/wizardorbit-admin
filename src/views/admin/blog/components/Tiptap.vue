@@ -16,7 +16,7 @@ import {
   Italic,
   Strike,
   Underline,
-  Code,
+  CodeBlock,
   Paragraph,
   Image,
   BulletList,
@@ -34,7 +34,7 @@ export default {
   },
   props: {
     _content: {
-      type: Object
+      type: Object,
     },
   },
   data() {
@@ -60,15 +60,14 @@ export default {
           },
         ],
         Bold,
-        Code,
+        CodeBlock,
         HorizontalRule,
         Paragraph,
         HardBreak,
       ],
     };
   },
-  watch: {
-  },
+  watch: {},
 };
 </script>
 

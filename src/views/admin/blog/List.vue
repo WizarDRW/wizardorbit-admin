@@ -134,6 +134,7 @@
       v-on:dialogClose="
         (value) => {
           preview = value;
+          blog = {}
         }
       "
     ></preview>

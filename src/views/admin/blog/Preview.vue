@@ -5,48 +5,54 @@
         <v-card-title class="headline dark lighten-2">
           <v-badge
             :color="
-              _blog.status == 'Published'
+              blog.status == 'Published'
                 ? 'green'
-                : _blog.status == 'Block'
+                : blog.status == 'Block'
                 ? 'red'
                 : 'orange'
             "
-            :content="_blog.status == 'Published' ? 'Yayında':_blog.status == 'Block' ? 'Bloklandı':'Onay Bekliyor'"
+            :content="
+              blog.status == 'Published'
+                ? 'Yayında'
+                : blog.status == 'Block'
+                ? 'Bloklandı'
+                : 'Onay Bekliyor'
+            "
             >Önizleme
           </v-badge></v-card-title
         >
 
-        <v-img :src="_blog.image_path"></v-img>
+        <v-img :src="blog.image_path"></v-img>
         <v-card-text></v-card-text>
 
         <v-divider></v-divider>
-        <div v-html="_blog.description"></div>
+        <div v-html="blog.description"></div>
         <v-card-actions>
           <v-spacer></v-spacer>
           <slot name="buttons">
             <v-btn color="warning" text @click="dialog = false"> Kapat </v-btn>
 
             <v-btn
-              v-if="_blog.status == 'Published'"
+              v-if="blog.status == 'Published'"
               color="error"
               text
-              @click="save()"
+              @click="process('Block')"
             >
               Bloke Koy!
             </v-btn>
             <v-btn
-              v-else-if="_blog.status == 'Block'"
+              v-else-if="blog.status == 'Block'"
               color="success"
               text
-              @click="save()"
+              @click="process('Published')"
             >
               Bloke Kaldır
             </v-btn>
             <v-btn
-              v-else-if="_blog.status == 'ModeratorAcceping'"
+              v-else-if="blog.status == 'ModeratorAcceping'"
               color="success"
               text
-              @click="save()"
+              @click="process('Published')"
             >
               Yayına Al
             </v-btn>
@@ -59,6 +65,7 @@
 
 
 <script>
+import ApiService from "@/core/services/api.service.js";
 export default {
   props: {
     _dialog: {
@@ -81,7 +88,7 @@ export default {
         msg: "Başarı ile değiştirildi.",
         type: "success",
       },
-      blog: {},
+      blog: {}
     };
   },
   computed: {
@@ -94,7 +101,15 @@ export default {
       },
     },
   },
-  methods: {},
+  updated() {
+    this.blog = this._blog
+  },
+  methods: {
+    process(value) {
+      this.blog.status = value;
+      ApiService.put(`blogs/id/${this.blog._id}`, this.blog)
+    },
+  },
 };
 </script>
 

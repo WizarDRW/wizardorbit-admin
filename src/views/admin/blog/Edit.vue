@@ -123,7 +123,7 @@
             hide-details
             append-icon="mdi-tag-outline"
           ></v-text-field>
-          <br>
+          <br />
         </div>
       </v-col>
       <v-col md="9">
@@ -144,11 +144,7 @@
           prepend-inner-icon="mdi-subtitles-outline"
         ></v-text-field>
         <v-hover v-if="blog.image_path" v-slot="{ hover }">
-          <v-img
-            :aspect-ratio="16 / 9"
-            :src="imageUrl"
-            max-width="500px"
-          >
+          <v-img :aspect-ratio="16 / 9" :src="imageUrl" max-width="500px">
             <v-fade-transition mode="out-in">
               <div v-if="hover" class="">
                 <v-btn
@@ -180,6 +176,19 @@
           <v-row>
             <v-col>
               <v-card> <tiptap :_content="blog" /> </v-card>
+              <v-btn icon @click="htmlVision = !htmlVision">
+                <v-icon> mdi-eye </v-icon>
+              </v-btn>
+              <v-textarea
+                v-if="htmlVision"
+                label="Html İçeriği"
+                v-model="blog.description"
+                auto-grow
+                outlined
+                rows="3"
+                row-height="25"
+                shaped
+              ></v-textarea>
             </v-col>
           </v-row>
         </div>
@@ -216,6 +225,7 @@ export default {
       loading: "block",
       categories: [],
       valueConsistsOf: "BRANCH_PRIORITY",
+      htmlVision: false,
     };
   },
   mounted() {
@@ -234,7 +244,7 @@ export default {
     getBlog() {
       ApiService.get(`blogs/id/${this.$route.params.id}`).then((x) => {
         this.blog = x.data;
-        this.imageUrl = this.blog.image_path
+        this.imageUrl = this.blog.image_path;
         this.loading = "none";
       });
     },

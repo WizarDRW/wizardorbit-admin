@@ -5,48 +5,52 @@
         <v-card-title class="headline dark lighten-2">
           <v-badge
             :color="
-              _form.status == 'Published'
+              form.status == 'Published'
                 ? 'green'
-                : _form.status == 'Block'
+                : form.status == 'Block'
                 ? 'red'
                 : 'orange'
             "
-            :content="_form.status == 'Published' ? 'Yayında':_form.status == 'Block' ? 'Bloklandı':'Onay Bekliyor'"
+            :content="
+              form.status == 'Published'
+                ? 'Yayında'
+                : form.status == 'Block'
+                ? 'Bloklandı'
+                : 'Onay Bekliyor'
+            "
             >Önizleme
           </v-badge></v-card-title
         >
 
-        <v-img :src="_form.image_path"></v-img>
         <v-card-text></v-card-text>
 
         <v-divider></v-divider>
-        <div v-html="_form.description"></div>
+        <div v-html="form.description"></div>
         <v-card-actions>
           <v-spacer></v-spacer>
           <slot name="buttons">
             <v-btn color="warning" text @click="dialog = false"> Kapat </v-btn>
-
             <v-btn
-              v-if="_form.status == 'Published'"
+              v-if="form.status == 'Published'"
               color="error"
               text
-              @click="save()"
+              @click="process('Block')"
             >
               Bloke Koy!
             </v-btn>
             <v-btn
-              v-else-if="_form.status == 'Block'"
+              v-else-if="form.status == 'Block'"
               color="success"
               text
-              @click="save()"
+              @click="process('Published')"
             >
               Bloke Kaldır
             </v-btn>
             <v-btn
-              v-else-if="_form.status == 'ModeratorAcceping'"
+              v-else-if="form.status == 'ModeratorAcceping'"
               color="success"
               text
-              @click="save()"
+              @click="process('Published')"
             >
               Yayına Al
             </v-btn>
@@ -59,6 +63,7 @@
 
 
 <script>
+import ApiService from "@/core/services/api.service.js";
 export default {
   props: {
     _dialog: {
@@ -94,7 +99,15 @@ export default {
       },
     },
   },
-  methods: {},
+  updated() {
+    this.form = this._form;
+  },
+  methods: {
+    process(value) {
+      this.form.status = value;
+      ApiService.put(`forms/id/${this.form._id}`, this.form);
+    },
+  },
 };
 </script>
 

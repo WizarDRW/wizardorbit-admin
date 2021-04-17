@@ -161,6 +161,18 @@
           <v-row>
             <v-col>
               <v-card> <tiptap :_content="blog" /> </v-card>
+              <v-btn icon @click="htmlVision = !htmlVision">
+                <v-icon> mdi-eye </v-icon>
+              </v-btn>
+              <v-textarea
+                v-if="htmlVision"
+                label="Html İçeriği"
+                v-model="blog.description"
+                auto-grow
+                outlined
+                rows="3"
+                row-height="25"
+              ></v-textarea>
             </v-col>
           </v-row>
         </div>
@@ -196,6 +208,7 @@ export default {
       imageUrl: "",
       imageFile: "",
       imageName: "",
+      htmlVision: false
     };
   },
   created() {

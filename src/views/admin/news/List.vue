@@ -132,6 +132,7 @@
       v-on:dialogClose="
         (value) => {
           preview = value;
+          news = {}
         }
       "
     ></preview>
