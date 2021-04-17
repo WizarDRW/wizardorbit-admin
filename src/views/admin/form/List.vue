@@ -10,7 +10,7 @@
                 v-bind="attrs"
                 v-on="on"
                 color="green"
-                @click="$router.push({ path: '/new-form' })"
+                @click="$router.push({ path: '/admin/new-form' })"
               >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
@@ -25,6 +25,8 @@
       :items="data"
       :page.sync="page"
       :items-per-page="itemsPerPage"
+      :loading="loading"
+      loading-text="Yükleniyor..."
       hide-default-footer
       class="elevation-1"
       @page-count="pageCount = $event"
@@ -113,7 +115,14 @@
               small
               v-bind="attrs"
               v-on="on"
-              @click="handleDelete(item._id, index)"
+              @click="
+                () => {
+                  (deleteRes.name = item.name),
+                    (deleteRes.index = index),
+                    (deleteRes.id = item._id),
+                    (deleteDialog = true);
+                }
+              "
             >
               mdi-delete
             </v-icon>
@@ -131,7 +140,15 @@
       v-on:handleDelete="handleDelete"
       v-on:dialogClose="(value) => (deleteDialog = value)"
     ></delete>
-    <preview :_dialog="preview" :_form="form" v-on:dialogClose="(value) => {preview = value}"></preview>
+    <preview
+      :_dialog="preview"
+      :_form="form"
+      v-on:dialogClose="
+        (value) => {
+          preview = value;
+        }
+      "
+    ></preview>
   </v-container>
 </template>
 
@@ -187,12 +204,11 @@ export default {
     Preview: () => import("./Preview"),
   },
   created() {
+    this.loading = true;
     ApiService.get("forms").then((x) => {
-      this.data = x.data
-    });
-    setTimeout(() => {
+      this.data = x.data;
       this.loading = false;
-    }, 1500);
+    });
   },
   methods: {
     editItem(item) {

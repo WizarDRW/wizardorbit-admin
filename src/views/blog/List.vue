@@ -25,6 +25,8 @@
       :items="data"
       :page.sync="page"
       :items-per-page="itemsPerPage"
+      :loading="loading"
+      loading-text="Yükleniyor..."
       hide-default-footer
       class="elevation-1"
       @page-count="pageCount = $event"
@@ -55,7 +57,7 @@
           }}
         </div>
       </template>
-      <template v-slot:item.actions="{ item, index }">
+      <template v-slot:item.actions="{ item }">
         <v-tooltip color="blue" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
@@ -69,20 +71,6 @@
             </v-icon>
           </template>
           <span>Düzenle</span>
-        </v-tooltip>
-        <v-tooltip color="red" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon
-              v-if="item.status != 'Published'"
-              small
-              v-bind="attrs"
-              v-on="on"
-              @click="handleDelete(item._id, index)"
-            >
-              mdi-delete
-            </v-icon>
-          </template>
-          <span>Sil</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -132,28 +120,22 @@ export default {
     SubHeader,
   },
   created() {
+    this.loading = true;
     ApiService.get("blogs").then((x) => {
       this.data = x.data.filter(
-        (x) => x.user_data._id == jwt_decode(localStorage.getItem("id_token")).user_id
+        (x) =>
+          x.user_data._id ==
+          jwt_decode(localStorage.getItem("id_token")).user_id
       );
-    });
-    setTimeout(() => {
       this.loading = false;
-    }, 1500);
+    });
   },
   methods: {
     editItem(item) {
       this.$router.push({
         path: `/blog/edit/${item._id}`,
       });
-    },
-    handleDelete(id, index) {
-      ApiService.delete(`blogs/id/${id}`).then((x) => {
-        if (x.status == 200) {
-          this.data.splice(index, 1);
-        }
-      });
-    },
+    }
   },
 };
 </script>

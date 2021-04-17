@@ -1,8 +1,8 @@
 <template>
   <v-subheader app>
     <div class="route">
-      <a v-for="item in $route.matched" :key="item.path" :href="item.path">
-        {{ item.name }} >
+      <a v-for="item in $route.matched" :key="item.path" :href="item.path == '' ? '/':item.path">
+        {{ item.meta.description }} /
       </a>
     </div>
     <slot name="buttons"></slot>

@@ -13,16 +13,16 @@
       </template>
     </sub-header>
     <v-row>
-      <v-col cols="3">
+      <v-col md="3">
         <h2>Kategori</h2>
         <v-treeview
           v-model="blog.categories"
           :items="categories"
           :selection-type="selectionType"
           selectable
-          return-object
           item-text="label"
           open-all
+          return-object
         >
           <template v-slot:prepend="{ item }">
             <v-icon>
@@ -31,7 +31,9 @@
             {{ item.label }}
           </template>
         </v-treeview>
-        <h2>SEO</h2>
+        <p></p>
+        <h2><v-icon>mdi-search-web</v-icon> SEO</h2>
+        <p></p>
         <v-text-field
           v-model="blog.name"
           label="Başlık"
@@ -39,7 +41,7 @@
           outlined
           dense
           disabled
-          prepend-icon="mdi-format-title"
+          prepend-inner-icon="mdi-format-title"
         ></v-text-field>
         <v-text-field
           v-model="blog.short_description"
@@ -48,10 +50,65 @@
           outlined
           dense
           disabled
-          prepend-icon="mdi-card-text-outline"
+          hide-details
+          prepend-inner-icon="mdi-card-text-outline"
         ></v-text-field>
+        <v-tooltip color="green" bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="success"
+              icon
+              v-bind="attrs"
+              v-on="on"
+              @click="
+                () => {
+                  tags.push({ key: '', tag: '' });
+                }
+              "
+            >
+              <v-icon> mdi-plus </v-icon>
+            </v-btn>
+          </template>
+          <span>Etiket Ekle</span>
+        </v-tooltip>
+        <div v-for="(item, index) in tags" :key="item">
+          <v-text-field
+            v-model="item.key"
+            label="Anahtar"
+            placeholder="Anahtar"
+            outlined
+            dense
+            hide-details
+            prepend-inner-icon="mdi-key"
+            prepend-icon="mdi-minus"
+          >
+            <template #prepend>
+              <v-btn
+                color="error"
+                icon
+                @click="
+                  () => {
+                    tags.splice(index, 1);
+                  }
+                "
+              >
+                <v-icon>mdi-minus</v-icon>
+              </v-btn>
+            </template>
+          </v-text-field>
+          <v-text-field
+            v-model="item.tag"
+            label="Etiket"
+            placeholder="Etiket"
+            outlined
+            dense
+            hide-details
+            append-icon="mdi-tag-outline"
+          ></v-text-field>
+          <br />
+        </div>
       </v-col>
-      <v-col>
+      <v-col md="9">
         <v-text-field
           v-model="blog.name"
           label="Başlık"
@@ -68,7 +125,30 @@
           dense
           prepend-icon="mdi-subtitles-outline"
         ></v-text-field>
+        <v-hover v-if="imageUrl" v-slot="{ hover }">
+          <v-img
+            :aspect-ratio="16 / 9"
+            :src="imageUrl"
+            max-width="500px"
+          >
+            <v-fade-transition mode="out-in">
+              <div v-if="hover" class="">
+                <v-btn
+                  @click="
+                    () => {
+                      imageUrl = null;
+                      blog.image_path = null;
+                    }
+                  "
+                  color="red"
+                  >Sil</v-btn
+                >
+              </div>
+            </v-fade-transition>
+          </v-img>
+        </v-hover>
         <v-file-input
+          v-else
           v-model="blog.image_path"
           label="Resim Ekle"
           outlined
@@ -112,6 +192,10 @@ export default {
       loading: "block",
       categories: [],
       valueConsistsOf: "BRANCH_PRIORITY",
+      tags: [],
+      imageUrl: "",
+      imageFile: "",
+      imageName: "",
     };
   },
   created() {
@@ -135,6 +219,8 @@ export default {
     save() {
       var data = {
         ...this.blog,
+        tags: this.tags,
+        image_path: this.imageUrl,
         user_id: ObjectID(jwt_decode(localStorage.getItem("id_token")).user_id),
         status: "ModeratorAcceping",
       };
@@ -147,17 +233,20 @@ export default {
     onFilePicked() {
       const files = this.blog.image_path;
       if (files !== undefined) {
-        var imageName = files.name;
-        if (imageName.lastIndexOf(".") <= 0) {
+        this.imageName = files.name;
+        if (this.imageName.lastIndexOf(".") <= 0) {
           return;
         }
         const fr = new FileReader();
         fr.readAsDataURL(files);
         fr.addEventListener("load", () => {
-          this.blog.image_path = fr.result;
+          this.imageUrl = fr.result;
+          this.imageFile = files; // this is an image file that can be sent to server...
         });
       } else {
-        this.blog.image_path = "";
+        this.imageName = "";
+        this.imageFile = "";
+        this.imageUrl = "";
       }
     },
   },

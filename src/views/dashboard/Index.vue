@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <h1>asıdhawıj</h1>
-    </div>
+    <v-container>
+        <h1>Dashboard</h1>
+    </v-container>
 </template>
 
 <script>

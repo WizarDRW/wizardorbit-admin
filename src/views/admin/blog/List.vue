@@ -25,6 +25,8 @@
       :items="data"
       :page.sync="page"
       :items-per-page="itemsPerPage"
+      :loading="loading"
+      loading-text="Yükleniyor..."
       hide-default-footer
       class="elevation-1"
       @page-count="pageCount = $event"
@@ -126,7 +128,15 @@
       v-on:handleDelete="handleDelete"
       v-on:dialogClose="(value) => (deleteDialog = value)"
     ></delete>
-    <preview :_dialog="preview" :_blog="blog" v-on:dialogClose="(value) => {preview = value}"></preview>
+    <preview
+      :_dialog="preview"
+      :_blog="blog"
+      v-on:dialogClose="
+        (value) => {
+          preview = value;
+        }
+      "
+    ></preview>
   </v-container>
 </template>
 
@@ -183,12 +193,11 @@ export default {
     Preview: () => import("./Preview"),
   },
   created() {
+    this.loading = true;
     ApiService.get("blogs").then((x) => {
       this.data = x.data;
-    });
-    setTimeout(() => {
       this.loading = false;
-    }, 1500);
+    });
   },
   methods: {
     editItem(item) {
