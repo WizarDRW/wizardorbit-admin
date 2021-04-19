@@ -80,7 +80,7 @@ export default {
         // go to which page after successfully login
         .then((x) => {
           if (x.status == 200) {
-            this.$router.push({ name: "Ev" });
+            this.$router.push({ name: "Home" });
           } else {
               this.error.status = true;
               this.error.message = x.data.message;

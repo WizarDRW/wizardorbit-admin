@@ -31,13 +31,13 @@
       class="elevation-1"
       @page-count="pageCount = $event"
     >
-      <template #item.user_data="{ item }">
+      <template #[`item.user_data`]="{ item }">
         {{ item.user_data.full_name }} ({{ item.user_data.email }})
       </template>
-      <template #item.create_date="{ item }">
+      <template #[`item.create_date`]="{ item }">
         {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
       </template>
-      <template v-slot:item.status="{ item }">
+      <template #[`item.status`]="{ item }">
         <div
           :style="`${
             item.status == 'Published'
@@ -60,7 +60,7 @@
           }}
         </div>
       </template>
-      <template v-slot:item.actions="{ item, index }">
+      <template #[`item.actions`]="{ item, index }">
         <v-tooltip color="purple" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon

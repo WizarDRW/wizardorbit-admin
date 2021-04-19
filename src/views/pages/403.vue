@@ -1,35 +1,34 @@
 <template>
-    <div>
-        <div class="fix-img-right">
-            <img src="@/assets/gandalf-transparent.png" alt="gandalf">
-        </div>
-        <div class="center">
-            <h1>403</h1>
-            <p>You shall not pass</p>
-        </div>
-    </div>
+  <div class="background">
+    <h1>403</h1>
+    <img
+     src="../../assets/youshallnotpass.gif"
+     width="50%"
+    />
+  </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap');
-.fix-img-right{
-    position: fixed;
-    right: 0;
-    bottom: -5px;
+@import url("https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap");
+.background {
+  width: 100%;
+  height: 100%;
+  text-align: center !important;
+  font-size: 90px;
+  font-family: "Nova Oval", cursive;
+  text-transform: uppercase;
+  padding: 30px 0;
 }
-.center{
-    position: fixed;
-    text-align: center;
-    width: 100%;
-    height: 100vh;
-    font-size: 100px;
-    font-family: 'Nova Oval', cursive;
-    text-transform: uppercase;
+.background p {
+  bottom: 15px;
+  font-size: 90px;
+}
+
+img{
+  box-shadow: 3px 3px 5px 6px rgb(0, 0, 0);
 }
 </style>

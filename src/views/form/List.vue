@@ -31,10 +31,10 @@
       class="elevation-1"
       @page-count="pageCount = $event"
     >
-      <template #item.create_date="{ item }">
+      <template #[`item.create_date`]="{ item }">
         {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
       </template>
-      <template v-slot:item.status="{ item }">
+      <template #[`item.status`]="{ item }">
         <div
           :style="`${
             item.status == 'Published'
@@ -57,7 +57,7 @@
           }}
         </div>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template #[`item.actions`]="{ item }">
         <v-tooltip color="blue" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon

@@ -1,6 +1,10 @@
 <template>
   <div class="background">
     <h1>404</h1>
+    <img
+     src="@/assets/ihavenomemory.png"
+     width="50%"
+    />
     <p>I have no memory of this page</p>
   </div>
 </template>
@@ -12,24 +16,20 @@ export default {};
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap");
 .background {
-  background: linear-gradient(
-      rgba(7, 0, 36, 0.651) 0%,
-      rgba(255, 255, 255, 0.055) 100%
-    ),
-    url("../../assets/ihavenomemory.png");
   width: 100%;
-  height: 100vh;
-  background-repeat: no-repeat;
-  background-size: cover;
-  text-align: center;
-  font-size: 100px;
+  height: 100%;
+  text-align: center !important;
+  font-size: 90px;
   font-family: "Nova Oval", cursive;
   text-transform: uppercase;
+  padding: 30px 0;
 }
 .background p {
-  position: absolute;
   bottom: 15px;
-  left: 6%;
   font-size: 90px;
+}
+
+img{
+  box-shadow: 3px 3px 5px 6px rgb(0, 0, 0);
 }
 </style>
