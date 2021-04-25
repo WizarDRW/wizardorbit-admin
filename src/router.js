@@ -5,7 +5,6 @@ import { CURRENT_USER } from "@/core/services/store/auth.module";
 
 Vue.use(Router);
 
-
 function isAuth(to, from, next) {
   store.dispatch('verifyAuth');
   if (!store.getters['isAuthenticated']) {
@@ -25,6 +24,20 @@ export default new Router({
   mode: "history",
   linkExactActiveClass: "active",
   routes: [
+    {
+      path: '/auth/:token',
+      name: 'auth',
+      beforeEnter: async (to, from, next) => {
+        if (to.params.token) {
+          localStorage.clear();
+          localStorage.setItem("id_token", to.params.token);
+          store.dispatch('verifyAuth');
+          if (!store.getters['isAuthenticated']) {
+            next({ name: "Home" })
+          }else next({ name: "Login" })
+        }
+      },
+    },
     {
       path: '/login',
       name: 'Login',
