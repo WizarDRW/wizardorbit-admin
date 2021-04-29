@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from '@/core/services/store/store'
-import { CURRENT_USER } from "@/core/services/store/auth.module";
 
 Vue.use(Router);
 
@@ -12,13 +11,11 @@ function isAuth(to, from, next) {
   } else next();
 }
 function isForbidden(role, to, from, next) {
-  store
-    .dispatch(CURRENT_USER).then(x => {
-      if (x._doc.role == role || x._doc.role == 'SuperUser') {
-        next();
-      } else
-        next({ name: "Forbidden" })
-    })
+  var currentUser = store.getters.currentUser;
+  if (currentUser.role == role || currentUser.role == 'SuperUser') {
+    next();
+  } else
+    next({ name: "Forbidden" })
 }
 export default new Router({
   mode: "history",
@@ -34,7 +31,7 @@ export default new Router({
           store.dispatch('verifyAuth');
           if (!store.getters['isAuthenticated']) {
             next({ name: "Home" })
-          }else next({ name: "Login" })
+          } else next({ name: "Login" })
         }
       },
     },

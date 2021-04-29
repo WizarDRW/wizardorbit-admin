@@ -79,7 +79,7 @@ export default {
         .dispatch(LOGIN, { email, password })
         // go to which page after successfully login
         .then((x) => {
-          if (x.status == 200) {
+          if (x.token) {
             this.$router.push({ name: "Home" });
           } else {
               this.error.status = true;

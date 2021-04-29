@@ -10,6 +10,7 @@ export const REGISTER = "register";
 export const UPDATE_USER = "updateUser";
 
 // mutation types
+export const SET_CURRENT_USER = "setCurrentUser";
 export const PURGE_AUTH = "logOut";
 export const SET_AUTH = "setUser";
 export const SET_ERROR = "setError";
@@ -101,6 +102,7 @@ const actions = {
         ApiService.setHeader();
         ApiService.get("users/whoami")
           .then(({ data }) => {
+            context.commit(SET_CURRENT_USER, data);
             resolve(data);
           })
           .catch((response) => {
@@ -113,6 +115,9 @@ const actions = {
 };
 
 const mutations = {
+  [SET_CURRENT_USER](state, data) {
+    state.user = data;
+  },
   [SET_ERROR](state, error) {
     state.errors = error;
   },

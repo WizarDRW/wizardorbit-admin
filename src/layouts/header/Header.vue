@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import ApiService from "@/core/services/api.service";
 export default {
   components: {
     ResetPassword: () => import("@/views/auth/ResetPassword"),
@@ -81,9 +80,7 @@ export default {
     };
   },
   mounted() {
-    ApiService.get(`users/whoami`).then((x) => {
-      this.user = this.firstChar(x.data._doc);
-    });
+    this.user = this.firstChar(this.$store.getters.currentUser);
   },
   methods: {
     logout() {

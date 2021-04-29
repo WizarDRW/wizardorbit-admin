@@ -67,7 +67,6 @@
 
 <script>
 import nav from "./_nav";
-import ApiService from "@/core/services/api.service";
 export default {
   name: "Sidebar",
   nav,
@@ -82,10 +81,9 @@ export default {
       user: {},
     };
   },
-  beforeCreate() {
-    ApiService.get(`users/whoami`).then((x) => {
-      this.user = x.data._doc;
-    });
+  beforeMount() {
+    this.user = this.$store.getters.currentUser
+    console.log(this.user);
   },
 };
 </script>
