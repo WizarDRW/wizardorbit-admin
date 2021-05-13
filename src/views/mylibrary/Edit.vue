@@ -13,7 +13,7 @@
       </template>
     </sub-header>
     <v-row>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="3">
         <v-text-field
           v-model="library.name"
           label="Başlık"
@@ -30,7 +30,29 @@
           dense
           prepend-icon="mdi-subtitles-outline"
         ></v-text-field>
+        <v-hover v-if="library.image_path" v-slot="{ hover }">
+          <v-img
+            :aspect-ratio="16 / 9"
+            :src="library.image_path"
+            max-width="500px"
+          >
+            <v-fade-transition mode="out-in">
+              <div v-if="hover" class="">
+                <v-btn
+                  @click="
+                    () => {
+                      library.image_path = null;
+                    }
+                  "
+                  color="red"
+                  >Sil</v-btn
+                >
+              </div>
+            </v-fade-transition>
+          </v-img>
+        </v-hover>
         <v-file-input
+          v-else
           v-model="library.image_path"
           label="Resim Ekle"
           outlined
@@ -44,7 +66,7 @@
           v-model="library.private"
           on-icon="mdi-lock-outline"
           off-icon="mdi-lock-open-variant-outline"
-          :label="`${library.private ? 'Gizli':'Herkes'}`"
+          :label="`${library.private ? 'Gizli' : 'Herkes'}`"
           dense
         >
         </v-checkbox>
@@ -52,13 +74,13 @@
       <v-col cols="9">
         <skeleton-loader v-if="loading"></skeleton-loader>
         <v-row v-else dense>
-          <v-col v-for="(item, index) in datas" :key="index" cols="12" md="3">
+          <v-col v-for="(item, index) in datas" :key="index" cols="12" sm="6" md="3">
             <v-card hover @click="addList(item)">
               <v-img
                 class="white--text align-end"
                 :gradient="
                   item.isAdd
-                    ? `to bottom, rgba(0,0,0,.1), rgba(46, 214, 91, .5)`
+                    ? `to bottom, rgba(0,0,0,.1), rgba(29, 145, 60, .5)`
                     : `to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)`
                 "
                 height="200px"
@@ -90,8 +112,10 @@
 
 <script>
 import ApiService from "@/core/services/api.service.js";
-// var ObjectID = require("bson-objectid");
+import { GET_API_LIBRARY } from "@/core/services/store/library.module";
+var ObjectID = require("bson-objectid");
 export default {
+  name: "my-library-create",
   components: {
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SkeletonLoader: () => import("@/components/SkeletonLoader"),
@@ -101,6 +125,7 @@ export default {
       library: {
         contents: [],
         private: false,
+        user_id: ObjectID(this.$store.getters.currentUser._id),
       },
       datas: [],
       loading: true,
@@ -128,6 +153,24 @@ export default {
       };
     });
     this.datas = [...blogs, ...news];
+    if (!this.$store.getters.getLibrary) {
+        await this.$store.dispatch(GET_API_LIBRARY, this.$route.params.id);
+    }
+    this.library = this.$store.getters.getLibrary;
+    this.library.blogs.forEach((x) => {
+      this.datas.forEach((y) => {
+        if (x._id == y._id) {
+          y.isAdd = true;
+        }
+      });
+    });
+    this.library.news.forEach((x) => {
+      this.datas.forEach((y) => {
+        if (x._id == y._id) {
+          y.isAdd = true;
+        }
+      });
+    });
     if (this.datas) {
       this.loading = false;
     }
@@ -138,19 +181,18 @@ export default {
         this.library.contents.push(item._id);
         item.isAdd = true;
       } else {
-        this.library.contents.splice(
-          this.library.contents.indexOf(item._id),
-          1
-        );
+        this.library.contents.splice(this.library.contents.indexOf(item._id), 1);
         item.isAdd = false;
       }
     },
     save() {
-      ApiService.post(`mylibraries/`, this.library).then((x) => {
-        if (x.status == 201) {
-          this.$router.push({ path: "/mylibrary" });
+      ApiService.put(`mylibraries/id/${this.library._id}`, this.library).then(
+        (x) => {
+          if (x.status == 201) {
+            this.$router.push({ path: "/mylibrary" });
+          }
         }
-      });
+      );
     },
     onFilePicked() {
       const files = this.library.image_path;
@@ -164,7 +206,7 @@ export default {
           this.library.image_path = fr.result;
         });
       } else {
-          this.library.image_path = ""
+        this.library.image_path = "";
       }
     },
   },

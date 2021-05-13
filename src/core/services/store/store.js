@@ -4,6 +4,7 @@ import Vuex from "vuex";
 import auth from "./auth.module";
 import blog from "./blog.module";
 import option from "./option.module";
+import library from "./library.module";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
   modules: {
     auth,
     blog,
-    option
+    option,
+    library
   }
 });

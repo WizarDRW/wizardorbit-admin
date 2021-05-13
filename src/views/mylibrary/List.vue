@@ -28,8 +28,8 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-for="(item, index) in libraries" :key="index" cols="3">
-        <v-card @click="$router.push({ path: '/mylibrary/content' })">
+      <v-col v-for="(item, index) in libraries" :key="index" cols="12" sm="6" md="3">
+        <v-card @click="content(item)">
           <v-carousel
             vertical
             touchless
@@ -100,7 +100,6 @@
             </v-col>
           </v-row>
           <v-card-text>
-            {{ item.description }}
           </v-card-text>
         </v-card>
       </v-col>
@@ -110,6 +109,7 @@
 
 <script>
 import ApiService from "@/core/services/api.service.js";
+import { LIBRARY } from "@/core/services/store/library.module";
 export default {
   name: "my-library-list",
   components: {
@@ -136,6 +136,10 @@ export default {
   methods: {
     getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
+    },
+    content(item) {
+      this.$store.dispatch(LIBRARY, item);
+      this.$router.push({ path: `/mylibrary/content/${item._id}` });
     },
   },
 };

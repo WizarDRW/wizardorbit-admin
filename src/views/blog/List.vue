@@ -84,6 +84,7 @@
 <script>
 import ApiService from "@/core/services/api.service.js";
 import SubHeader from "@/layouts/header/SubHeader";
+import { BLOG } from "@/core/services/store/blog.module";
 export default {
   data() {
     return {
@@ -125,6 +126,7 @@ export default {
   },
   methods: {
     editItem(item) {
+      this.$store.dispatch(BLOG, item);
       this.$router.push({
         path: `/blog/edit/${item._id}`,
       });

@@ -1,38 +1,32 @@
+import ApiService from "@/core/services/api.service"
 // action types
-export const SET_ID_CONFIG = "setIDConfig";
+export const BLOG = "blog";
+export const GET_API_BLOG = "getApiBlog"
 
 // mutation types
+export const SET_BLOG = "setBlog";
 
 export default {
   state: {
-    id: 0,
+    blog: null,
   },
   getters: {
-    /**
-     * Get config from layout config
-     * @param state
-     * @returns {function(path, defaultValue): *}
-     */
-    getId(state) {
-        
-        return state.id != 0 ? state.id:sessionStorage.getItem("_blogId");
-      }
+    getBlog(state) {
+      return state.blog;
+    }
   },
   actions: {
-    /**
-     * Set and replace the whole config
-     * @param state
-     * @param payload
-     */
-    [SET_ID_CONFIG](state, payload) {
-    console.log(payload);
-      state.commit(SET_ID_CONFIG, payload);
+    [BLOG](state, payload) {
+      state.commit(SET_BLOG, payload);
+    },
+    async [GET_API_BLOG](state, id) {
+      var data = (await ApiService.get(`blogs/id/${id}`)).data
+      state.commit(SET_BLOG, data);
     },
   },
   mutations: {
-    [SET_ID_CONFIG](state, payload) {
-      state.id = payload;
-      sessionStorage.setItem("_blogId", payload);
+    [SET_BLOG](state, payload) {
+      state.blog = payload;
     },
   }
 };

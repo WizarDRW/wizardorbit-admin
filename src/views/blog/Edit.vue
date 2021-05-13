@@ -126,14 +126,17 @@
           prepend-inner-icon="mdi-subtitles-outline"
         ></v-text-field>
         <v-hover v-if="blog.image_path" v-slot="{ hover }">
-          <v-img :aspect-ratio="16 / 9" :src="imageUrl" max-width="500px">
+          <v-img
+            :aspect-ratio="16 / 9"
+            :src="blog.image_path"
+            max-width="500px"
+          >
             <v-fade-transition mode="out-in">
               <div v-if="hover" class="">
                 <v-btn
                   @click="
                     () => {
                       blog.image_path = null;
-                      imageUrl = null;
                     }
                   "
                   color="red"
@@ -310,6 +313,7 @@
 
 <script>
 import ApiService from "@/core/services/api.service.js";
+import { GET_API_BLOG } from "@/core/services/store/blog.module";
 import SubHeader from "@/layouts/header/SubHeader";
 import jwt_decode from "jwt-decode";
 var ObjectID = require("bson-objectid");
@@ -338,25 +342,16 @@ export default {
       preview: false,
     };
   },
-  mounted() {
-    ApiService.get(`blogcategories/`).then((x) => {
-      this.getBlog();
-      this.categories = x.data.map((x) => {
-        return {
-          id: x.id,
-          label: x.label,
-          children: x.children,
-        };
-      });
-    });
+  async mounted() {
+    this.categories = (await ApiService.get(`blogcategories/`)).data;
+    this.getBlog();
   },
   methods: {
-    getBlog() {
-      ApiService.get(`blogs/id/${this.$route.params.id}`).then((x) => {
-        this.blog = x.data;
-        this.imageUrl = this.blog.image_path;
-        this.loading = "none";
-      });
+    async getBlog() {
+      if (!this.$store.getters.getBlog)
+        await this.$store.dispatch(GET_API_BLOG, this.$route.params.id);
+      this.blog = this.$store.getters.getBlog;
+      this.loading = "none";
     },
     reset() {
       this.blog = {};
@@ -380,19 +375,16 @@ export default {
     onFilePicked() {
       const files = this.blog.image_path;
       if (files !== undefined) {
-        this.imageName = files.name;
-        if (this.imageName.lastIndexOf(".") <= 0) {
+        if (files.name.lastIndexOf(".") <= 0) {
           return;
         }
         const fr = new FileReader();
         fr.readAsDataURL(files);
         fr.addEventListener("load", () => {
-          this.imageUrl = fr.result;
+          this.blog.image_path = fr.result;
         });
       } else {
-        this.imageName = "";
-        this.imageFile = "";
-        this.imageUrl = "";
+        this.blog.image_path = "";
       }
     },
   },

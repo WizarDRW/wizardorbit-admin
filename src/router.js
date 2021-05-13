@@ -186,16 +186,30 @@ export default new Router({
             {
               path: '/mylibrary/book-shelves',
               name: 'BookShelves',
-              meta: { description: 'Kitap Rafları' },
+              meta: { description: 'Raftaki Kitaplar' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/mylibrary/List.vue")
             },
             {
               path: '/mylibrary/new-shelve',
               name: 'NewShelve',
-              meta: { description: 'Yeni Kitap Rafı' },
+              meta: { description: 'Yeni Kitap' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/mylibrary/Create.vue")
+            },
+            {
+              path: '/mylibrary/content/:id',
+              name: 'LibraryContent',
+              meta: { description: 'Kitap' },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: () => import("./views/mylibrary/Content.vue")
+            },
+            {
+              path: '/mylibrary/edit/:id',
+              name: 'LibraryEdit',
+              meta: { description: 'Kitap Düzenle' },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: () => import("./views/mylibrary/Edit.vue")
             },
           ]
         },

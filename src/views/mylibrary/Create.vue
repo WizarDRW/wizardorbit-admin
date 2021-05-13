@@ -13,7 +13,7 @@
       </template>
     </sub-header>
     <v-row>
-      <v-col cols="3">
+      <v-col cols="12" sm="6" md="3">
         <v-text-field
           v-model="library.name"
           label="Başlık"
@@ -74,7 +74,7 @@
       <v-col cols="9">
         <skeleton-loader v-if="loading"></skeleton-loader>
         <v-row v-else dense>
-          <v-col v-for="(item, index) in datas" :key="index" cols="12" md="3">
+          <v-col v-for="(item, index) in datas" :key="index" cols="12" sm="6" md="3">
             <v-card hover @click="addList(item)">
               <v-img
                 class="white--text align-end"
@@ -126,7 +126,6 @@ export default {
         private: false,
         user_id: ObjectID(this.$store.getters.currentUser._id),
       },
-      selects: [],
       datas: [],
       loading: true,
     };
@@ -159,18 +158,15 @@ export default {
   },
   methods: {
     addList(item) {
-      if (!this.selects.includes(item._id)) {
-        this.selects.push(item._id);
+      if (!this.library.contents.includes(item._id)) {
+        this.library.contents.push(item._id);
         item.isAdd = true;
       } else {
-        this.selects.splice(this.selects.indexOf(item._id), 1);
+        this.library.contents.splice(this.library.contents.indexOf(item._id), 1);
         item.isAdd = false;
       }
     },
     save() {
-      this.selects.forEach((element) => {
-        this.library.contents.push(ObjectID(element));
-      });
       ApiService.post(`mylibraries/`, this.library).then((x) => {
         if (x.status == 201) {
           this.$router.push({ path: "/mylibrary" });
