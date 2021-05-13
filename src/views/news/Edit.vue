@@ -161,7 +161,162 @@
         <div class="quill">
           <v-row>
             <v-col>
-              <v-card> <tiptap :_content="news" /> </v-card>
+              <!-- İçerikler -->
+              <div v-for="(item, index) in news.descriptions" :key="index">
+                <!-- Markdown üst butonları -->
+                <v-card v-if="item.type == 'markdown'">
+                  <v-menu
+                    v-for="(process, p_index) in processes"
+                    :key="p_index"
+                    offset-y
+                  >
+                    <template v-slot:activator="{ on: menu, attrs }">
+                      <v-tooltip top>
+                        <template v-slot:activator="{ on: tooltip }">
+                          <v-btn icon
+                            ><v-icon
+                              v-bind="attrs"
+                              v-on="{ ...tooltip, ...menu }"
+                            >
+                              {{ process.icon }}
+                            </v-icon></v-btn
+                          >
+                        </template>
+                        <span>{{ process.name }}</span>
+                      </v-tooltip>
+                    </template>
+                    <v-list>
+                      <v-list-item
+                        v-for="(item, g_index) in getMarkdowns(process.data)"
+                        :key="g_index"
+                        link
+                      >
+                        <div @click="addMarkdowns(index, item.value)">
+                          <v-icon>{{ item.icon }}</v-icon
+                          ><v-list-item-action>
+                            {{ item.name }}</v-list-item-action
+                          >
+                        </div>
+                      </v-list-item>
+                    </v-list>
+                  </v-menu>
+                </v-card>
+                <!-- Markdown içeriği -->
+                <v-textarea
+                  v-if="item.type == 'markdown'"
+                  label="İçerik(Markdown)"
+                  v-model="item.val"
+                  outlined
+                  hide-details
+                  prepend-inner-icon="mdi-information-outline"
+                  @click:prepend-inner="
+                    () => {
+                      info = !info;
+                      info_componentId = 'Markdown';
+                    }
+                  "
+                ></v-textarea>
+                <!-- Code editor içeriği -->
+                <div v-if="item.type == 'code'">
+                  <code-block :_code="item"></code-block>
+                </div>
+                <!-- Tiptap içeriği -->
+                <div v-if="item.type == 'tiptap'">
+                  <tiptap :_content="item"></tiptap>
+                </div>
+                <br />
+              </div>
+              <!-- Önizleme dialoğu -->
+              <preview
+                v-if="preview"
+                :_dialog="preview"
+                :_blog="blog"
+                v-on:dialogClose="
+                  (value) => {
+                    preview = value;
+                  }
+                "
+              ></preview>
+              <!-- Bilgi bankası dialoğu -->
+              <info-bank
+                v-if="info"
+                :_dialog="info"
+                :_componentId="info_componentId"
+                v-on:dialogClose="
+                  (value) => {
+                    info = value;
+                  }
+                "
+              ></info-bank>
+              <!-- Content ekleme butonu -->
+              <v-menu offset-y>
+                <template v-slot:activator="{ on: menu, attrs }">
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on: tooltip }">
+                      <v-btn icon v-bind="attrs" v-on="{ ...tooltip, ...menu }">
+                        <v-icon> mdi-plus </v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Ekle</span>
+                  </v-tooltip>
+                </template>
+                <v-list>
+                  <v-list-item link>
+                    <v-list-item-action
+                      @click="
+                        news.descriptions.push({
+                          sort: news.descriptions.length - 1,
+                          type: 'markdown',
+                          val: '',
+                        })
+                      "
+                    >
+                      Markdown
+                    </v-list-item-action>
+                  </v-list-item>
+                  <v-list-item link>
+                    <v-list-item-action
+                      @click="
+                        news.descriptions.push({
+                          sort: news.descriptions.length - 1,
+                          type: 'code',
+                          lang: { id: 'js', name: 'javascript' },
+                          val: '',
+                        })
+                      "
+                    >
+                      Code
+                    </v-list-item-action>
+                  </v-list-item>
+                  <v-list-item link>
+                    <v-list-item-action
+                      @click="
+                        news.descriptions.push({
+                          sort: news.descriptions.length - 1,
+                          type: 'tiptap',
+                          val: '',
+                        })
+                      "
+                    >
+                      Tiptap
+                    </v-list-item-action>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <!-- Önizleme -->
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    icon
+                    @click="preview = !preview"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon> mdi-eye </v-icon>
+                  </v-btn>
+                </template>
+                <span>Önizle</span>
+              </v-tooltip>
             </v-col>
           </v-row>
         </div>
@@ -174,16 +329,22 @@
 <script>
 import ApiService from "@/core/services/api.service.js";
 import SubHeader from "@/layouts/header/SubHeader";
+import markdowns from "@/utils/markdowns";
 import jwt_decode from "jwt-decode";
 var ObjectID = require("bson-objectid");
 export default {
   name: "Breadcrumbs",
   components: {
-    Tiptap: () => import("./components/Tiptap"),
+    Preview: () => import("@/components/Preview"),
+    InfoBank: () => import("@/views/infobanks/InfoBank.vue"),
+    Tiptap: () => import("@/components/Tiptap"),
+    CodeBlock: () => import("@/components/Code"),
     SubHeader,
   },
   data() {
     return {
+      info: false,
+      info_componentId: "",
       drag: {
         col: 12,
       },
@@ -196,6 +357,29 @@ export default {
       imageUrl: "",
       imageFile: "",
       imageName: "",
+      preview: false,
+      processes: [
+        {
+          icon: "mdi-sigma",
+          name: "Matematik",
+          data: "math",
+        },
+        {
+          icon: "mdi-language-markdown-outline",
+          name: "Markdown",
+          data: "markdown",
+        },
+        {
+          icon: "mdi-set-none",
+          name: "Diagram",
+          data: "diagram",
+        },
+        {
+          icon: "mdi-code-tags",
+          name: "Kod Bluğu",
+          data: "code",
+        },
+      ],
     };
   },
   mounted() {
@@ -255,6 +439,12 @@ export default {
         this.imageFile = "";
         this.imageUrl = "";
       }
+    },
+    getMarkdowns(lib) {
+      return markdowns[lib];
+    },
+    addMarkdowns(index, value) {
+      this.news.descriptions[index].val += value + "\n";
     },
   },
 };

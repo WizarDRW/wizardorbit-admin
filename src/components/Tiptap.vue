@@ -1,10 +1,23 @@
 <template>
   <tiptap-vuetify
-    v-model="_content.description"
+    v-model="_content.val"
     placeholder="Yazınız…"
     :extensions="extensions"
     :toolbar-attributes="{ color: 'black' }"
   >
+    <template #toolbar-after>
+      <div class="delete-btn">
+        <v-btn
+          @click="
+            () => {
+              $emit('delete_item');
+            }
+          "
+          icon
+          ><v-icon>mdi-delete-variant</v-icon></v-btn
+        >
+      </div>
+    </template>
   </tiptap-vuetify>
 </template>
 
@@ -67,9 +80,11 @@ export default {
       ],
     };
   },
-  watch: {},
 };
 </script>
 
 <style lang="scss" scoped>
+.delete-btn {
+  float: right;
+}
 </style>

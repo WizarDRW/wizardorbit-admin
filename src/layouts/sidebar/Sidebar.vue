@@ -83,7 +83,6 @@ export default {
   },
   beforeMount() {
     this.user = this.$store.getters.currentUser
-    console.log(this.user);
   },
 };
 </script>

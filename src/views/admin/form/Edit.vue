@@ -140,7 +140,7 @@ import SubHeader from "@/layouts/header/SubHeader";
 export default {
   components: {
     SubHeader,
-    Tiptap: () => import("./components/Tiptap"),
+    Tiptap: () => import("@/components/Tiptap"),
   },
   data() {
     return {

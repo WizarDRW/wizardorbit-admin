@@ -23,7 +23,7 @@ const state = {
 
 const getters = {
   currentUser(state) {
-    return state.user;
+    return state.user
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
@@ -44,6 +44,7 @@ const actions = {
         .then(({ data }) => {
           context.commit(SET_AUTH, data);
           resolve(data);
+          context.commit(CURRENT_USER)
         })
         .catch(({ response }) => {
           context.commit(SET_ERROR, response.data);
@@ -72,8 +73,10 @@ const actions = {
       ApiService.setHeader();
       ApiService.get("users/verify")
         .then((x) => {
-          if (!x.data) {
+          if (!x.data)
             context.commit(PURGE_AUTH);
+          else {
+            context.dispatch(CURRENT_USER)
           }
         })
         .catch(() => {
@@ -96,9 +99,9 @@ const actions = {
       return data;
     });
   },
-  [CURRENT_USER](context) {
+  async [CURRENT_USER](context) {
     if (JwtService.getToken()) {
-      return new Promise((resolve, reject) => {
+      return await new Promise((resolve, reject) => {
         ApiService.setHeader();
         ApiService.get("users/whoami")
           .then(({ data }) => {

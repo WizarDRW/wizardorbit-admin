@@ -128,7 +128,9 @@
     ></delete>
     <preview
       :_dialog="preview"
-      :_news="news"
+      :_content="news"
+      :_created="true"
+      _apiurl="news"
       v-on:dialogClose="
         (value) => {
           preview = value;
@@ -189,7 +191,7 @@ export default {
   components: {
     SubHeader,
     Delete: () => import("./Delete"),
-    Preview: () => import("./Preview"),
+    Preview: () => import("@/components/Preview"),
   },
   mounted() {
     this.loading = true;

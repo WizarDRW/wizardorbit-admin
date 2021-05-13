@@ -4,18 +4,17 @@ import store from '@/core/services/store/store'
 
 Vue.use(Router);
 
-function isAuth(to, from, next) {
+async function isAuth(to, from, next) {
   store.dispatch('verifyAuth');
   if (!store.getters['isAuthenticated']) {
     next({ name: 'Login' });
   } else next();
 }
-function isForbidden(role, to, from, next) {
+async function isForbidden(role, to, from, next) {
   var currentUser = store.getters.currentUser;
   if (currentUser.role == role || currentUser.role == 'SuperUser') {
     next();
-  } else
-    next({ name: "Forbidden" })
+  } else next({ name: "Forbidden" })
 }
 export default new Router({
   mode: "history",
@@ -45,7 +44,7 @@ export default new Router({
       name: 'Home',
       meta: { description: 'Ev' },
       redirect: '/dashboard',
-      beforeEnter: (to, from, next) => isAuth(to, from, next),
+      beforeEnter: isAuth,
       component: () => import("./layouts/Container.vue"),
       children: [
         {
@@ -175,13 +174,39 @@ export default new Router({
           ]
         },
         {
+          path: '/mylibrary',
+          name: 'MyLibrary',
+          meta: { description: 'Kütüphanem' },
+          redirect: '/mylibrary/book-shelves',
+          beforeEnter: (to, from, next) => isAuth(to, from, next),
+          component: {
+            render(c) { return c('router-view') }
+          },
+          children: [
+            {
+              path: '/mylibrary/book-shelves',
+              name: 'BookShelves',
+              meta: { description: 'Kitap Rafları' },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: () => import("./views/mylibrary/List.vue")
+            },
+            {
+              path: '/mylibrary/new-shelve',
+              name: 'NewShelve',
+              meta: { description: 'Yeni Kitap Rafı' },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: () => import("./views/mylibrary/Create.vue")
+            },
+          ]
+        },
+        {
           path: '/admin/blog',
           name: 'AdminBlog',
           meta: { description: 'Yönetim Bloğu' },
           redirect: '/admin/myblogs',
-          beforeEnter: (to, from, next) => {
-            isAuth(to, from, next);
-            isForbidden('Admin', to, from, next);
+          beforeEnter: async (to, from, next) => {
+            await isAuth(to, from, next);
+            await isForbidden('Admin', to, from, next);
           },
           component: {
             render(c) { return c('router-view') }

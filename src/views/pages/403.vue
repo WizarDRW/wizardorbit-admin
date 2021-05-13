@@ -1,10 +1,7 @@
 <template>
   <div class="background">
     <h1>403</h1>
-    <img
-     src="../../assets/youshallnotpass.gif"
-     width="50%"
-    />
+    <img src="../../assets/youshallnotpass.gif" width="50%" />
   </div>
 </template>
 
@@ -28,7 +25,7 @@ export default {};
   font-size: 90px;
 }
 
-img{
+img {
   box-shadow: 3px 3px 5px 6px rgb(0, 0, 0);
 }
 </style>

@@ -22,6 +22,11 @@ export default [
                 _name: "Forum",
                 to: "/form",
                 icon: "mdi-head-question-outline"
+            },
+            {
+                _name: "Kütüphanem",
+                to: "/mylibrary",
+                icon: "mdi-bookmark-multiple-outline"
             }
         ]
     },

@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { CURRENT_USER } from "@/core/services/store/auth.module";
 export default {
   name: "App",
 
@@ -17,9 +16,7 @@ export default {
     //
   }),
 
-  beforeCreate() {
-    this.$store.dispatch(CURRENT_USER)
-  },
+  beforeCreate() {},
 };
 </script>
 <style>

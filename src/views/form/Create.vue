@@ -131,7 +131,7 @@ var ObjectID = require("bson-objectid");
 export default {
   components: {
     SubHeader,
-    Tiptap: () => import("./components/Tiptap"),
+    Tiptap: () => import("@/components/Tiptap"),
   },
   data() {
     return {

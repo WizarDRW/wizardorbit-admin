@@ -90,7 +90,7 @@ export default {
     firstChar(x) {
       return {
         ...x,
-        first_char: x.first_name.split("")[0] + "" + x.last_name.split("")[0],
+        first_char: x.first_name + "" + x.last_name,
       };
     },
   },

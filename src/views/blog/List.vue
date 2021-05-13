@@ -84,7 +84,6 @@
 <script>
 import ApiService from "@/core/services/api.service.js";
 import SubHeader from "@/layouts/header/SubHeader";
-import jwt_decode from "jwt-decode";
 export default {
   data() {
     return {
@@ -119,16 +118,10 @@ export default {
   components: {
     SubHeader,
   },
-  created() {
+  async created() {
     this.loading = true;
-    ApiService.get("blogs").then((x) => {
-      this.data = x.data.filter(
-        (x) =>
-          x.user_data._id ==
-          jwt_decode(localStorage.getItem("id_token")).user_id
-      );
-      this.loading = false;
-    });
+    this.data = (await ApiService.get(`blogs/userid/${this.$store.getters.currentUser._id}`)).data
+    this.loading = this.data ? false:true;
   },
   methods: {
     editItem(item) {

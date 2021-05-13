@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <div class="alert">
-      <v-alert v-if="error.status" type="error"> {{error.message}} </v-alert>
+      <v-alert v-if="error.status" type="error"> {{ error.message }} </v-alert>
     </div>
     <v-content>
       <v-container fluid fill-height>
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { LOGIN, LOGOUT } from "@/core/services/store/auth.module";
+import { LOGIN, LOGOUT, CURRENT_USER } from "@/core/services/store/auth.module";
 export default {
   name: "Login",
   components: {},
@@ -63,9 +63,9 @@ export default {
       },
       loading: false,
       error: {
-          status: false,
-          message: ""
-      }
+        status: false,
+        message: "",
+      },
     };
   },
   methods: {
@@ -80,25 +80,26 @@ export default {
         // go to which page after successfully login
         .then((x) => {
           if (x.token) {
+            this.$store.dispatch(CURRENT_USER);
             this.$router.push({ name: "Home" });
           } else {
-              this.error.status = true;
-              this.error.message = x.data.message;
-              this.loading = false;
-              setTimeout(() => {
-                  this.error.status = false;
-              }, 5000);
+            this.error.status = true;
+            this.error.message = x.data.message;
+            this.loading = false;
+            setTimeout(() => {
+              this.error.status = false;
+            }, 5000);
           }
-        })
+        });
     },
   },
 };
 </script>
 
 <style scoped>
-.alert{
-    position: absolute;
-    right: 5px;
-    top: 5px;
+.alert {
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
 </style>

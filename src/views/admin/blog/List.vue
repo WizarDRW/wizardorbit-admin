@@ -130,7 +130,9 @@
     ></delete>
     <preview
       :_dialog="preview"
-      :_blog="blog"
+      :_content="blog"
+      :_created="true"
+      _apiurl="blogs"
       v-on:dialogClose="
         (value) => {
           preview = value;
@@ -146,6 +148,7 @@
 import ApiService from "@/core/services/api.service.js";
 import SubHeader from "@/layouts/header/SubHeader";
 export default {
+  name: "AdminBlogList",
   data() {
     return {
       page: 1,
@@ -191,7 +194,7 @@ export default {
   components: {
     SubHeader,
     Delete: () => import("./Delete"),
-    Preview: () => import("./Preview"),
+    Preview: () => import("@/components/Preview"),
   },
   created() {
     this.loading = true;

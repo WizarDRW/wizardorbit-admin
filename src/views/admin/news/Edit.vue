@@ -171,11 +171,131 @@
           accept="image/*"
           @change="onFilePicked"
         ></v-file-input>
-        <br />
         <div class="quill">
           <v-row>
             <v-col>
-              <v-card> <tiptap :_content="news" /> </v-card>
+              <!-- İçerikler -->
+              <div v-for="(item, index) in news.descriptions" :key="index">
+                <!-- Markdown içeriği -->
+                <div v-if="item.type == 'markdown'">
+                  <markdown :_content="item" v-on:delete_item="() => {
+                      news.descriptions.splice(index, 1)
+                    }"></markdown>
+                </div>
+                <!-- Code editor içeriği -->
+                <div v-if="item.type == 'code'">
+                  <code-block :_code="item" v-on:delete_item="() => {
+                      news.descriptions.splice(index, 1)
+                    }"></code-block>
+                </div>
+                <!-- Tiptap içeriği -->
+                <div v-if="item.type == 'tiptap'">
+                  <tiptap :_content="item" v-on:delete_item="() => {
+                      news.descriptions.splice(index, 1)
+                    }"></tiptap>
+                </div>
+                <!-- Resim içeriği -->
+                <div v-if="item.type == 'image'">
+                  <image-block :_content="item" v-on:delete_item="() => {
+                      news.descriptions.splice(index, 1)
+                    }"></image-block>
+                </div>
+                <br />
+              </div>
+              <!-- Önizleme dialoğu -->
+              <preview
+                v-if="preview"
+                :_dialog="preview"
+                :_content="news"
+                v-on:dialogClose="
+                  (value) => {
+                    preview = value;
+                  }
+                "
+              ></preview>
+              <!-- Content ekleme butonu -->
+              <v-menu offset-y>
+                <template v-slot:activator="{ on: menu, attrs }">
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on: tooltip }">
+                      <v-btn icon v-bind="attrs" v-on="{ ...tooltip, ...menu }">
+                        <v-icon> mdi-plus </v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Ekle</span>
+                  </v-tooltip>
+                </template>
+                <v-list>
+                  <v-list-item link>
+                    <v-list-item-action
+                      @click="
+                        news.descriptions.push({
+                          sort: news.descriptions.length - 1,
+                          type: 'markdown',
+                          val: '',
+                        })
+                      "
+                    >
+                      Markdown
+                    </v-list-item-action>
+                  </v-list-item>
+                  <v-list-item link>
+                    <v-list-item-action
+                      @click="
+                        news.descriptions.push({
+                          sort: news.descriptions.length - 1,
+                          type: 'code',
+                          lang: { id: 'js', name: 'javascript' },
+                          val: '',
+                        })
+                      "
+                    >
+                      Code
+                    </v-list-item-action>
+                  </v-list-item>
+                  <v-list-item link>
+                    <v-list-item-action
+                      @click="
+                        news.descriptions.push({
+                          sort: news.descriptions.length - 1,
+                          type: 'tiptap',
+                          val: '',
+                        })
+                      "
+                    >
+                      Tiptap
+                    </v-list-item-action>
+                  </v-list-item>
+                  <v-list-item link>
+                    <v-list-item-action
+                      @click="
+                        news.descriptions.push({
+                          sort: news.descriptions.length - 1,
+                          type: 'image',
+                          val: '',
+                          width: 500
+                        })
+                      "
+                    >
+                      Image
+                    </v-list-item-action>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <!-- Önizleme -->
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    icon
+                    @click="preview = !preview"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <v-icon> mdi-eye </v-icon>
+                  </v-btn>
+                </template>
+                <span>Önizle</span>
+              </v-tooltip>
             </v-col>
           </v-row>
         </div>
@@ -193,7 +313,11 @@ var ObjectID = require("bson-objectid");
 export default {
   name: "Breadcrumbs",
   components: {
-    Tiptap: () => import("./components/Tiptap"),
+    Preview: () => import("@/components/Preview"),
+    Markdown: () => import("@/components/Markdown"),
+    Tiptap: () => import("@/components/Tiptap"),
+    CodeBlock: () => import("@/components/Code"),
+    ImageBlock: () => import("@/components/Image"),
     SubHeader,
   },
   data() {
@@ -208,6 +332,7 @@ export default {
           title: "",
           description: "",
         },
+        descriptions: []
       },
       loading: "block",
       categories: [],
@@ -215,6 +340,7 @@ export default {
       imageUrl: "",
       imageFile: "",
       imageName: "",
+      preview: false,
     };
   },
   mounted() {
