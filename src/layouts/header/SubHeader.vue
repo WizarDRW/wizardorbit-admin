@@ -1,16 +1,32 @@
 <template>
   <v-subheader app>
     <div class="route">
-      <a v-for="item in $route.matched" :key="item.path" :href="item.path == '' ? '/':item.path">
-        {{ item.meta.description }} /
-      </a>
+      <v-breadcrumbs :items="$route.matched">
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+        <template v-slot:item="{ item }">
+          <v-breadcrumbs-item
+            :href="item.path === '' ? '/' : item.path"
+            :disabled="
+              item.path === $route.matched[$route.matched.length - 1].path
+            "
+          >
+            {{ item.meta.description.toUpperCase() }}
+          </v-breadcrumbs-item>
+        </template>
+      </v-breadcrumbs>
     </div>
     <slot name="buttons"></slot>
   </v-subheader>
 </template>
 
 <script>
-export default {};
+export default {
+  created() {
+    console.log(this.$route.matched);
+  },
+};
 </script>
 
 <style lang="scss" scoped>

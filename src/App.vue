@@ -19,8 +19,14 @@ export default {
   beforeCreate() {},
 };
 </script>
+
 <style>
 .v-treeview-node__prepend {
   width: 100% !important;
+}
+.alerts {
+  position: fixed !important;
+  bottom: 10px;
+  right: 10px;
 }
 </style>

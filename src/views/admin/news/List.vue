@@ -10,7 +10,7 @@
                 v-bind="attrs"
                 v-on="on"
                 color="green"
-                @click="$router.push({ path: '/admin/new-news' })"
+                @click="$router.push({ name: 'AdminNewNews' })"
               >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
@@ -22,7 +22,7 @@
     </sub-header>
     <v-data-table
       :headers="headers"
-      :items="data"
+      :items="thenews"
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
@@ -60,7 +60,7 @@
           }}
         </div>
       </template>
-      <template #[`item.actions`]="{ item, index }">
+      <template #[`item.actions`]="{ item }">
         <v-tooltip color="purple" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
@@ -103,10 +103,8 @@
               v-on="on"
               @click="
                 () => {
-                  (deleteRes.name = item.name),
-                    (deleteRes.index = index),
-                    (deleteRes.id = item._id),
-                    (deleteDialog = true);
+                  deleteDialog = true;
+                  deleteRes.id = item._id;
                 }
               "
             >
@@ -122,7 +120,7 @@
     </div>
     <delete
       :_dialog="deleteDialog"
-      :_name="deleteRes.name"
+      :_id="deleteRes.id"
       v-on:handleDelete="handleDelete"
       v-on:dialogClose="(value) => (deleteDialog = value)"
     ></delete>
@@ -134,18 +132,38 @@
       v-on:dialogClose="
         (value) => {
           preview = value;
-          news = {}
+          news = {};
         }
       "
     ></preview>
+    <div class="alerts">
+      <delete-alert
+        v-for="(item, index) in deleteItems"
+        :key="index"
+        v-model="item.status"
+        :_msg="item.msg"
+        :_type="item.type"
+        :_second="item.second"
+        :_alert="item.status"
+        :_func="item.func"
+        :_itemid="item.itemid"
+        v-on:deleted="deleteProcess"
+      ></delete-alert>
+    </div>
   </v-container>
 </template>
 
 
 <script>
-import ApiService from "@/core/services/api.service.js";
+import { NEWS, GET_API_THE_NEWS } from "@/core/services/store/news.module";
 import SubHeader from "@/layouts/header/SubHeader";
 export default {
+  components: {
+    SubHeader,
+    Delete: () => import("@/components/Delete"),
+    Preview: () => import("@/components/Preview"),
+    DeleteAlert: () => import("@/components/Alert/DeleteAlert"),
+  },
   data() {
     return {
       page: 1,
@@ -176,7 +194,7 @@ export default {
           sortable: false,
         },
       ],
-      data: [],
+      thenews: [],
       loading: true,
       deleteDialog: false,
       deleteRes: {
@@ -184,35 +202,43 @@ export default {
         id: "",
         index: -1,
       },
+      deleteItems: [],
       preview: false,
       news: {},
     };
   },
-  components: {
-    SubHeader,
-    Delete: () => import("./Delete"),
-    Preview: () => import("@/components/Preview"),
-  },
-  mounted() {
-    this.loading = true;
-    ApiService.get("news").then((x) => {
-      this.data = x.data;
-      this.loading = false;
-    });
+  async created() {
+    if (!this.$store.getters.getTheNews)
+      await this.$store.dispatch(GET_API_THE_NEWS);
+    this.thenews = this.$store.getters.getTheNews;
+    if (this.thenews) this.loading = false;
   },
   methods: {
     editItem(item) {
+      this.$store.dispatch(NEWS, item);
       this.$router.push({
-        path: `/admin/news/edit/${item._id}`,
+        name: `AdminEditNews`,
+        params: { id: item._id },
       });
     },
-    handleDelete() {
-      ApiService.delete(`news/id/${this.deleteRes.id}`).then((x) => {
-        if (x.status == 200) {
-          this.data.splice(this.deleteRes.index, 1);
-          this.deleteDialog = false;
-        }
+    handleDelete(itemid) {
+      this.deleteItems.push({
+        msg: "Silinme işlemi için",
+        type: "error",
+        second: 100,
+        func: "deleteApiNews",
+        status: true,
+        itemid: itemid,
       });
+    },
+    deleteProcess() {
+      var count = 0;
+      this.deleteItems.forEach((el) => {
+        count += el.status ? 0 : 1;
+      });
+      if (count == this.deleteItems.length) {
+        this.deleteItems = [];
+      }
     },
   },
 };

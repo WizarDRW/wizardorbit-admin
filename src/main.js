@@ -6,6 +6,7 @@ import ApiService from './core/services/api.service'
 import store from './core/services/store/store'
 import VueMoment from 'vue-moment'
 import Katex from 'vue-katex-auto-render'
+import { VueMasonryPlugin } from "vue-masonry";
 import { CURRENT_USER } from "./core/services/store/auth.module";
 
 Vue.config.productionTip = false
@@ -13,10 +14,10 @@ Vue.config.productionTip = false
 ApiService.init();
 const moment = require('moment')
 require('moment/locale/tr')
+Vue.use(VueMasonryPlugin);
 Vue.use(VueMoment, {
   moment
 });
-
 Vue.directive('katex', Katex);
 
 router.beforeEach(async (to, from, next) => {

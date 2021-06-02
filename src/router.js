@@ -27,8 +27,8 @@ export default new Router({
         if (to.params.token) {
           localStorage.clear();
           localStorage.setItem("id_token", to.params.token);
-          store.dispatch('verifyAuth');
-          if (!store.getters['isAuthenticated']) {
+          await store.dispatch('verifyAuth');
+          if (store.getters['isAuthenticated']) {
             next({ name: "Home" })
           } else next({ name: "Login" })
         }
@@ -54,42 +54,35 @@ export default new Router({
           component: () => import('./views/dashboard/Index.vue')
         },
         {
-          path: '/blog',
-          name: 'Blog',
-          meta: { description: 'Blog' },
-          redirect: '/myblogs',
+          path: '/chapter',
+          name: 'Chapter',
+          meta: { description: 'Bölüm' },
+          redirect: '/my-chapters',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
             render(c) { return c('router-view') }
           },
           children: [
             {
-              path: '/newblog',
-              name: 'NewBlog',
-              meta: { description: 'Yeni' },
+              path: '/new-chapter',
+              name: 'NewChapter',
+              meta: { description: 'Yeni Bölüm' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/blog/Create.vue")
+              component: () => import("./views/client/chapters/Create.vue")
             },
             {
-              path: '/myblogs',
-              name: 'MyBlog',
-              meta: { description: 'Bloglarım' },
+              path: '/my-chapters',
+              name: 'MyChapters',
+              meta: { description: 'Bölümlerim' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/blog/List.vue")
+              component: () => import("./views/client/chapters/List.vue")
             },
             {
-              path: '/blog/edit/:id',
-              name: 'EditBlog',
+              path: '/chapter/edit/:id',
+              name: 'EditChapter',
               meta: { description: 'Düzenle' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/blog/Edit.vue"),
-            },
-            {
-              path: '/blog/detail/:id',
-              name: 'DetailBlog',
-              meta: { description: 'Detay' },
-              beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/blog/Detail.vue")
+              component: () => import("./views/client/chapters/Edit.vue"),
             }
           ]
         },
@@ -105,119 +98,112 @@ export default new Router({
           children: [
             {
               path: '/new-news',
-              name: 'New-News',
+              name: 'NewNews',
               meta: { description: 'Yeni' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/news/Create.vue")
+              component: () => import("./views/client/news/Create.vue")
             },
             {
               path: '/my-news',
               name: 'MyNews',
               meta: { description: 'Haberlerim' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/news/List.vue")
+              component: () => import("./views/client/news/List.vue")
             },
             {
               path: '/news/edit/:id',
               name: 'EditNews',
               meta: { description: 'Düzenle' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/news/Edit.vue"),
-            },
-            {
-              path: '/news/detail/:id',
-              name: 'DetailNews',
-              meta: { description: 'Detay' },
-              beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/news/Detail.vue")
+              component: () => import("./views/client/news/Edit.vue"),
             }
           ]
         },
         {
-          path: '/form',
-          name: 'Form',
+          path: '/forum',
+          name: 'Forum',
           meta: { description: 'Forum' },
-          redirect: '/my-form',
+          redirect: '/my-forums',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
             render(c) { return c('router-view') }
           },
           children: [
             {
-              path: '/new-form',
-              name: 'NewForm',
+              path: '/new-forum',
+              name: 'NewForum',
               meta: { description: 'Yeni' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/form/Create.vue")
+              component: () => import("./views/client/forums/Create.vue")
             },
             {
-              path: '/my-form',
-              name: 'MyForm',
+              path: '/my-forums',
+              name: 'MyForums',
               meta: { description: 'Forumlarım' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/form/List.vue")
+              component: () => import("./views/client/forums/List.vue")
             },
             {
-              path: '/form/edit/:id',
-              name: 'EditForm',
+              path: '/forum/edit/:id',
+              name: 'EditForum',
               meta: { description: 'Düzenle' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/form/Edit.vue"),
+              component: () => import("./views/client/forums/Edit.vue"),
             },
             {
-              path: '/form/detail/:id',
-              name: 'DetailForm',
+              path: '/forum/detail/:id',
+              name: 'DetailForum',
               meta: { description: 'Detay' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/form/Detail.vue")
+              component: () => import("./views/client/forums/Detail.vue")
             }
           ]
         },
         {
-          path: '/mylibrary',
-          name: 'MyLibrary',
-          meta: { description: 'Kütüphanem' },
-          redirect: '/mylibrary/book-shelves',
+          path: '/library',
+          name: 'Library',
+          meta: { description: 'Kütüphane' },
+          redirect: '/library/book-shelves',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
             render(c) { return c('router-view') }
           },
           children: [
             {
-              path: '/mylibrary/book-shelves',
+              path: '/library/book-shelves',
               name: 'BookShelves',
               meta: { description: 'Raftaki Kitaplar' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/mylibrary/List.vue")
+              component: () => import("./views/libraries/List.vue")
             },
             {
-              path: '/mylibrary/new-shelve',
-              name: 'NewShelve',
+              path: '/library/new-book',
+              name: 'NewBook',
               meta: { description: 'Yeni Kitap' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/mylibrary/Create.vue")
+              component: () => import("./views/libraries/Create.vue")
             },
             {
-              path: '/mylibrary/content/:id',
+              path: '/library/content/:id',
               name: 'LibraryContent',
               meta: { description: 'Kitap' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/mylibrary/Content.vue")
+              component: () => import("./views/libraries/Content.vue")
             },
             {
-              path: '/mylibrary/edit/:id',
+              path: '/library/edit/:id',
               name: 'LibraryEdit',
               meta: { description: 'Kitap Düzenle' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/mylibrary/Edit.vue")
+              component: () => import("./views/libraries/Edit.vue")
             },
           ]
         },
         {
-          path: '/admin/blog',
-          name: 'AdminBlog',
-          meta: { description: 'Yönetim Bloğu' },
-          redirect: '/admin/myblogs',
+          path: '/admin/chapter',
+          name: 'AdminChapter',
+          meta: { description: 'Bölüm(Yönetici)' },
+          redirect: '/admin/chapters',
           beforeEnter: async (to, from, next) => {
             await isAuth(to, from, next);
             await isForbidden('Admin', to, from, next);
@@ -227,32 +213,32 @@ export default new Router({
           },
           children: [
             {
-              path: '/admin/newblog',
-              name: 'AdminNewBlog',
-              meta: { description: 'Yeni' },
+              path: '/admin/new-chapter',
+              name: 'AdminNewChapter',
+              meta: { description: 'Yeni Bölüm' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/blog/Create.vue")
+              component: () => import("./views/admin/chapters/Create.vue")
             },
             {
-              path: '/admin/myblogs',
-              name: 'AdminBlogs',
-              meta: { description: 'Bloglar' },
+              path: '/admin/chapters',
+              name: 'AdminChapters',
+              meta: { description: 'Bölümler' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/blog/List.vue")
+              component: () => import("./views/admin/chapters/List.vue")
             },
             {
-              path: '/admin/blog/edit/:id',
-              name: 'AdminEditBlog',
+              path: '/admin/chapter/edit/:id',
+              name: 'AdminEditChapter',
               meta: { description: 'Düzenle' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/blog/Edit.vue"),
+              component: () => import("./views/admin/chapters/Edit.vue"),
             },
             {
-              path: '/admin/blog/detail/:id',
-              name: 'AdminDetailBlog',
+              path: '/admin/chapter/detail/:id',
+              name: 'AdminDetailChapter',
               meta: { description: 'Detay' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/blog/Detail.vue")
+              component: () => import("./views/admin/chapters/Detail.vue")
             }
           ]
         },
@@ -268,14 +254,14 @@ export default new Router({
           children: [
             {
               path: '/admin/new-news',
-              name: 'AdminNew-News',
+              name: 'AdminNewNews',
               meta: { description: 'Yeni' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/Create.vue")
             },
             {
               path: '/admin/my-news',
-              name: 'Admin-News',
+              name: 'AdminTheNews',
               meta: { description: 'Haberler' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/List.vue")
@@ -297,10 +283,10 @@ export default new Router({
           ]
         },
         {
-          path: '/admin/form',
-          name: 'AdminForm',
+          path: '/admin/forum',
+          name: 'AdminForum',
           meta: { description: 'Yönetici Forumu' },
-          redirect: '/admin/my-form',
+          redirect: '/admin/forums',
           beforeEnter: (to, from, next) => {
             isAuth(to, from, next);
             isForbidden('Admin', to, from, next);
@@ -310,32 +296,32 @@ export default new Router({
           },
           children: [
             {
-              path: '/admin/new-form',
+              path: '/admin/new-forum',
               name: 'AdminNewForm',
-              meta: { description: 'Yeni' },
+              meta: { description: 'Yeni Forum' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/form/Create.vue")
+              component: () => import("./views/admin/forums/Create.vue")
             },
             {
-              path: '/admin/my-form',
+              path: '/admin/forums',
               name: 'AdminForms',
               meta: { description: 'Forumlar' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/form/List.vue")
+              component: () => import("./views/admin/forums/List.vue")
             },
             {
-              path: '/admin/form/edit/:id',
-              name: 'AdminEditForm',
+              path: '/admin/forum/edit/:id',
+              name: 'AdminEditForum',
               meta: { description: 'Düzenle' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/form/Edit.vue"),
+              component: () => import("./views/admin/forums/Edit.vue"),
             },
             {
-              path: '/admin/form/detail/:id',
-              name: 'AdminDetailForm',
+              path: '/admin/forum/detail/:id',
+              name: 'AdminDetailForum',
               meta: { description: 'Detay' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/form/Detail.vue")
+              component: () => import("./views/admin/forums/Detail.vue")
             }
           ]
         },
@@ -357,7 +343,28 @@ export default new Router({
               name: 'Users',
               meta: { description: 'Kullanıcılar' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/user/User.vue")
+              component: () => import("./views/superuser/users/List.vue")
+            },
+            {
+              path: '/superuser/category/chapter-categories',
+              name: 'SuperUserChapterCategories',
+              meta: { description: 'Bölüm Kategorileri' },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: () => import("./views/admin/chapters/Category.vue")
+            },
+            {
+              path: '/superuser/category/news-categories',
+              name: 'SuperUserNewsCategories',
+              meta: { description: 'Haber Kategorileri' },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: () => import("./views/admin/news/Category.vue")
+            },
+            {
+              path: '/superuser/category/forum-categories',
+              name: 'SuperUserForumCategories',
+              meta: { description: 'Forum Kategorileri' },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: () => import("./views/admin/forums/Category.vue")
             }
           ]
         },

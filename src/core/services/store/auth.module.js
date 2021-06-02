@@ -10,10 +10,10 @@ export const REGISTER = "register";
 export const UPDATE_USER = "updateUser";
 
 // mutation types
-export const SET_CURRENT_USER = "setCurrentUser";
-export const PURGE_AUTH = "logOut";
-export const SET_AUTH = "setUser";
-export const SET_ERROR = "setError";
+const SET_CURRENT_USER = "setCurrentUser";
+const PURGE_AUTH = "logOut";
+const SET_AUTH = "setUser";
+const SET_ERROR = "setError";
 
 const state = {
   errors: null,

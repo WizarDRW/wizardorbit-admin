@@ -3,10 +3,10 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-btn icon color="red" @click="$router.push({ path: '/my-news' })">
+          <v-btn :disabled="loading" icon color="red" @click="$router.push({ name: 'AdminNews' })">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
-          <v-btn icon color="green" @click="save()">
+          <v-btn :loading="loading" icon color="green" @click="handleSave()">
             <v-icon>mdi-content-save-outline</v-icon>
           </v-btn>
         </div>
@@ -76,7 +76,7 @@
               v-on="on"
               @click="
                 () => {
-                  tags.push({ key: '', tag: '' });
+                  news.tags.push({ key: '', tag: '' });
                 }
               "
             >
@@ -85,7 +85,7 @@
           </template>
           <span>Etiket Ekle</span>
         </v-tooltip>
-        <div v-for="(item, index) in news.tags" :key="item">
+        <div v-for="(item, index) in news.tags" :key="index">
           <v-text-field
             v-model="item.key"
             label="Anahtar"
@@ -102,7 +102,7 @@
                 icon
                 @click="
                   () => {
-                    tags.splice(index, 1);
+                    news.tags.splice(index, 1);
                   }
                 "
               >
@@ -142,7 +142,7 @@
         <v-hover v-if="news.image_path" v-slot="{ hover }">
           <v-img
             :aspect-ratio="16 / 9"
-            :src="imageUrl"
+            :src="news.image_path"
             max-width="500px"
           >
             <v-fade-transition mode="out-in">
@@ -151,7 +151,6 @@
                   @click="
                     () => {
                       news.image_path = null;
-                      imageUrl = null;
                     }
                   "
                   color="red"
@@ -178,27 +177,47 @@
               <div v-for="(item, index) in news.descriptions" :key="index">
                 <!-- Markdown içeriği -->
                 <div v-if="item.type == 'markdown'">
-                  <markdown :_content="item" v-on:delete_item="() => {
-                      news.descriptions.splice(index, 1)
-                    }"></markdown>
+                  <markdown
+                    :_content="item"
+                    v-on:delete_item="
+                      () => {
+                        news.descriptions.splice(index, 1);
+                      }
+                    "
+                  ></markdown>
                 </div>
                 <!-- Code editor içeriği -->
                 <div v-if="item.type == 'code'">
-                  <code-block :_code="item" v-on:delete_item="() => {
-                      news.descriptions.splice(index, 1)
-                    }"></code-block>
+                  <code-block
+                    :_code="item"
+                    v-on:delete_item="
+                      () => {
+                        news.descriptions.splice(index, 1);
+                      }
+                    "
+                  ></code-block>
                 </div>
                 <!-- Tiptap içeriği -->
                 <div v-if="item.type == 'tiptap'">
-                  <tiptap :_content="item" v-on:delete_item="() => {
-                      news.descriptions.splice(index, 1)
-                    }"></tiptap>
+                  <tiptap
+                    :_content="item"
+                    v-on:delete_item="
+                      () => {
+                        news.descriptions.splice(index, 1);
+                      }
+                    "
+                  ></tiptap>
                 </div>
                 <!-- Resim içeriği -->
                 <div v-if="item.type == 'image'">
-                  <image-block :_content="item" v-on:delete_item="() => {
-                      news.descriptions.splice(index, 1)
-                    }"></image-block>
+                  <image-block
+                    :_content="item"
+                    v-on:delete_item="
+                      () => {
+                        news.descriptions.splice(index, 1);
+                      }
+                    "
+                  ></image-block>
                 </div>
                 <br />
               </div>
@@ -273,7 +292,7 @@
                           sort: news.descriptions.length - 1,
                           type: 'image',
                           val: '',
-                          width: 500
+                          width: 500,
                         })
                       "
                     >
@@ -301,24 +320,41 @@
         </div>
       </v-col>
     </v-row>
+    <div class="alerts">
+      <update-alert
+        v-if="update.status"
+        v-on:input="
+          (val) => {
+            loading = val;
+            update.status = val;
+          }
+        "
+        :_msg="update.msg"
+        :_type="update.type"
+        :_second="update.second"
+        :_alert="update.status"
+        :_func="update.func"
+        :_item="update.item"
+        v-on:updated="save"
+      ></update-alert>
+    </div>
   </v-container>
 </template>
 
 
 <script>
-import ApiService from "@/core/services/api.service.js";
-import SubHeader from "@/layouts/header/SubHeader";
-import jwt_decode from "jwt-decode";
-var ObjectID = require("bson-objectid");
+import { GET_API_NEWS } from "@/core/services/store/news.module";
+import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 export default {
-  name: "Breadcrumbs",
+  name: "AdminEditNews",
   components: {
     Preview: () => import("@/components/Preview"),
     Markdown: () => import("@/components/Markdown"),
     Tiptap: () => import("@/components/Tiptap"),
     CodeBlock: () => import("@/components/Code"),
     ImageBlock: () => import("@/components/Image"),
-    SubHeader,
+    UpdateAlert: () => import("@/components/Alert/UpdateAlert"),
+    SubHeader: () => import("@/layouts/header/SubHeader"),
   },
   data() {
     return {
@@ -328,40 +364,38 @@ export default {
       selectionType: "leaf",
       selection: [],
       news: {
-        seo: {
-          title: "",
-          description: "",
-        },
-        descriptions: []
+        descriptions: [],
+        status: "ModeratorAcceping",
       },
-      loading: "block",
+      loading: true,
       categories: [],
       valueConsistsOf: "BRANCH_PRIORITY",
-      imageUrl: "",
-      imageFile: "",
-      imageName: "",
       preview: false,
+      update: {
+        status: false,
+        msg: "Güncelleme işlemi yaklaşık 10sn içinde gerçekleşecektir.",
+        second: 100,
+        type: "warning",
+        func: "putApiNews",
+        item: {},
+      },
     };
   },
-  mounted() {
-    ApiService.get(`newscategories/`).then((x) => {
-      this.getNews();
-      this.categories = x.data.map((x) => {
-        return {
-          id: x.id,
-          label: x.label,
-          children: x.children,
-        };
-      });
-    });
+  async mounted() {
+    if (
+      !this.$store.getters.getCategory ||
+      this.$store.getters.getCategory.type !== "news"
+    )
+      await this.$store.dispatch(GET_API_CATEGORY, "news");
+    this.categories = this.$store.getters.getCategory.categories;
+    this.getNews();
   },
   methods: {
-    getNews() {
-      ApiService.get(`news/id/${this.$route.params.id}`).then((x) => {
-        this.news = x.data;
-        this.imageUrl = this.news.image_path
-        this.loading = "none";
-      });
+    async getNews() {
+      if (!this.$store.getters.getNews)
+        await this.$store.dispatch(GET_API_NEWS, this.$route.params.id);
+      this.news = this.$store.getters.getNews;
+      this.loading = false;
     },
     reset() {
       this.news = {};
@@ -369,35 +403,29 @@ export default {
     getFiles(files) {
       this.news.image_path = files.base64;
     },
-    save() {
-      var data = {
-        ...this.news,
-        image_path: this.imageUrl,
-        user_id: ObjectID(jwt_decode(localStorage.getItem("id_token")).user_id),
-        status: "ModeratorAcceping",
-      };
-      ApiService.put(`news/id/${data._id}`, data).then((x) => {
-        if (x.status == 200) {
-          this.$router.push({ path: "/news" });
-        }
-      });
+    handleSave() {
+      this.loading = true;
+      this.update.item = this.news;
+      this.update.second = 100;
+      this.update.status = true;
+    },
+    async save() {
+      this.loading = false;
+      this.$router.push({ name: "AdminNews" });
     },
     onFilePicked() {
       const files = this.news.image_path;
       if (files !== undefined) {
-        this.imageName = files.name;
-        if (this.imageName.lastIndexOf(".") <= 0) {
+        if (files.name.lastIndexOf(".") <= 0) {
           return;
         }
         const fr = new FileReader();
         fr.readAsDataURL(files);
         fr.addEventListener("load", () => {
-          this.imageUrl = fr.result;
+          this.news.image_path = fr.result;
         });
       } else {
-        this.imageName = "";
-        this.imageFile = "";
-        this.imageUrl = "";
+        this.news.image_path = "";
       }
     },
   },

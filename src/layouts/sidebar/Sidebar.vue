@@ -8,58 +8,39 @@
       />
 
       <v-divider></v-divider>
-      <v-list v-for="nav in $options.nav" :key="nav._name" dense nav>        
-        <div v-if="user.role != 'Client' && nav._id == 10023">
-          <h1>{{ nav._name }}</h1>
-          <v-list-item
-            v-for="item in nav.children"
-            :key="item._name"
-            link
-            @click="$router.push({ path: item.to })"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item._name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-        </div>
-        <div v-else-if="user.role == 'SuperUser' && nav._id == 10024">
-          <h1>{{ nav._name }}</h1>
-          <v-list-item
-            v-for="item in nav.children"
-            :key="item._name"
-            link
-            @click="$router.push({ path: item.to })"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item._name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-        </div>
-        <div v-else-if="nav._id == 10022">
-          <h1>{{ nav._name }}</h1>
-          <v-list-item
-            v-for="item in nav.children"
-            :key="item._name"
-            link
-            @click="$router.push({ path: item.to })"
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>{{ item._name }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-        </div>
+      <v-list dense nav>
+        <v-list-item-group mandatory color="warning">
+          <div v-for="(nav, i) in $options.nav" :key="i">
+            <v-list-group
+              v-if="nav._roles.includes(user.role)"
+              :value="true"
+              no-action
+              sub-group
+            >
+              <template v-slot:activator>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <h2>{{ nav._name }}</h2>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </template>
+              <v-list-item
+                v-for="item in nav.children"
+                :key="item._name"
+                link
+                @click="$router.push({ path: item.to })"
+              >
+                <v-list-item-icon>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item._name }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider></v-divider>
+            </v-list-group>
+          </div>
+        </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
   </v-card>
@@ -82,7 +63,7 @@ export default {
     };
   },
   beforeMount() {
-    this.user = this.$store.getters.currentUser
+    this.user = this.$store.getters.currentUser;
   },
 };
 </script>

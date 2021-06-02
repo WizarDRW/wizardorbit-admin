@@ -1,24 +1,28 @@
 <template>
-  <tiptap-vuetify
-    v-model="_content.val"
-    placeholder="Yazınız…"
-    :extensions="extensions"
-    :toolbar-attributes="{ color: 'black' }"
-  >
-    <template #toolbar-after>
-      <div class="delete-btn">
-        <v-btn
-          @click="
-            () => {
-              $emit('delete_item');
-            }
-          "
-          icon
-          ><v-icon>mdi-delete-variant</v-icon></v-btn
-        >
-      </div>
-    </template>
-  </tiptap-vuetify>
+  <div>
+    <slot v-bind:extensions="extensions">
+      <tiptap-vuetify
+        v-model="_content.val"
+        placeholder="Yazınız…"
+        :extensions="extensions"
+        :toolbar-attributes="{ color: 'black' }"
+      >
+        <template #toolbar-after>
+          <div class="delete-btn">
+            <v-btn
+              @click="
+                () => {
+                  $emit('delete_item');
+                }
+              "
+              icon
+              ><v-icon>mdi-delete-variant</v-icon></v-btn
+            >
+          </div>
+        </template>
+      </tiptap-vuetify>
+    </slot>
+  </div>
 </template>
 
 <script>
@@ -48,6 +52,9 @@ export default {
   props: {
     _content: {
       type: Object,
+      default: () => {
+        return { val: "" };
+      },
     },
   },
   data() {

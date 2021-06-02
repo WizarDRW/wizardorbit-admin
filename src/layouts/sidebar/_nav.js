@@ -1,7 +1,7 @@
 export default [
     {
         _name: "Kullanıcı Menüsü",
-        _id: 10022,
+        _roles: ["Client", "Admin", "SuperUser"],
         children: [
             {
                 _name: "Panel",
@@ -9,8 +9,8 @@ export default [
                 icon: "mdi-view-dashboard-variant"
             },
             {
-                _name: "Blog",
-                to: "/blog",
+                _name: "Bölümler",
+                to: "/chapter",
                 icon: "mdi-post"
             },
             {
@@ -20,23 +20,23 @@ export default [
             },
             {
                 _name: "Forum",
-                to: "/form",
+                to: "/forum",
                 icon: "mdi-head-question-outline"
             },
             {
                 _name: "Kütüphanem",
-                to: "/mylibrary",
+                to: "/library",
                 icon: "mdi-bookmark-multiple-outline"
             }
         ]
     },
     {
         _name: "Yönetici Menüsü",
-        _id: 10023,
+        _roles: ["Admin", "SuperUser"],
         children: [
             {
-                _name: "Blog",
-                to: "/admin/blog",
+                _name: "Bölümler",
+                to: "/admin/chapter",
                 icon: "mdi-text-box-check"
             },
             {
@@ -46,19 +46,34 @@ export default [
             },
             {
                 _name: "Forum",
-                to: "/admin/form",
+                to: "/admin/forum",
                 icon: "mdi-tooltip-check"
             }
         ]
     },
     {
         _name: "Süper Kullanıcı",
-        _id: 10024,
+        _roles: ["SuperUser"],
         children: [
             {
                 _name: "Kullanıcılar",
-                to: "/users",
+                to: "/superuser/users",
                 icon: "mdi-account-group"
+            },
+            {
+                _name: "Bölüm Seçenekleri",
+                to: "/superuser/category/chapter-categories",
+                icon: "mdi-select-group"
+            },
+            {
+                _name: "Haber Seçenekleri",
+                to: "/superuser/category/news-categories",
+                icon: "mdi-select-group"
+            },
+            {
+                _name: "Forum Seçenekleri",
+                to: "/superuser/category/forum-categories",
+                icon: "mdi-select-group"
             }
         ]
     }
