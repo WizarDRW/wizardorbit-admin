@@ -10,7 +10,7 @@
                 v-bind="attrs"
                 v-on="on"
                 color="green"
-                @click="$router.push({ path: '/new-user' })"
+                @click="$router.push({ name: 'UserCreate' })"
               >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
@@ -22,7 +22,7 @@
     </sub-header>
     <v-data-table
       :headers="headers"
-      :items="data"
+      :items="users"
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
@@ -34,13 +34,32 @@
       <template #[`item.create_date`]="{ item }">
         {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
       </template>
+      <template #[`item.role`]="{ item }">
+        {{
+          item.role == "SuperUser"
+            ? "Süper Kullanıcı"
+            : item.role == "Admin"
+            ? "Yetkili"
+            : "Kullanıcı"
+        }}
+      </template>
       <template #[`item.status`]="{ item }">
         <div
           :style="`${
-            item.status == true ? 'color: #18f523;' : 'color: #f5141b'
+            item.status == 'Online'
+              ? 'color: #18f523;'
+              : item.status == 'Offline'
+              ? 'color: #7a7a7a'
+              : 'color: #f5141b'
           }`"
         >
-          {{ item.status == true ? "Aktif" : "Bloklandı" }}
+          {{
+            item.status == "Online"
+              ? "Çevrimiçi"
+              : item.status == "Offline"
+              ? "Çevrimdışı"
+              : "Bloklandı"
+          }}
         </div>
       </template>
       <template #[`item.actions`]="{ item }">
@@ -48,6 +67,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               small
+              color="primary"
               v-bind="attrs"
               v-on="on"
               class="mr-2"
@@ -58,28 +78,44 @@
           </template>
           <span>Düzenle</span>
         </v-tooltip>
-        <v-tooltip color="error" bottom>
+        <v-tooltip
+          :color="item.status == 'Online' ? `error` : `success`"
+          bottom
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               small
+              :color="item.status == 'Online' ? `error` : `success`"
               v-bind="attrs"
               v-on="on"
               class="mr-2"
-              @click="editItem(item)"
+              @click="block(item)"
             >
-              mdi-account-cancel-outline
+              {{
+                item.status == "Online"
+                  ? "mdi-account-cancel-outline"
+                  : "mdi-account-outline"
+              }}
             </v-icon>
           </template>
-          <span>Bloke koy!</span>
+          <span>{{
+            item.status == "Online" ? "Bloke koy!" : "Blokeyi kaldır!"
+          }}</span>
         </v-tooltip>
-        <v-tooltip color="warning" bottom>
+        <v-tooltip v-if="item.type == 'internal'" color="warning" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               small
+              color="warning"
               v-bind="attrs"
               v-on="on"
               class="mr-2"
-              @click="editItem(item)"
+              @click="
+                () => {
+                  resetpassword.status = true;
+                  resetpassword.id = item._id;
+                }
+              "
             >
               mdi-lock-reset
             </v-icon>
@@ -90,10 +126,16 @@
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               small
+              color="error"
               v-bind="attrs"
               v-on="on"
               class="mr-2"
-              @click="editItem(item)"
+              @click="
+                () => {
+                  deleteDialog = true;
+                  deleteRes.id = item._id;
+                }
+              "
             >
               mdi-delete-outline
             </v-icon>
@@ -105,15 +147,44 @@
     <div class="text-center pt-2">
       <v-pagination v-model="page" :length="pageCount"></v-pagination>
     </div>
+    <delete
+      :_dialog="deleteDialog"
+      :_id="deleteRes.id"
+      v-on:handleDelete="handleDelete"
+      v-on:dialogClose="(value) => (deleteDialog = value)"
+    ></delete>
+    <reset-password
+      :_dialog="resetpassword.status"
+      :_id="resetpassword.id"
+      v-on:dialogClose="(val) => (resetpassword.status = val)"
+    ></reset-password>
+    <div class="alerts">
+      <delete-alert
+        v-for="(item, index) in deleteItems"
+        :key="index"
+        v-model="item.status"
+        :_msg="item.msg"
+        :_type="item.type"
+        :_second="item.second"
+        :_alert="item.status"
+        :_func="item.func"
+        :_itemid="item.itemid"
+        v-on:deleted="deleteProcess"
+      ></delete-alert>
+    </div>
   </v-container>
 </template>
 
 
 <script>
-import ApiService from "@/core/services/api.service.js";
-import SubHeader from "@/layouts/header/SubHeader";
-import { USER } from "@/core/services/store/user.module";
+import { USER, GET_API_USERS } from "@/core/services/store/user.module";
 export default {
+  components: {
+    SubHeader: () => import(`@/layouts/header/SubHeader`),
+    Delete: () => import(`@/components/Delete.vue`),
+    DeleteAlert: () => import(`@/components/Alert/DeleteAlert.vue`),
+    ResetPassword: () => import(`./components/ResetPassword.vue`),
+  },
   data() {
     return {
       page: 1,
@@ -138,6 +209,11 @@ export default {
           sortable: true,
         },
         {
+          text: "Yetki",
+          value: "role",
+          sortable: true,
+        },
+        {
           text: "Durum",
           value: "status",
           sortable: true,
@@ -145,27 +221,64 @@ export default {
         {
           text: "",
           value: "actions",
+          align: "end",
           sortable: false,
         },
       ],
-      data: [],
+      users: [],
       loading: true,
+      deleteDialog: false,
+      deleteRes: {
+        name: "",
+        id: "",
+        index: -1,
+      },
+      deleteItems: [],
+      resetpassword: {
+        status: false,
+        id: null,
+      },
     };
   },
-  components: {
-    SubHeader,
-  },
   async created() {
-    this.loading = true;
-    this.data = (await ApiService.get(`users`)).data;
-    this.loading = this.data ? false : true;
+    if (!this.$store.getters.getUsers)
+      await this.$store.dispatch(GET_API_USERS);
+    this.users = this.$store.getters.getUsers;
+    this.loading = this.users ? false : true;
   },
   methods: {
     editItem(item) {
       this.$store.dispatch(USER, item);
       this.$router.push({
-        path: `/superuser/users/edit/${item._id}`,
+        name: `UserEdit`,
+        params: { id: item._id },
       });
+    },
+    block(item) {
+      var data = {
+        _id: item._id,
+        status: item.status == "Online" ? "Block" : "Online",
+      };
+      this.$store.dispatch("putApiUserStatus", data);
+    },
+    handleDelete(itemid) {
+      this.deleteItems.push({
+        msg: "Silinme işlemi için",
+        type: "error",
+        second: 100,
+        func: "deleteApiUser",
+        status: true,
+        itemid: itemid,
+      });
+    },
+    deleteProcess() {
+      var count = 0;
+      this.deleteItems.forEach((el) => {
+        count += el.status ? 0 : 1;
+      });
+      if (count == this.deleteItems.length) {
+        this.deleteItems = [];
+      }
     },
   },
 };

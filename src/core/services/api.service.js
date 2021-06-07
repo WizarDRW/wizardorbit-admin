@@ -9,8 +9,8 @@ import JwtService from "@/core/services/jwt.service";
 const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
-    //Vue.axios.defaults.baseURL = "https://sihirbaz.herokuapp.com/api/v1/";
-    Vue.axios.defaults.baseURL = "http://localhost:3000/api/v1/";
+    Vue.axios.defaults.baseURL = "https://sihirbaz.herokuapp.com/api/v1/";
+    //Vue.axios.defaults.baseURL = "http://localhost:3000/api/v1/";
   },
 
   /**

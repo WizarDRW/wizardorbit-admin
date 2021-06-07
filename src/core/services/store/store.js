@@ -9,6 +9,7 @@ import option from "./option.module";
 import category from "./category.module";
 import library from "./library.module";
 import log from "./log.module";
+import user from './user.module'
 
 Vue.use(Vuex);
 
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     option,
     library,
     category,
-    log
+    log,
+    user
   }
 });

@@ -5,6 +5,7 @@ import JwtService from "@/core/services/jwt.service";
 export const VERIFY_AUTH = "verifyAuth";
 export const CURRENT_USER = "currentUser";
 export const LOGIN = "login";
+export const GOOGLE_AUTH = "googleAuth"
 export const LOGOUT = "logout";
 export const REGISTER = "register";
 export const UPDATE_USER = "updateUser";
@@ -12,7 +13,7 @@ export const UPDATE_USER = "updateUser";
 // mutation types
 const SET_CURRENT_USER = "setCurrentUser";
 const PURGE_AUTH = "logOut";
-const SET_AUTH = "setUser";
+const SET_AUTH = "setAuth";
 const SET_ERROR = "setError";
 
 const state = {
@@ -52,12 +53,25 @@ const actions = {
         });
     });
   },
+  [GOOGLE_AUTH]: (context, data) => {
+    return new Promise((resolve, reject) => {
+      ApiService.post(`users/google_token/`, data)
+        .then(({ data }) => {
+          context.commit(SET_AUTH, data);
+          resolve(data);
+        })
+        .catch(({ response }) => {
+          context.commit(SET_ERROR, response.data.errors);
+          reject(response);
+        });
+    });
+  },
   [LOGOUT](context) {
     context.commit(PURGE_AUTH);
   },
   [REGISTER](context, credentials) {
     return new Promise((resolve, reject) => {
-      ApiService.post("users", { user: credentials })
+      ApiService.post("users/register", { user: credentials })
         .then(({ data }) => {
           context.commit(SET_AUTH, data);
           resolve(data);

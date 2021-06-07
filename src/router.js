@@ -21,6 +21,14 @@ export default new Router({
   linkExactActiveClass: "active",
   routes: [
     {
+      path: '/authenticate/google',
+      name: 'googleauth',
+      beforeEnter: async (to, from, next) => {
+        store.dispatch('googleAuth', to.query)
+        isAuth(to, from, next)
+      }
+    },
+    {
       path: '/auth/:token',
       name: 'auth',
       beforeEnter: async (to, from, next) => {
@@ -342,8 +350,31 @@ export default new Router({
               path: '/superuser/users',
               name: 'Users',
               meta: { description: 'Kullanıcılar' },
+              redirect: { name: "UsersList" },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/superuser/users/List.vue")
+              component: {
+                render(c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: "/superuser/users/list",
+                  name: "UsersList",
+                  meta: { description: 'Kullanıcılar Listesi' },
+                  component: () => import("@/views/superuser/users/List.vue")
+                },
+                {
+                  path: "/superuser/users/create",
+                  name: "UserCreate",
+                  meta: { description: 'Kullanıcı Oluştur' },
+                  component: () => import("@/views/superuser/users/Create")
+                },
+                {
+                  path: "/superuser/users/edit/:id",
+                  name: "UserEdit",
+                  meta: { description: 'Kullanıcı Düzenle' },
+                  component: () => import("./views/superuser/users/Edit")
+                },
+              ],
             },
             {
               path: '/superuser/category/chapter-categories',
