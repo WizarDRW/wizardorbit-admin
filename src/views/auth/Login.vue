@@ -68,6 +68,9 @@ export default {
       },
     };
   },
+  created() {
+    console.log(this.$cookies.get('connect.sid'));
+  },
   methods: {
     login() {
       const email = this.user.email;

@@ -84,8 +84,7 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.removeItem("id_token");
-      this.$router.push({ path: "/login" });
+      this.$store.dispatch('logout');
     },
     firstChar(x) {
       return {

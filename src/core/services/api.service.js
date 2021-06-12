@@ -10,16 +10,14 @@ const ApiService = {
   init() {
     Vue.use(VueAxios, axios);
     Vue.axios.defaults.baseURL = "https://sihirbaz.herokuapp.com/api/v1/";
-    //Vue.axios.defaults.baseURL = "http://localhost:3000/api/v1/";
+    // Vue.axios.defaults.baseURL = "http://localhost:3000/api/v1/";
   },
 
   /**
    * Set the default HTTP request headers
    */
   setHeader() {
-    Vue.axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${JwtService.getToken()}`;
+    Vue.axios.defaults.withCredentials = true;
   },
   query(resource, params) {
     return Vue.axios.get(resource, params).catch(error => {

@@ -8,6 +8,7 @@ import VueMoment from 'vue-moment'
 import Katex from 'vue-katex-auto-render'
 import { VueMasonryPlugin } from "vue-masonry";
 import { CURRENT_USER } from "./core/services/store/auth.module";
+import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false
 
@@ -15,6 +16,7 @@ ApiService.init();
 const moment = require('moment')
 require('moment/locale/tr')
 Vue.use(VueMasonryPlugin);
+Vue.use(VueCookies)
 Vue.use(VueMoment, {
   moment
 });

@@ -5,10 +5,12 @@ import store from '@/core/services/store/store'
 Vue.use(Router);
 
 async function isAuth(to, from, next) {
-  store.dispatch('verifyAuth');
-  if (!store.getters['isAuthenticated']) {
-    next({ name: 'Login' });
-  } else next();
+  // store.dispatch('verifyAuth');
+  // console.log(store.getters['isAuthenticated']);
+  // if (!store.getters['isAuthenticated']) {
+  //   window.location = "/login"
+  // } else next();
+  next();
 }
 async function isForbidden(role, to, from, next) {
   var currentUser = store.getters.currentUser;
@@ -41,11 +43,6 @@ export default new Router({
           } else next({ name: "Login" })
         }
       },
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: () => import("./views/auth/Login.vue"),
     },
     {
       path: '/',

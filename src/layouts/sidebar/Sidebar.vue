@@ -2,7 +2,7 @@
   <v-card>
     <v-navigation-drawer app v-model="_hide">
       <img
-        src="https://sihirbazblog.com/assets/sihirbazblog_logo.png"
+        src="@/assets/logo.png"
         width="75%"
         alt=""
       />
