@@ -84,6 +84,9 @@
 <script>
 import { NEWS, GET_API_USER_THE_NEWS } from "@/core/services/store/news.module";
 export default {
+  components: {
+    SubHeader: () => import("@/layouts/header/SubHeader"),
+  },
   data() {
     return {
       page: 1,
@@ -113,9 +116,6 @@ export default {
       data: [],
       loading: true,
     };
-  },
-  components: {
-    SubHeader: () => import("@/layouts/header/SubHeader"),
   },
   async created() {
     if (!this.$store.getters.getUserTheNews) await this.$store.dispatch(GET_API_USER_THE_NEWS, this.$store.getters.currentUser._id);

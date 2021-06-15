@@ -10,6 +10,8 @@ import category from "./category.module";
 import library from "./library.module";
 import log from "./log.module";
 import user from './user.module'
+import useroption from './useroption.module'
+import theme from './theme.module'
 
 Vue.use(Vuex);
 
@@ -26,6 +28,8 @@ export default new Vuex.Store({
     library,
     category,
     log,
-    user
+    user,
+    useroption,
+    theme
   }
 });

@@ -7,11 +7,11 @@ module.exports = {
       "Access-Control-Allow-Credentials": true,
       "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
       "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Origin": "https://sihirbaz.herokuapp.com"
+      "Access-Control-Allow-Origin": "http://localhost:3000"
     },
     proxy: {
       '/service': {
-        target: 'https://sihirbaz.herokuapp.com',
+        target: 'http://localhost:3000',
         ws: true,
         changeOrigin: true,
         pathRewrite: {
@@ -19,7 +19,7 @@ module.exports = {
         }
       },
       '/login': {
-        target: 'https://sihirbaz.herokuapp.com/api/v1/auth/login',
+        target: 'http://localhost:3000/api/v1/auth/login',
         ws: true,
         changeOrigin: true,
         pathRewrite: {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar color="accent-4" dense dark app>
+    <v-app-bar color="accent-4" dark app>
       <v-app-bar-nav-icon @click.stop="$emit('hide')"></v-app-bar-nav-icon>
 
       <v-toolbar-title> {{ user.first_name }}</v-toolbar-title>
@@ -48,6 +48,11 @@
               Değiştir</v-list-item-title
             >
           </v-list-item>
+          <v-list-item @click="$router.push({ name: 'UserOption' })">
+            <v-list-item-title
+              ><v-icon>mdi-cog-outline</v-icon>&nbsp; Seçenekler</v-list-item-title
+            >
+          </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="logout()">
             <v-list-item-title
@@ -84,7 +89,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('logout');
+      this.$store.dispatch("logout");
     },
     firstChar(x) {
       return {

@@ -99,7 +99,6 @@ const actions = {
       })
       .catch(() => {
         context.commit(PURGE_AUTH);
-        window.location = '/login';
       });
   },
   [UPDATE_USER](context, payload) {
@@ -114,8 +113,8 @@ const actions = {
       return data;
     });
   },
-  async [CURRENT_USER](context) {
-    return await new Promise((resolve, reject) => {
+  [CURRENT_USER](context) {
+    return new Promise((resolve, reject) => {
       ApiService.setHeader();
       ApiService.get("users/whoami")
         .then(({ data }) => {

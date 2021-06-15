@@ -205,6 +205,12 @@ export default new Router({
           ]
         },
         {
+          path: '/useroptions',
+          name: 'UserOption',
+          meta: { description: 'Kullanıcı Seçenekleri' },
+          component: () => import(`./views/profile/ProfileOption.vue`)
+        },
+        {
           path: '/admin/chapter',
           name: 'AdminChapter',
           meta: { description: 'Bölüm(Yönetici)' },
