@@ -9,7 +9,7 @@
                 icon
                 v-bind="attrs"
                 v-on="on"
-                color="green"
+                color="success"
                 @click="$router.push({ name: 'AdminNewChapter' })"
               >
                 <v-icon>mdi-plus</v-icon>
@@ -29,6 +29,7 @@
       loading-text="Yükleniyor..."
       hide-default-footer
       class="elevation-1"
+      style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
       <template #[`item.user_data`]="{ item }">
@@ -41,13 +42,13 @@
       </template>
       <template #[`item.status`]="{ item }">
         <div
-          :style="`${
+          :class="`${
             item.status == 'Published'
-              ? 'color: #18f523;'
+              ? 'success--text'
               : item.status == 'ModeratorAcceping'
-              ? 'color: #fcba03;'
+              ? 'warning--text'
               : item.status == 'Block'
-              ? 'color: #f5141b'
+              ? 'error--text'
               : ''
           }`"
         >
@@ -159,7 +160,7 @@
 <script>
 import {
   CHAPTER,
-  GET_API_CHAPTERS
+  GET_API_CHAPTERS,
 } from "@/core/services/store/chapter.module";
 export default {
   name: "AdminChapterList",

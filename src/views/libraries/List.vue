@@ -35,7 +35,7 @@
         sm="6"
         md="3"
       >
-        <v-card>
+        <v-card color="v_card_background">
           <v-carousel
             vertical
             touchless

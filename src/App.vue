@@ -21,6 +21,9 @@ export default {
 </script>
 
 <style>
+#app {
+  background-color: var(--v-background-base);
+}
 .v-treeview-node__prepend {
   width: 100% !important;
 }

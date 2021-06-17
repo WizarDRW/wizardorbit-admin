@@ -1,18 +1,37 @@
 <template>
   <div>
-    <v-app-bar color="accent-4" dark app>
-      <v-app-bar-nav-icon @click.stop="$emit('hide')"></v-app-bar-nav-icon>
+    <v-app-bar color="header" app>
+      <v-app-bar-nav-icon
+        color="header_theme_btn"
+        @click.stop="$emit('hide')"
+      ></v-app-bar-nav-icon>
 
-      <v-toolbar-title> {{ user.first_name }}</v-toolbar-title>
+      <v-toolbar-title class="header_theme_btn--text">
+        {{ user.first_name }}</v-toolbar-title
+      >
 
       <v-spacer></v-spacer>
 
+      <div class="theme-mode navbar-nav">
+        <v-btn
+          name="themeBtn"
+          color="header_theme_btn"
+          @click="themeMode(!$store.getters.getTheme.isDark)"
+          icon
+        >
+          <v-icon>{{
+            $store.getters.getTheme.isDark
+              ? "mdi-weather-sunny"
+              : "mdi-weather-night"
+          }}</v-icon>
+        </v-btn>
+      </div>
       <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
+        <v-icon color="header_theme_btn">mdi-heart</v-icon>
       </v-btn>
 
       <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
+        <v-icon color="header_theme_btn">mdi-magnify</v-icon>
       </v-btn>
 
       <v-menu left bottom offset-y>
@@ -50,7 +69,8 @@
           </v-list-item>
           <v-list-item @click="$router.push({ name: 'UserOption' })">
             <v-list-item-title
-              ><v-icon>mdi-cog-outline</v-icon>&nbsp; Seçenekler</v-list-item-title
+              ><v-icon>mdi-cog-outline</v-icon>&nbsp;
+              Seçenekler</v-list-item-title
             >
           </v-list-item>
           <v-divider></v-divider>
@@ -96,6 +116,10 @@ export default {
         ...x,
         first_char: x.first_name + "" + x.last_name,
       };
+    },
+    /** Theme Mode */
+    themeMode(status) {
+      this.$store.dispatch("changeUserTheme", status);
     },
   },
 };

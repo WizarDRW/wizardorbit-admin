@@ -29,6 +29,7 @@
       loading-text="Yükleniyor..."
       hide-default-footer
       class="elevation-1"
+      style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
       <template #[`item.user_data`]="{ item }">

@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
+import store from "@/core/services/store/store"
+import themes from "../core/themes"
 // import plugin
 import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
 // don't forget to import CSS styles
@@ -20,5 +22,14 @@ Vue.use(TiptapVuetifyPlugin, {
 })
 
 export default new Vuetify({
-    theme: { dark: true }
+  theme: {
+    options: {
+      customProperties: true
+    },
+    themes: {
+      light: themes.light,
+      dark: themes.dark
+    },
+    dark: store.getters.getTheme.isDark
+  }
 });
