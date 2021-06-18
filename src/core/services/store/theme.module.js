@@ -12,7 +12,7 @@ export default {
         themes: null
     },
     getters: {
-        getTheme: (state) => state.theme,
+        getApiTheme: (state) => state.theme,
         getThemes: (state) => state.themes
     },
     actions: {

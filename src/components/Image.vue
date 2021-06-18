@@ -19,18 +19,30 @@
         <v-img
           :aspect-ratio="16 / 9"
           :src="_content.val"
+          lazy-src="https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW"
           :max-width="`${_content.width}px`"
         >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+              Yükleniyor...
+            </v-row>
+          </template>
           <v-fade-transition mode="out-in">
             <div v-if="hover" class="">
               <v-btn
                 @click="
                   () => {
+                    $store.dispatch('deleteApiMultipart', _content.val);
                     image = null;
                     _content.val = null;
                   }
                 "
                 color="red"
+                tile
                 >Sil</v-btn
               >
             </div>
@@ -75,7 +87,7 @@ export default {
     async onFilePicked(e) {
       var formData = new FormData();
       formData.append("photo", e);
-      var id = await this.$store.dispatch("postApiMultipartChapter", formData);
+      var id = await this.$store.dispatch("postApiMultipart", formData);
       this._content.val = `https://drive.google.com/uc?export=view&id=${id}`;
     },
   },
