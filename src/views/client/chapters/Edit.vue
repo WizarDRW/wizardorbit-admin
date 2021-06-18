@@ -129,17 +129,32 @@
           <v-img
             :aspect-ratio="16 / 9"
             :src="chapter.image_path"
+            :lazy-src="chapter.image_path ? chapter.image_path:'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'"
             max-width="500px"
           >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+                Yükleniyor...
+              </v-row>
+            </template>
             <v-fade-transition mode="out-in">
               <div v-if="hover" class="">
                 <v-btn
                   @click="
                     () => {
+                      $store.dispatch(
+                        'deleteApiMultipart',
+                        chapter.image_path
+                      );
                       chapter.image_path = null;
                     }
                   "
                   color="red"
+                  tile
                   >Sil</v-btn
                 >
               </div>
@@ -400,20 +415,11 @@ export default {
       this.loading = false;
       this.$router.push({ path: "/chapter" });
     },
-    onFilePicked() {
-      const files = this.chapter.image_path;
-      if (files !== undefined) {
-        if (files.name.lastIndexOf(".") <= 0) {
-          return;
-        }
-        const fr = new FileReader();
-        fr.readAsDataURL(files);
-        fr.addEventListener("load", () => {
-          this.chapter.image_path = fr.result;
-        });
-      } else {
-        this.chapter.image_path = "";
-      }
+    async onFilePicked(e) {
+      var formData = new FormData();
+      formData.append("photo", e);
+      var id = await this.$store.dispatch("postApiMultipart", formData);
+      this.chapter.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
   },
 };

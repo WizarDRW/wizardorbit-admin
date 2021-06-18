@@ -143,13 +143,27 @@
           <v-img
             :aspect-ratio="16 / 9"
             :src="news.image_path"
+            :lazy-src="news.image_path ? news.image_path:'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'"
             max-width="500px"
           >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+                Yükleniyor...
+              </v-row>
+            </template>
             <v-fade-transition mode="out-in">
               <div v-if="hover" class="">
                 <v-btn
                   @click="
                     () => {
+                      $store.dispatch(
+                        'deleteApiMultipart',
+                        chapter.image_path
+                      );
                       news.image_path = null;
                     }
                   "
@@ -413,20 +427,11 @@ export default {
       this.loading = false;
       this.$router.push({ name: "AdminNews" });
     },
-    onFilePicked() {
-      const files = this.news.image_path;
-      if (files !== undefined) {
-        if (files.name.lastIndexOf(".") <= 0) {
-          return;
-        }
-        const fr = new FileReader();
-        fr.readAsDataURL(files);
-        fr.addEventListener("load", () => {
-          this.news.image_path = fr.result;
-        });
-      } else {
-        this.news.image_path = "";
-      }
+    async onFilePicked(e) {
+      var formData = new FormData();
+      formData.append("photo", e);
+      var id = await this.$store.dispatch("postApiMultipart", formData);
+      this.news.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
   },
 };

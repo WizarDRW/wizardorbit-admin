@@ -12,6 +12,7 @@ import log from "./log.module";
 import user from './user.module'
 import useroption from './useroption.module'
 import theme from './theme.module'
+import multipart from './multipart.module'
 
 Vue.use(Vuex);
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     log,
     user,
     useroption,
-    theme
+    theme,
+    multipart
   }
 });

@@ -3,7 +3,12 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-btn :disabled="loading" icon color="red" @click="$router.push({ name: 'News' })">
+          <v-btn
+            :disabled="loading"
+            icon
+            color="red"
+            @click="$router.push({ name: 'News' })"
+          >
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-btn :loading="loading" icon color="green" @click="handleSave()">
@@ -126,16 +131,35 @@
           prepend-icon="mdi-subtitles-outline"
         ></v-text-field>
         <v-hover v-if="news.image_path" v-slot="{ hover }">
-          <v-img :aspect-ratio="16 / 9" :src="news.image_path" max-width="500px">
+          <v-img
+            :aspect-ratio="16 / 9"
+            :src="news.image_path"
+            lazy-src="https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW"
+            max-width="500px"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+                Yükleniyor...
+              </v-row>
+            </template>
             <v-fade-transition mode="out-in">
               <div v-if="hover" class="">
                 <v-btn
                   @click="
                     () => {
+                      $store.dispatch(
+                        'deleteApiMultipart',
+                        chapter.image_path
+                      );
                       news.image_path = null;
                     }
                   "
                   color="red"
+                  tile
                   >Sil</v-btn
                 >
               </div>
@@ -171,21 +195,25 @@
                 </div>
                 <!-- Code editor içeriği -->
                 <div v-if="item.type == 'code'">
-                  <code-block :_code="item"
+                  <code-block
+                    :_code="item"
                     v-on:delete_item="
                       () => {
                         news.descriptions.splice(index, 1);
                       }
-                    "></code-block>
+                    "
+                  ></code-block>
                 </div>
                 <!-- Tiptap içeriği -->
                 <div v-if="item.type == 'tiptap'">
-                  <tiptap :_content="item" 
+                  <tiptap
+                    :_content="item"
                     v-on:delete_item="
                       () => {
                         news.descriptions.splice(index, 1);
                       }
-                    "></tiptap>
+                    "
+                  ></tiptap>
                 </div>
                 <!-- Image içeriği -->
                 <div v-if="item.type == 'image'">
@@ -358,7 +386,7 @@ export default {
         user_id: this.$store.getters.currentUser._id,
         status: "ModeratorAcceping",
         descriptions: [],
-        tags: []
+        tags: [],
       },
       loading: true,
       categories: [],
@@ -401,20 +429,11 @@ export default {
       this.loading = false;
       this.$router.push({ name: "News" });
     },
-    onFilePicked() {
-      const files = this.news.image_path;
-      if (files !== undefined) {
-        if (files.name.lastIndexOf(".") <= 0) {
-          return;
-        }
-        const fr = new FileReader();
-        fr.readAsDataURL(files);
-        fr.addEventListener("load", () => {
-          this.news.image_path = fr.result;
-        });
-      } else {
-        this.news.image_path = "";
-      }
+    async onFilePicked(e) {
+      var formData = new FormData();
+      formData.append("photo", e);
+      var id = await this.$store.dispatch("postApiMultipart", formData);
+      this.news.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
   },
 };

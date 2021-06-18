@@ -49,6 +49,16 @@ const ApiService = {
     return Vue.axios.post(`${resource}`, params);
   },
 
+  /**
+   * Set the POST HTTP request
+   * @param resource
+   * @param params
+   * @returns {*}
+   */
+  async postMultipart(resource, params) {
+    return Vue.axios.post(`${resource}`, params, { headers: { 'Content-Type': 'multipart/form-data' } });
+  },
+
   async postImage(resource, params) {
     return Vue.axios.post(`${resource}`, params, { "Authorization": `Bearer ${JwtService.getToken()}`, "Content-Type": "multipart/form-data" });
   },

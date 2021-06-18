@@ -10,10 +10,12 @@ export const GET_API_USER_THE_NEWS = "getApiUserTheNews"
 export const IMPRESSION_NEWS_UPDATE = "impressionNewsUpdate"
 // action types -> NEWS<POST>
 export const POST_API_NEWS = "postApiNews"
+export const POST_API_MULTIPART_NEWS = "postApiMultipartNews";
 // action types -> NEWS<PUT>
 export const PUT_API_NEWS = "putApiNews"
 // action types -> NEWS<DELETE>
 export const DELETE_API_NEWS = "deleteApiNews"
+export const DELETE_API_IMAGE_NEWS = "deleteApiImageNews"
 
 // mutation types -> NEWS<SET>
 const SET_NEWS = "setNews"
@@ -42,7 +44,7 @@ export default {
         [USER_THE_NEWS]: (context, payload) => context.commit(SET_USER_THE_NEWS, payload),
         [GET_API_USER_THE_NEWS]: async (context, id) => context.commit(SET_USER_THE_NEWS, (await ApiService.get(`news/userid/${id}`)).data),
         [IMPRESSION_NEWS_UPDATE]: async (context, data) => {
-            ApiService.put("/blogs/updateImpression/id/" + data.id, {
+            ApiService.put("/news/updateImpression/id/" + data.id, {
                 ip_address: data.ip,
                 blog_id: data.id,
             });
@@ -51,6 +53,10 @@ export default {
             var response = (await ApiService.post(`news/`, payload))
             context.commit(SET_POST_NEWS, response.data)
             return response.status;
+        },
+        [POST_API_MULTIPART_NEWS]: async (context, payload) => {
+          var result = (await ApiService.postMultipart(`news/upload/`, payload))
+          return result.data;
         },
         [PUT_API_NEWS]: async (context, payload) => {
             var response = (await ApiService.put(`news/id/${payload._id}`, payload))
@@ -61,6 +67,10 @@ export default {
             var response = (await ApiService.delete(`news/id/${id}`))
             context.commit(SET_DELETE_NEWS, response.data)
             return response.status;
+        },
+        [DELETE_API_IMAGE_NEWS]: async (context, url) => {
+          var result = (await ApiService.post(`news/delete-image`, { url: url }))
+          return result.data;
         },
     },
     mutations: {

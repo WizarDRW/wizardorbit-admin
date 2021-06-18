@@ -145,15 +145,34 @@
           prepend-icon="mdi-subtitles-outline"
         ></v-text-field>
         <v-hover v-if="chapter.image_path" v-slot="{ hover }">
-          <v-img :aspect-ratio="16 / 9" :src="chapter.image_path" max-width="500px">
+          <v-img
+            :aspect-ratio="16 / 9"
+            :src="chapter.image_path"
+            lazy-src="https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW"
+            max-width="500px"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+                Yükleniyor...
+              </v-row>
+            </template>
             <v-fade-transition mode="out-in">
               <div v-if="hover" class="">
                 <v-btn
                   @click="
                     () => {
+                      $store.dispatch(
+                        'deleteApiMultipart',
+                        chapter.image_path
+                      );
                       chapter.image_path = null;
                     }
                   "
+                  tile
                   color="red"
                   >Sil</v-btn
                 >
@@ -369,7 +388,7 @@ export default {
         image_path: null,
         tags: [],
         status: "ModeratorAcceping",
-        user_id: ObjectID(this.$store.getters.currentUser._id)
+        user_id: ObjectID(this.$store.getters.currentUser._id),
       },
       loading: false,
       categories: [],
@@ -385,6 +404,7 @@ export default {
         func: "postApiChapter",
         item: {},
       },
+      imageFile: null,
     };
   },
   async created() {
@@ -411,21 +431,11 @@ export default {
     async save() {
       this.$router.push({ name: "AdminChapter" });
     },
-    onFilePicked() {
-      const files = this.chapter.image_path;
-      if (files !== undefined) {
-        if (files.name.lastIndexOf(".") <= 0) {
-          return;
-        }
-        const fr = new FileReader();
-        fr.readAsDataURL(files);
-        fr.addEventListener("load", () => {
-          this.chapter.image_path = fr.result;
-          //this.imageFile = files; // this is an image file that can be sent to server...
-        });
-      } else {
-        this.chapter.image_path = "";
-      }
+    async onFilePicked(e) {
+      var formData = new FormData();
+      formData.append("photo", e);
+      var id = await this.$store.dispatch("postApiMultipart", formData);
+      this.chapter.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
   },
 };

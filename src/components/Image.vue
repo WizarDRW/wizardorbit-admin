@@ -50,6 +50,7 @@
       append-outer-icon="mdi-delete-variant"
       @click:append-outer="
         () => {
+          $store.dispatch('deleteApiMultipart', _content.val);
           $emit('delete_item');
         }
       "
@@ -71,21 +72,11 @@ export default {
     };
   },
   methods: {
-    onFilePicked() {
-      const files = this.image;
-      if (files !== undefined) {
-        var imageName = files.name;
-        if (imageName.lastIndexOf(".") <= 0) {
-          return;
-        }
-        const fr = new FileReader();
-        fr.readAsDataURL(files);
-        fr.addEventListener("load", () => {
-          this._content.val = fr.result;
-        });
-      } else {
-        this._content.val = "";
-      }
+    async onFilePicked(e) {
+      var formData = new FormData();
+      formData.append("photo", e);
+      var id = await this.$store.dispatch("postApiMultipartChapter", formData);
+      this._content.val = `https://drive.google.com/uc?export=view&id=${id}`;
     },
   },
 };
