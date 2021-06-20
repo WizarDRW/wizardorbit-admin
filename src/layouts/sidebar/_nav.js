@@ -27,6 +27,11 @@ export default [
                 _name: "Kütüphanem",
                 to: "/library",
                 icon: "mdi-bookmark-multiple-outline"
+            },
+            {
+                _name: "Taslaklar",
+                to: "/drafts",
+                icon: "mdi-file"
             }
         ]
     },

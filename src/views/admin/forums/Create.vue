@@ -201,6 +201,7 @@ export default {
         func: "postApiForum",
         item: {},
       },
+      isSave: false
     };
   },
   async created() {
@@ -221,8 +222,19 @@ export default {
     },
     async save() {
       this.loading = false;
+      this.isSave = true;
       this.$router.push({ name: "AdminForum" });
     },
+  },
+  destroyed() {
+    if (!this.isSave) {
+      var data = {
+        user_id: ObjectID(this.$store.getters.currentUser._id),
+        type: 'forum',
+        data: this.forum
+      }
+      this.$store.dispatch('postApiDraft', data);
+    }
   },
 };
 </script>

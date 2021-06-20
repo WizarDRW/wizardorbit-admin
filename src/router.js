@@ -5,13 +5,9 @@ import store from '@/core/services/store/store'
 Vue.use(Router);
 
 async function isAuth(to, from, next) {
-  // store.dispatch('verifyAuth');
-  // console.log(store.getters['isAuthenticated']);
-  // if (!store.getters['isAuthenticated']) {
-  //   window.location = "/login"
-  // } else next();
   next();
 }
+
 async function isForbidden(role, to, from, next) {
   var currentUser = store.getters.currentUser;
   if (currentUser.role == role || currentUser.role == 'SuperUser') {
@@ -69,7 +65,7 @@ export default new Router({
           },
           children: [
             {
-              path: '/new-chapter',
+              path: '/new-chapter/:draftid?',
               name: 'NewChapter',
               meta: { description: 'Yeni Bölüm' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
@@ -102,7 +98,7 @@ export default new Router({
           },
           children: [
             {
-              path: '/new-news',
+              path: '/new-news/:draftid?',
               name: 'NewNews',
               meta: { description: 'Yeni' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
@@ -135,7 +131,7 @@ export default new Router({
           },
           children: [
             {
-              path: '/new-forum',
+              path: '/new-forum/:draftid?',
               name: 'NewForum',
               meta: { description: 'Yeni' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
@@ -203,6 +199,12 @@ export default new Router({
               component: () => import("./views/libraries/Edit.vue")
             },
           ]
+        },
+        {
+          path: '/drafts',
+          name: 'Draft',
+          meta: { description: 'Teslaklar' },
+          component: () => import(`./views/drafts/List.vue`)
         },
         {
           path: '/useroptions',

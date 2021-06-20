@@ -362,6 +362,7 @@
 
 <script>
 import { GET_API_CATEGORY } from "@/core/services/store/category.module";
+var ObjectID = require("bson-objectid");
 export default {
   name: "NewsCreate",
   components: {
@@ -383,7 +384,7 @@ export default {
       selectionType: "leaf",
       selection: [],
       news: {
-        user_id: this.$store.getters.currentUser._id,
+        user_id: ObjectID(this.$store.getters.currentUser._id),
         status: "ModeratorAcceping",
         descriptions: [],
         tags: [],
@@ -401,6 +402,8 @@ export default {
         func: "postApiNews",
         item: {},
       },
+      isSave: false,
+      draftid: null,
     };
   },
   async created() {
@@ -411,6 +414,12 @@ export default {
       await this.$store.dispatch(GET_API_CATEGORY, "news");
     this.categories = this.$store.getters.getCategory.categories;
     if (this.categories) this.loading = false;
+
+    if (this.$route.params.draftid) {
+      this.draftid = this.$route.params.draftid;
+      if (!this.$store.getters.getDraft) await this.$store.dispatch('getApiDraft', this.$route.params.draftid)
+      this.news = this.$store.getters.getDraft.data
+    }
   },
   methods: {
     reset() {
@@ -426,6 +435,7 @@ export default {
       this.add.status = true;
     },
     async save() {
+      if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);
       this.loading = false;
       this.$router.push({ name: "News" });
     },
@@ -435,6 +445,19 @@ export default {
       var id = await this.$store.dispatch("postApiMultipart", formData);
       this.news.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
+  },
+  destroyed() {
+    if (this.draftid) {
+      this.$store.getters.getDraft.data = this.chapter;
+      this.$store.dispatch("putApiDraft", this.$store.getters.getDraft);
+    } else if (!this.isSave) {
+      var data = {
+        user_id: ObjectID(this.$store.getters.currentUser._id),
+        type: 'news',
+        data: this.news
+      }
+      this.$store.dispatch('postApiDraft', data);
+    }
   },
 };
 </script>

@@ -364,6 +364,7 @@
 
 <script>
 import { GET_API_CATEGORY } from "@/core/services/store/category.module";
+var ObjectID = require("bson-objectid");
 export default {
   name: "admin-news-create",
   components: {
@@ -383,7 +384,7 @@ export default {
       selectionType: "leaf",
       selection: [],
       news: {
-        user_id: this.$store.getters.currentUser._id,
+        user_id: ObjectID(this.$store.getters.currentUser._id),
         status: "ModeratorAcceping",
         descriptions: [],
         tags: []
@@ -401,6 +402,7 @@ export default {
         func: "postApiNews",
         item: {},
       },
+      isSave: false
     };
   },
   async created() {
@@ -427,6 +429,7 @@ export default {
     },
     async save() {
       this.loading = false;
+      this.isSave = true;
       this.$router.push({ name: "AdminNews" });
     },
     async onFilePicked(e) {
@@ -435,6 +438,16 @@ export default {
       var id = await this.$store.dispatch("postApiMultipart", formData);
       this.news.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
+  },
+  destroyed() {
+    if (!this.isSave) {
+      var data = {
+        user_id: ObjectID(this.$store.getters.currentUser._id),
+        type: 'news',
+        data: this.news
+      }
+      this.$store.dispatch('postApiDraft', data);
+    }
   },
 };
 </script>

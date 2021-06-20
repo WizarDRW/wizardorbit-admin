@@ -151,10 +151,7 @@
                 <v-btn
                   @click="
                     () => {
-                      $store.dispatch(
-                        'deleteApiMultipart',
-                        chapter.image_path
-                      );
+                      $store.dispatch('deleteApiMultipart', chapter.image_path);
                       chapter.image_path = null;
                     }
                   "
@@ -389,6 +386,8 @@ export default {
         func: "postApiChapter",
         item: {},
       },
+      isSave: false,
+      draftid: null,
     };
   },
   async created() {
@@ -398,6 +397,13 @@ export default {
     )
       await this.$store.dispatch(GET_API_CATEGORY, "chapter");
     this.categories = this.$store.getters.getCategory.categories;
+
+    if (this.$route.params.draftid) {
+      this.draftid = this.$route.params.draftid;
+      if (!this.$store.getters.getDraft)
+        await this.$store.dispatch("getApiDraft", this.draftid);
+      this.chapter = this.$store.getters.getDraft.data;
+    }
   },
   methods: {
     reset() {
@@ -413,6 +419,8 @@ export default {
       this.add.status = true;
     },
     async save() {
+      if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);
+      this.isSave = true;
       this.$router.push({ path: "/chapter" });
     },
     async onFilePicked(e) {
@@ -421,6 +429,19 @@ export default {
       var id = await this.$store.dispatch("postApiMultipart", formData);
       this.chapter.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
+  },
+  destroyed() {
+    if (this.draftid) {
+      this.$store.getters.getDraft.data = this.chapter;
+      this.$store.dispatch("putApiDraft", this.$store.getters.getDraft);
+    } else if (!this.isSave) {
+      var data = {
+        user_id: ObjectID(this.$store.getters.currentUser._id),
+        type: "chapter",
+        data: this.chapter,
+      };
+      this.$store.dispatch("postApiDraft", data);
+    }
   },
 };
 </script>

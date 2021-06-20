@@ -3,6 +3,7 @@ import Vuex from "vuex";
 
 import auth from "./auth.module";
 import chapter from "./chapter.module";
+import draft from "./draft.module";
 import forum from "./forum.module";
 import news from "./news.module";
 import option from "./option.module";
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     user,
     useroption,
     theme,
-    multipart
+    multipart,
+    draft
   }
 });

@@ -165,7 +165,7 @@ export default {
     Tiptap: () => import("@/components/Tiptap"),
     AddAlert: () => import("@/components/Alert/AddAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
-    TiptapVuetify
+    TiptapVuetify,
   },
   data() {
     return {
@@ -175,7 +175,7 @@ export default {
         connects: [],
         comments: [],
         tags: [],
-        showcases: []
+        showcases: [],
       },
       selectionType: "leaf",
       selection: [],
@@ -189,6 +189,8 @@ export default {
         func: "postApiForum",
         item: {},
       },
+      isSave: false,
+      draftid: null,
     };
   },
   async created() {
@@ -199,6 +201,13 @@ export default {
       await this.$store.dispatch(GET_API_CATEGORY, "forum");
     this.categories = this.$store.getters.getCategory.categories;
     if (this.categories) this.loading = false;
+
+    if (this.$route.params.draftid) {
+      this.draftid = this.$route.params.draftid;
+      if (!this.$store.getters.getDraft)
+        await this.$store.dispatch("getApiDraft", this.$route.params.draftid);
+      this.forum = this.$store.getters.getDraft.data;
+    }
   },
   methods: {
     handleSave() {
@@ -208,8 +217,23 @@ export default {
       this.add.status = true;
     },
     async save() {
+      if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);
+      this.isSave = true;
       this.$router.push({ name: "Forum" });
     },
+  },
+  destroyed() {
+    if (this.draftid) {
+      this.$store.getters.getDraft.data = this.chapter;
+      this.$store.dispatch("putApiDraft", this.$store.getters.getDraft);
+    } else if (!this.isSave) {
+      var data = {
+        user_id: ObjectID(this.$store.getters.currentUser._id),
+        type: "forum",
+        data: this.forum,
+      };
+      this.$store.dispatch("postApiDraft", data);
+    }
   },
 };
 </script>

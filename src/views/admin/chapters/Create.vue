@@ -405,6 +405,7 @@ export default {
         item: {},
       },
       imageFile: null,
+      isSave: false
     };
   },
   async created() {
@@ -429,6 +430,7 @@ export default {
       this.add.status = true;
     },
     async save() {
+      this.isSave = true;
       this.$router.push({ name: "AdminChapter" });
     },
     async onFilePicked(e) {
@@ -437,6 +439,16 @@ export default {
       var id = await this.$store.dispatch("postApiMultipart", formData);
       this.chapter.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
+  },
+  destroyed() {
+    if (!this.isSave) {
+      var data = {
+        user_id: ObjectID(this.$store.getters.currentUser._id),
+        type: 'chapter',
+        data: this.chapter
+      }
+      this.$store.dispatch('postApiDraft', data);
+    }
   },
 };
 </script>
