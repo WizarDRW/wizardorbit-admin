@@ -3,7 +3,12 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-btn :disabled="loading" icon color="red" @click="$router.push({ name: 'AdminNews' })">
+          <v-btn
+            :disabled="loading"
+            icon
+            color="red"
+            @click="$router.push({ name: 'AdminNews' })"
+          >
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-btn :loading="loading" icon color="green" @click="handleSave()">
@@ -143,7 +148,11 @@
           <v-img
             :aspect-ratio="16 / 9"
             :src="news.image_path"
-            :lazy-src="news.image_path ? news.image_path:'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'"
+            :lazy-src="
+              news.image_path
+                ? news.image_path
+                : 'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'
+            "
             max-width="500px"
           >
             <template v-slot:placeholder>
@@ -160,10 +169,8 @@
                 <v-btn
                   @click="
                     () => {
-                      $store.dispatch(
-                        'deleteApiMultipart',
-                        chapter.image_path
-                      );
+                      if (news.image_path != defaultImage)
+                        $store.dispatch('deleteApiMultipart', news.image_path);
                       news.image_path = null;
                     }
                   "
@@ -393,6 +400,8 @@ export default {
         func: "putApiNews",
         item: {},
       },
+      isSave: false,
+      defaultImage: null,
     };
   },
   async mounted() {
@@ -409,6 +418,7 @@ export default {
       if (!this.$store.getters.getNews)
         await this.$store.dispatch(GET_API_NEWS, this.$route.params.id);
       this.news = this.$store.getters.getNews;
+      this.defaultImage = this.news.image_path;
       this.loading = false;
     },
     reset() {
@@ -424,6 +434,7 @@ export default {
       this.update.status = true;
     },
     async save() {
+      this.isSave = true;
       this.loading = false;
       this.$router.push({ name: "AdminNews" });
     },
@@ -433,6 +444,14 @@ export default {
       var id = await this.$store.dispatch("postApiMultipart", formData);
       this.news.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
+  },
+  destroyed() {
+    if (!this.isSave) {
+      if (this.news.image_path != this.defaultImage)
+        this.$store.dispatch("deleteApiMultipart", this.news.image_path);
+      this.news.image_path = this.defaultImage;
+    } else if (this.news.image_path != this.defaultImage)
+      this.$store.dispatch("deleteApiMultipart", this.defaultImage);
   },
 };
 </script>

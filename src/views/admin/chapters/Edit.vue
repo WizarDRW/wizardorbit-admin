@@ -148,7 +148,11 @@
           <v-img
             :aspect-ratio="16 / 9"
             :src="chapter.image_path"
-            :lazy-src="chapter.image_path ? chapter.image_path:'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'"
+            :lazy-src="
+              chapter.image_path
+                ? chapter.image_path
+                : 'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'
+            "
             max-width="500px"
           >
             <template v-slot:placeholder>
@@ -165,10 +169,11 @@
                 <v-btn
                   @click="
                     () => {
-                      $store.dispatch(
-                        'deleteApiMultipart',
-                        chapter.image_path
-                      );
+                      if (chapter.image_path != defaultImage)
+                        $store.dispatch(
+                          'deleteApiMultipart',
+                          chapter.image_path
+                        );
                       chapter.image_path = null;
                     }
                   "
@@ -403,6 +408,8 @@ export default {
         func: "putApiChapter",
         item: {},
       },
+      isSave: false,
+      defaultImage: null,
     };
   },
   async mounted() {
@@ -419,6 +426,7 @@ export default {
       if (!this.$store.getters.getChapter)
         await this.$store.dispatch(GET_API_CHAPTER, this.$route.params.id);
       this.chapter = this.$store.getters.getChapter;
+      this.defaultImage = this.chapter.image_path;
       this.loading = false;
     },
     reset() {
@@ -434,6 +442,7 @@ export default {
       this.update.status = true;
     },
     async save() {
+      this.isSave = true;
       this.loading = false;
       this.$router.push({ name: "AdminChapter" });
     },
@@ -443,6 +452,14 @@ export default {
       var id = await this.$store.dispatch("postApiMultipart", formData);
       this.chapter.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
+  },
+  destroyed() {
+    if (!this.isSave) {
+      if (this.chapter.image_path != this.defaultImage)
+        this.$store.dispatch("deleteApiMultipart", this.chapter.image_path);
+      this.chapter.image_path = this.defaultImage;
+    } else if (this.chapter.image_path != this.defaultImage)
+      this.$store.dispatch("deleteApiMultipart", this.defaultImage);
   },
 };
 </script>

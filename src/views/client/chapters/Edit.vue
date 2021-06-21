@@ -3,7 +3,12 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-btn :disabled="loading" icon color="red" @click="$router.push({ name: 'Chapter' })">
+          <v-btn
+            :disabled="loading"
+            icon
+            color="red"
+            @click="$router.push({ name: 'Chapter' })"
+          >
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
           <v-btn :loading="loading" icon color="green" @click="handleSave()">
@@ -129,7 +134,11 @@
           <v-img
             :aspect-ratio="16 / 9"
             :src="chapter.image_path"
-            :lazy-src="chapter.image_path ? chapter.image_path:'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'"
+            :lazy-src="
+              chapter.image_path
+                ? chapter.image_path
+                : 'https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW'
+            "
             max-width="500px"
           >
             <template v-slot:placeholder>
@@ -146,10 +155,11 @@
                 <v-btn
                   @click="
                     () => {
-                      $store.dispatch(
-                        'deleteApiMultipart',
-                        chapter.image_path
-                      );
+                      if (chapter.image_path != defaultImage)
+                        $store.dispatch(
+                          'deleteApiMultipart',
+                          chapter.image_path
+                        );
                       chapter.image_path = null;
                     }
                   "
@@ -366,7 +376,7 @@ export default {
       selectionType: "leaf",
       selection: [],
       chapter: {
-        status: "ModeratorAcceping"
+        status: "ModeratorAcceping",
       },
       loading: true,
       categories: [],
@@ -381,6 +391,8 @@ export default {
         func: "putApiChapter",
         item: {},
       },
+      isSave: false,
+      defaultImage: null,
     };
   },
   async mounted() {
@@ -397,6 +409,7 @@ export default {
       if (!this.$store.getters.getChapter)
         await this.$store.dispatch(GET_API_CHAPTER, this.$route.params.id);
       this.chapter = this.$store.getters.getChapter;
+      this.defaultImage = this.chapter.image_path;
       this.loading = false;
     },
     reset() {
@@ -412,6 +425,7 @@ export default {
       this.update.status = true;
     },
     async save() {
+      this.isSave = true;
       this.loading = false;
       this.$router.push({ path: "/chapter" });
     },
@@ -421,6 +435,14 @@ export default {
       var id = await this.$store.dispatch("postApiMultipart", formData);
       this.chapter.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
+  },
+  destroyed() {
+    if (!this.isSave) {
+      if (this.chapter.image_path != this.defaultImage)
+        this.$store.dispatch("deleteApiMultipart", this.chapter.image_path);
+      this.chapter.image_path = this.defaultImage;
+    } else if (this.chapter.image_path != this.defaultImage)
+      this.$store.dispatch("deleteApiMultipart", this.defaultImage);
   },
 };
 </script>
