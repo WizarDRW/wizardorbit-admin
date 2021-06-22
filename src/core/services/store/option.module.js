@@ -1,6 +1,5 @@
 import Vuetify from '@/plugins/vuetify';
 import themes from '../../themes'
-import { dark, light } from '../../themes'
 
 // action types
 export const THEME = "theme";
@@ -45,9 +44,9 @@ export default {
                 Vuetify.framework.theme.themes.light = context.state.user_theme.light
         else
             if (status)
-                Vuetify.framework.theme.themes.dark = { ...Vuetify.framework.theme.themes.dark, ...dark };
+                Vuetify.framework.theme.themes.dark = { ...Vuetify.framework.theme.themes.dark, ...themes.dark };
             else
-                Vuetify.framework.theme.themes.light = { ...Vuetify.framework.theme.themes.light, ...light };
+                Vuetify.framework.theme.themes.light = { ...Vuetify.framework.theme.themes.light, ...themes.light };
     },
   },
   mutations: {

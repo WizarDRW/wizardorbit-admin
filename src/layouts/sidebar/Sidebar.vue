@@ -28,10 +28,27 @@
               @click="$router.push({ path: item.to })"
             >
               <v-list-item-icon>
-                <v-icon color="sidebar_list_menu_color">{{ item.icon }}</v-icon>
+                <v-badge
+                  v-if="item.to == '/drafts' && $store.getters.getUserDrafts.length > 0"
+                  bordered
+                  left
+                  color="error"
+                  :content="$store.getters.getUserDrafts.length"
+                  overlap
+                >
+                  <v-icon color="sidebar_list_menu_color">{{
+                    item.icon
+                  }}</v-icon>
+                </v-badge>
+
+                <v-icon v-else color="sidebar_list_menu_color">{{
+                  item.icon
+                }}</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title class="sidebar_list_menu_color--text">{{ item._name }}</v-list-item-title>
+                <v-list-item-title class="sidebar_list_menu_color--text">{{
+                  item._name
+                }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
@@ -56,10 +73,16 @@ export default {
   data() {
     return {
       user: {},
+      draftCount: 0,
     };
   },
-  beforeMount() {
+  async beforeMount() {
     this.user = this.$store.getters.currentUser;
+    if (!this.$store.getters.getUserDrafts)
+      await this.$store.dispatch(
+        "getApiUserDrafts",
+        this.$store.getters.currentUser._id
+      );
   },
 };
 </script>

@@ -36,7 +36,8 @@
               <v-btn
                 @click="
                   () => {
-                    $store.dispatch('deleteApiMultipart', _content.val);
+                    if (_content.val != _defaultImage.val)
+                      $store.dispatch('deleteApiMultipart', _content.val);
                     image = null;
                     _content.val = null;
                   }
@@ -74,6 +75,10 @@
 export default {
   props: {
     _content: {
+      type: Object,
+      default: () => {},
+    },
+    _defaultImage: {
       type: Object,
       default: () => {},
     },

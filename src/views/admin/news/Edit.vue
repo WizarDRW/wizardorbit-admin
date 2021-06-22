@@ -233,6 +233,11 @@
                 <div v-if="item.type == 'image'">
                   <image-block
                     :_content="item"
+                    :_defaultImage="
+                      defaultImages[
+                        defaultImages.findIndex((x) => x.i == index)
+                      ]
+                    "
                     v-on:delete_item="
                       () => {
                         news.descriptions.splice(index, 1);
@@ -402,6 +407,7 @@ export default {
       },
       isSave: false,
       defaultImage: null,
+      defaultImages: null,
     };
   },
   async mounted() {
@@ -419,6 +425,15 @@ export default {
         await this.$store.dispatch(GET_API_NEWS, this.$route.params.id);
       this.news = this.$store.getters.getNews;
       this.defaultImage = this.news.image_path;
+      this.defaultImages = this.news.descriptions
+        .map((x, i) => {
+          if (x.type == "image")
+            return {
+              i: i,
+              val: x.val,
+            };
+        })
+        .filter((x) => x != undefined);
       this.loading = false;
     },
     reset() {
@@ -449,9 +464,23 @@ export default {
     if (!this.isSave) {
       if (this.news.image_path != this.defaultImage)
         this.$store.dispatch("deleteApiMultipart", this.news.image_path);
+      this.defaultImages.forEach((el) => {
+        if (el.val != this.news.descriptions[el.i].val)
+          this.$store.dispatch(
+            "deleteApiMultipart",
+            this.news.descriptions[el.i].val
+          );
+        this.news.descriptions[el.i].val = el.val;
+      });
       this.news.image_path = this.defaultImage;
-    } else if (this.news.image_path != this.defaultImage)
-      this.$store.dispatch("deleteApiMultipart", this.defaultImage);
+    } else {
+      if (this.news.image_path != this.defaultImage)
+        this.$store.dispatch("deleteApiMultipart", this.defaultImage);
+      this.defaultImages.forEach((el) => {
+        if (el.val != this.chapter.descriptions[el.i].val)
+          this.$store.dispatch("deleteApiMultipart", el.val);
+      });
+    }
   },
 };
 </script>
