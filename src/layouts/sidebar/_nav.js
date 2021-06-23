@@ -79,7 +79,17 @@ export default [
                 _name: "Forum Seçenekleri",
                 to: "/superuser/category/forum-categories",
                 icon: "mdi-select-group"
-            }
+            },
+            {
+                _name: "Sürüm Notu",
+                to: "/superuser/release",
+                icon: "mdi-alert-decagram"
+            },
+            {
+                _name: "Hakkında",
+                to: "/superuser/about",
+                icon: "mdi-information-outline"
+            },
         ]
     }
 ]

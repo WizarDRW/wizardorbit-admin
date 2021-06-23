@@ -10,10 +10,11 @@ import option from "./option.module";
 import category from "./category.module";
 import library from "./library.module";
 import log from "./log.module";
-import user from './user.module'
-import useroption from './useroption.module'
-import theme from './theme.module'
-import multipart from './multipart.module'
+import user from './user.module';
+import useroption from './useroption.module';
+import theme from './theme.module';
+import multipart from './multipart.module';
+import about from './about.module';
 
 Vue.use(Vuex);
 
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     useroption,
     theme,
     multipart,
-    draft
+    draft,
+    about
   }
 });

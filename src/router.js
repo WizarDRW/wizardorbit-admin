@@ -382,6 +382,66 @@ export default new Router({
               ],
             },
             {
+              path: '/superuser/about',
+              name: 'About',
+              meta: { description: 'Hakkında' },
+              redirect: { name: "AboutList" },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: {
+                render(c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: "/superuser/about/list",
+                  name: "AboutList",
+                  meta: { description: 'Hakkında Listesi' },
+                  component: () => import("@/views/superuser/about/List.vue")
+                },
+                {
+                  path: "/superuser/about/create",
+                  name: "AboutCreate",
+                  meta: { description: 'Hakkında Oluştur' },
+                  component: () => import("@/views/superuser/about/Create")
+                },
+                {
+                  path: "/superuser/about/edit/:id",
+                  name: "AboutEdit",
+                  meta: { description: 'Hakkında Düzenle' },
+                  component: () => import("./views/superuser/about/Edit")
+                },
+              ],
+            },
+            {
+              path: '/superuser/release',
+              name: 'Release',
+              meta: { description: 'Sürüm Notu' },
+              redirect: { name: "ReleaseList" },
+              beforeEnter: (to, from, next) => isAuth(to, from, next),
+              component: {
+                render(c) { return c('router-view') }
+              },
+              children: [
+                {
+                  path: "/superuser/release/list",
+                  name: "ReleaseList",
+                  meta: { description: 'Sürüm Notu Listesi' },
+                  component: () => import("@/views/superuser/release/List.vue")
+                },
+                {
+                  path: "/superuser/release/create",
+                  name: "ReleaseCreate",
+                  meta: { description: 'Sürüm Notu Oluştur' },
+                  component: () => import("@/views/superuser/release/Create")
+                },
+                {
+                  path: "/superuser/release/edit/:id",
+                  name: "ReleaseEdit",
+                  meta: { description: 'Sürüm Notu Düzenle' },
+                  component: () => import("./views/superuser/release/Edit")
+                },
+              ],
+            },
+            {
               path: '/superuser/category/chapter-categories',
               name: 'SuperUserChapterCategories',
               meta: { description: 'Bölüm Kategorileri' },
