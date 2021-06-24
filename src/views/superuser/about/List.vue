@@ -10,7 +10,7 @@
                 v-bind="attrs"
                 v-on="on"
                 color="green"
-                @click="$router.push({ name: 'UserCreate' })"
+                @click="$router.push({ name: 'AboutCreate' })"
               >
                 <v-icon>mdi-plus</v-icon>
               </v-btn>

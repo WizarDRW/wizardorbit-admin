@@ -27,7 +27,7 @@
       ></v-text-field>
       <!-- İçerikler -->
       <div v-for="(item, index) in release.descriptions" :key="index">
-        <!-- Markdown üst butonları -->
+        <!-- Card Title -->
         <div v-if="item.type == 'v-card-title'">
           <v-text-field
             v-model="item.val"
@@ -41,6 +41,36 @@
             "
             solo
           ></v-text-field>
+        </div>
+        <!-- Card Subtitle -->
+        <div v-if="item.type == 'v-card-subtitle'">
+          <v-text-field
+            v-model="item.val"
+            label="Kart Destek Başlığı"
+            placeholder="Kart Destek Başlığı"
+            append-icon="mdi-delete-variant"
+            @click:append="
+              () => {
+                release.descriptions.splice(index, 1);
+              }
+            "
+            solo
+          ></v-text-field>
+        </div>
+        <!-- Card Text -->
+        <div v-if="item.type == 'v-card-text'">
+          <v-textarea
+            v-model="item.val"
+            label="Kart Metni"
+            placeholder="Kart Metni"
+            append-icon="mdi-delete-variant"
+            @click:append="
+              () => {
+                release.descriptions.splice(index, 1);
+              }
+            "
+            solo
+          ></v-textarea>
         </div>
         <!-- Markdown üst butonları -->
         <div v-if="item.type == 'markdown'">
