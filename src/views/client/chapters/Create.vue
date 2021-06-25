@@ -3,17 +3,52 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-btn
-            :disabled="loading"
-            icon
-            color="red"
-            @click="$router.push({ path: '/chapter' })"
-          >
-            <v-icon>mdi-arrow-left</v-icon>
-          </v-btn>
-          <v-btn :loading="loading" icon color="green" @click="handleSave()">
-            <v-icon>mdi-content-save-outline</v-icon>
-          </v-btn>
+          <v-tooltip color="error" bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                :disabled="loading"
+                icon
+                color="error"
+                @click="$router.push({ path: '/chapter' })"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-arrow-left</v-icon>
+              </v-btn>
+            </template>
+            <span>Geri</span>
+          </v-tooltip>
+          <!-- Önizleme -->
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                small
+                fab
+                icon
+                @click="preview = !preview"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon> mdi-eye </v-icon>
+              </v-btn>
+            </template>
+            <span>Önizle</span>
+          </v-tooltip>
+          <v-tooltip color="success" bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                :loading="loading"
+                icon
+                color="success"
+                @click="handleSave()"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-icon>mdi-content-save-outline</v-icon>
+              </v-btn>
+            </template>
+            <span>Kaydet</span>
+          </v-tooltip>
         </div>
       </template>
     </sub-header>
@@ -178,6 +213,51 @@
             <v-col>
               <!-- İçerikler -->
               <div v-for="(item, index) in chapter.descriptions" :key="index">
+                <!-- Card Title -->
+                <div v-if="item.type == 'v-card-title'">
+                  <v-text-field
+                    v-model="item.val"
+                    label="Kart Başlığı"
+                    placeholder="Kart Başlığı"
+                    append-icon="mdi-delete-variant"
+                    @click:append="
+                      () => {
+                        chapter.descriptions.splice(index, 1);
+                      }
+                    "
+                    solo
+                  ></v-text-field>
+                </div>
+                <!-- Card Subtitle -->
+                <div v-if="item.type == 'v-card-subtitle'">
+                  <v-text-field
+                    v-model="item.val"
+                    label="Kart Destek Başlığı"
+                    placeholder="Kart Destek Başlığı"
+                    append-icon="mdi-delete-variant"
+                    @click:append="
+                      () => {
+                        chapter.descriptions.splice(index, 1);
+                      }
+                    "
+                    solo
+                  ></v-text-field>
+                </div>
+                <!-- Card Text -->
+                <div v-if="item.type == 'v-card-text'">
+                  <v-textarea
+                    v-model="item.val"
+                    label="Kart Metni"
+                    placeholder="Kart Metni"
+                    append-icon="mdi-delete-variant"
+                    @click:append="
+                      () => {
+                        chapter.descriptions.splice(index, 1);
+                      }
+                    "
+                    solo
+                  ></v-textarea>
+                </div>
                 <!-- Markdown üst butonları -->
                 <div v-if="item.type == 'markdown'">
                   <markdown
@@ -235,89 +315,6 @@
                   }
                 "
               ></preview>
-              <!-- Content ekleme butonu -->
-              <v-menu offset-y>
-                <template v-slot:activator="{ on: menu, attrs }">
-                  <v-tooltip top>
-                    <template v-slot:activator="{ on: tooltip }">
-                      <v-btn icon v-bind="attrs" v-on="{ ...tooltip, ...menu }">
-                        <v-icon> mdi-plus </v-icon>
-                      </v-btn>
-                    </template>
-                    <span>Ekle</span>
-                  </v-tooltip>
-                </template>
-                <v-list>
-                  <v-list-item link>
-                    <v-list-item-action
-                      @click="
-                        chapter.descriptions.push({
-                          sort: chapter.descriptions.length - 1,
-                          type: 'markdown',
-                          val: '',
-                        })
-                      "
-                    >
-                      Markdown
-                    </v-list-item-action>
-                  </v-list-item>
-                  <v-list-item link>
-                    <v-list-item-action
-                      @click="
-                        chapter.descriptions.push({
-                          sort: chapter.descriptions.length - 1,
-                          type: 'code',
-                          lang: { id: 'js', name: 'javascript' },
-                          val: '',
-                        })
-                      "
-                    >
-                      Code
-                    </v-list-item-action>
-                  </v-list-item>
-                  <v-list-item link>
-                    <v-list-item-action
-                      @click="
-                        chapter.descriptions.push({
-                          sort: chapter.descriptions.length - 1,
-                          type: 'tiptap',
-                          val: '',
-                        })
-                      "
-                    >
-                      Tiptap
-                    </v-list-item-action>
-                  </v-list-item>
-                  <v-list-item link>
-                    <v-list-item-action
-                      @click="
-                        chapter.descriptions.push({
-                          sort: chapter.descriptions.length - 1,
-                          type: 'image',
-                          val: '',
-                          width: 500,
-                        })
-                      "
-                    >
-                      Image
-                    </v-list-item-action>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-              <!-- Önizleme -->
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    icon
-                    @click="preview = !preview"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <v-icon> mdi-eye </v-icon>
-                  </v-btn>
-                </template>
-                <span>Önizle</span>
-              </v-tooltip>
             </v-col>
           </v-row>
         </div>
@@ -341,6 +338,16 @@
         v-on:added="save"
       ></add-alert>
     </div>
+    <!-- Content ekleme butonu -->
+    <speed-dial
+      :_bottom="true"
+      :_right="true"
+      _direction="top"
+      :_openOnHover="false"
+      _transition="slide-y-reverse-transition"
+      :_contents="chapter.descriptions"
+    >
+    </speed-dial>
   </v-container>
 </template>
 
@@ -358,6 +365,7 @@ export default {
     ImageBlock: () => import("@/components/Image"),
     AddAlert: () => import("@/components/Alert/AddAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
+    SpeedDial: () => import(`@/components/SpeedDial.vue`),
   },
   data() {
     return {

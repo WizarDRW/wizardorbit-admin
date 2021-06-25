@@ -19,7 +19,12 @@ const SET_ABOUT = "setAbout";
 const SET_ABOUTS = "setAbouts";
 const SET_RELEASE = "setRelease";
 const SET_RELEASES = "setReleases";
+const SET_POST_API_ABOUTS = "setPostApiAbouts";
 const SET_POST_API_RELEASES = "setPostApiReleases";
+const SET_PUT_API_ABOUTS = "setPutApiAbouts";
+const SET_PUT_API_RELEASES = "setPutApiReleases";
+const SET_DELETE_API_ABOUTS = "setDeleteApiAbouts";
+const SET_DELETE_API_RELEASES = "setDeleteApiReleases";
 
 export default {
     state: {
@@ -61,9 +66,34 @@ export default {
             context.commit(SET_RELEASES, response.data);
             return response.status;
         },
+        [POST_API_ABOUT]: async (context, payload) => {
+            var response = await ApiService.post(`abouts/`, payload);
+            context.commit(SET_POST_API_ABOUTS, response.data);
+            return response.status;
+        },
         [POST_API_RELEASE]: async (context, payload) => {
             var response = await ApiService.post(`abouts/`, payload);
             context.commit(SET_POST_API_RELEASES, response.data);
+            return response.status;
+        },
+        [PUT_API_ABOUT]: async (context, payload) => {
+            var response = await ApiService.put(`abouts/id/${payload._id}`, payload);
+            context.commit(SET_PUT_API_ABOUTS, response.data);
+            return response.status;
+        },
+        [PUT_API_RELEASE]: async (context, payload) => {
+            var response = await ApiService.put(`abouts/id/${payload._id}`, payload);
+            context.commit(SET_PUT_API_RELEASES, response.data);
+            return response.status;
+        },
+        [DELETE_API_ABOUT]: async (context, payload) => {
+            var response = await ApiService.put(`abouts/id/${payload}`);
+            context.commit(SET_DELETE_API_ABOUTS, response.data);
+            return response.status;
+        },
+        [DELETE_API_RELEASE]: async (context, payload) => {
+            var response = await ApiService.put(`abouts/id/${payload}`);
+            context.commit(SET_DELETE_API_RELEASES, response.data);
             return response.status;
         }
     },
@@ -80,6 +110,11 @@ export default {
         [SET_RELEASES]: (state, payload) => {
             state.releases = payload;
         },
+        [SET_POST_API_ABOUTS]: (state, payload) => state.abouts ? state.abouts.push(payload) : null,
         [SET_POST_API_RELEASES]: (state, payload) => state.releases ? state.releases.push(payload) : null,
+        [SET_PUT_API_ABOUTS]: (state, payload) => state.abouts ? state.abouts[state.abouts.findIndex(x=> x._id == payload._id)] = payload : null,
+        [SET_PUT_API_RELEASES]: (state, payload) => state.releases ? state.releases[state.releases.findIndex(x=> x._id == payload._id)] = payload : null,
+        [SET_DELETE_API_ABOUTS]: (state, payload) => state.abouts ? state.abouts.splice(state.abouts.findIndex(x=> x._id == payload), 1) : null,
+        [SET_DELETE_API_RELEASES]: (state, payload) => state.releases ? state.releases.splice(state.releases.findIndex(x=> x._id == payload), 1) : null,
     }
 }

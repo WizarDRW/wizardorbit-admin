@@ -14,48 +14,200 @@
         <v-icon v-else> mdi-plus </v-icon>
       </v-btn>
     </template>
-    <slot></slot>
+    <slot>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            fab
+            @click="
+              _contents.push({
+                sort: _contents.length - 1,
+                type: 'v-card-title',
+                val: '',
+              })
+            "
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-format-title</v-icon>
+          </v-btn>
+        </template>
+        <span>Kart Başlığı</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            fab
+            @click="
+              _contents.push({
+                sort: _contents.length - 1,
+                type: 'v-card-subtitle',
+                val: '',
+              })
+            "
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-subtitles</v-icon>
+          </v-btn>
+        </template>
+        <span>Kart Alt Başlığı</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            fab
+            @click="
+              _contents.push({
+                sort: _contents.length - 1,
+                type: 'v-card-text',
+                val: '',
+              })
+            "
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-text-box-multiple-outline</v-icon>
+          </v-btn>
+        </template>
+        <span>Metin Alanı</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            fab
+            @click="
+              _contents.push({
+                sort: _contents.length - 1,
+                type: 'markdown',
+                val: '',
+              })
+            "
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-language-markdown-outline</v-icon>
+          </v-btn>
+        </template>
+        <span>Markdown</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            fab
+            @click="
+              _contents.push({
+                sort: _contents.length - 1,
+                type: 'code',
+                lang: { id: 'js', name: 'javascript' },
+                val: '',
+              })
+            "
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-code-tags</v-icon>
+          </v-btn>
+        </template>
+        <span>Kod Bloğu</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            fab
+            @click="
+              _contents.push({
+                sort: _contents.length - 1,
+                type: 'tiptap',
+                val: '',
+              })
+            "
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-text-recognition</v-icon>
+          </v-btn>
+        </template>
+        <span>Metin Editörü</span>
+      </v-tooltip>
+      <v-tooltip left>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            small
+            fab
+            @click="
+              _contents.push({
+                sort: _contents.length - 1,
+                type: 'image',
+                val: '',
+                width: 500,
+              })
+            "
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-image-outline</v-icon>
+          </v-btn>
+        </template>
+        <span>Resim</span>
+      </v-tooltip>
+    </slot>
   </v-speed-dial>
 </template>
 
 <script>
 export default {
-    props: {
-        _top: {
-            type: Boolean,
-            default: false
-        },
-        _right: {
-            type: Boolean,
-            default: false
-        },
-        _bottom: {
-            type: Boolean,
-            default: false
-        },
-        _left: {
-            type: Boolean,
-            default: false
-        },
-        _direction: {
-            type: String,
-            default: "left"
-        },
-        _openOnHover: {
-            type: Boolean,
-            default: false
-        },
-        _transition: {
-            type: String,
-            default: "slide-y-reverse-transition"
-        }
+  props: {
+    _top: {
+      type: Boolean,
+      default: false,
     },
+    _right: {
+      type: Boolean,
+      default: false,
+    },
+    _bottom: {
+      type: Boolean,
+      default: false,
+    },
+    _left: {
+      type: Boolean,
+      default: false,
+    },
+    _direction: {
+      type: String,
+      default: "left",
+    },
+    _openOnHover: {
+      type: Boolean,
+      default: false,
+    },
+    _transition: {
+      type: String,
+      default: "slide-y-reverse-transition",
+    },
+    _contents: {
+      type: Array,
+      default: () => []
+    }
+  },
+  data() {
+    return {
+      fab: false,
+    };
+  },
 };
 </script>
 
 <style scoped>
 .v-speed-dial {
-  position: absolute;
+  position: fixed;
 }
 
 .v-btn--floating {

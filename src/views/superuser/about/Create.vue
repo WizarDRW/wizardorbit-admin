@@ -141,6 +141,7 @@
       ></add-alert>
     </div>
 
+
     <!-- Content ekleme butonu -->
     <speed-dial
       :_bottom="true"
@@ -148,100 +149,8 @@
       _direction="top"
       :_openOnHover="false"
       _transition="slide-y-reverse-transition"
+      :_contents="about.descriptions"
     >
-      <v-btn
-        small
-        fab
-        @click="
-          about.descriptions.push({
-            sort: about.descriptions.length - 1,
-            type: 'v-card-title',
-            val: '',
-          })
-        "
-      >
-        <v-icon>mdi-format-title</v-icon>
-      </v-btn>
-      <v-btn
-        small
-        fab
-        @click="
-          about.descriptions.push({
-            sort: about.descriptions.length - 1,
-            type: 'v-card-subtitle',
-            val: '',
-          })
-        "
-      >
-        <v-icon>mdi-subtitles</v-icon>
-      </v-btn>
-      <v-btn
-        small
-        fab
-        @click="
-          about.descriptions.push({
-            sort: about.descriptions.length - 1,
-            type: 'v-card-text',
-            val: '',
-          })
-        "
-      >
-        <v-icon>mdi-text-box-multiple-outline</v-icon>
-      </v-btn>
-      <v-btn
-        small
-        fab
-        @click="
-          about.descriptions.push({
-            sort: about.descriptions.length - 1,
-            type: 'markdown',
-            val: '',
-          })
-        "
-      >
-        <v-icon>mdi-language-markdown-outline</v-icon>
-      </v-btn>
-      <v-btn
-        small
-        fab
-        @click="
-          about.descriptions.push({
-            sort: about.descriptions.length - 1,
-            type: 'code',
-            lang: { id: 'js', name: 'javascript' },
-            val: '',
-          })
-        "
-      >
-        <v-icon>mdi-code-tags</v-icon>
-      </v-btn>
-      <v-btn
-        small
-        fab
-        @click="
-          about.descriptions.push({
-            sort: about.descriptions.length - 1,
-            type: 'tiptap',
-            val: '',
-          })
-        "
-      >
-        <v-icon>mdi-text-recognition</v-icon>
-      </v-btn>
-      <v-btn
-        small
-        fab
-        @click="
-          about.descriptions.push({
-            sort: about.descriptions.length - 1,
-            type: 'image',
-            val: '',
-            width: 500,
-          })
-        "
-      >
-        <v-icon>mdi-image-outline</v-icon>
-      </v-btn>
     </speed-dial>
   </v-container>
 </template>
