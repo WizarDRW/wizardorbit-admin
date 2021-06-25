@@ -17,6 +17,18 @@
         </div>
       </template>
     </sub-header>
+    <v-select
+      v-model="about.type"
+      :items="[
+        { label: 'Hikaye', id: 'ourhistory' },
+        { label: 'Plan', id: 'ourplan' },
+      ]"
+      label="Tip"
+      item-text="label"
+      item-value="id"
+      solo
+      hide-details
+    ></v-select>
     <v-container>
       <!-- İçerikler -->
       <div v-for="(item, index) in about.descriptions" :key="index">
@@ -33,6 +45,7 @@
               }
             "
             solo
+            hide-details
           ></v-text-field>
         </div>
         <!-- Card Subtitle -->
@@ -48,6 +61,7 @@
               }
             "
             solo
+            hide-details
           ></v-text-field>
         </div>
         <!-- Card Text -->
@@ -63,6 +77,7 @@
               }
             "
             solo
+            hide-details
           ></v-textarea>
         </div>
         <!-- Markdown üst butonları -->
@@ -111,108 +126,6 @@
         </div>
         <br />
       </div>
-
-      <!-- Content ekleme butonu -->
-      <v-menu offset-y>
-        <template v-slot:activator="{ on: menu, attrs }">
-          <v-tooltip top>
-            <template v-slot:activator="{ on: tooltip }">
-              <v-btn icon v-bind="attrs" v-on="{ ...tooltip, ...menu }">
-                <v-icon> mdi-plus </v-icon>
-              </v-btn>
-            </template>
-            <span>Ekle</span>
-          </v-tooltip>
-        </template>
-        <v-list>
-          <v-list-item
-            link
-            @click="
-              about.descriptions.push({
-                sort: about.descriptions.length - 1,
-                type: 'v-card-title',
-                val: '',
-              })
-            "
-          >
-            <v-list-item-action> Kart Başlığı </v-list-item-action>
-          </v-list-item>
-          <v-list-item
-            link
-            @click="
-              about.descriptions.push({
-                sort: about.descriptions.length - 1,
-                type: 'v-card-subtitle',
-                val: '',
-              })
-            "
-          >
-            <v-list-item-action> Kart Destek Başlığı </v-list-item-action>
-          </v-list-item>
-          <v-list-item
-            link
-            @click="
-              about.descriptions.push({
-                sort: about.descriptions.length - 1,
-                type: 'v-card-text',
-                val: '',
-              })
-            "
-          >
-            <v-list-item-action> Kart Metni </v-list-item-action>
-          </v-list-item>
-          <v-list-item
-            link
-            @click="
-              about.descriptions.push({
-                sort: about.descriptions.length - 1,
-                type: 'markdown',
-                val: '',
-              })
-            "
-          >
-            <v-list-item-action> Markdown </v-list-item-action>
-          </v-list-item>
-          <v-list-item
-            link
-            @click="
-              about.descriptions.push({
-                sort: about.descriptions.length - 1,
-                type: 'code',
-                lang: { id: 'js', name: 'javascript' },
-                val: '',
-              })
-            "
-          >
-            <v-list-item-action> Code </v-list-item-action>
-          </v-list-item>
-          <v-list-item
-            link
-            @click="
-              about.descriptions.push({
-                sort: about.descriptions.length - 1,
-                type: 'tiptap',
-                val: '',
-              })
-            "
-          >
-            <v-list-item-action> Tiptap </v-list-item-action>
-          </v-list-item>
-          <v-list-item
-            link
-            @click="
-              about.descriptions.push({
-                sort: about.descriptions.length - 1,
-                type: 'image',
-                val: '',
-                width: 500,
-              })
-            "
-          >
-            <v-list-item-action> Image </v-list-item-action>
-          </v-list-item>
-        </v-list>
-      </v-menu>
     </v-container>
     <div class="alerts">
       <update-alert
@@ -232,6 +145,109 @@
         v-on:added="save"
       ></update-alert>
     </div>
+
+    <!-- Content ekleme butonu -->
+    <speed-dial
+      :_bottom="true"
+      :_right="true"
+      _direction="top"
+      :_openOnHover="false"
+      _transition="slide-y-reverse-transition"
+    >
+      <v-btn
+        small
+        fab
+        @click="
+          about.descriptions.push({
+            sort: about.descriptions.length - 1,
+            type: 'v-card-title',
+            val: '',
+          })
+        "
+      >
+        <v-icon>mdi-format-title</v-icon>
+      </v-btn>
+      <v-btn
+        small
+        fab
+        @click="
+          about.descriptions.push({
+            sort: about.descriptions.length - 1,
+            type: 'v-card-subtitle',
+            val: '',
+          })
+        "
+      >
+        <v-icon>mdi-subtitles</v-icon>
+      </v-btn>
+      <v-btn
+        small
+        fab
+        @click="
+          about.descriptions.push({
+            sort: about.descriptions.length - 1,
+            type: 'v-card-text',
+            val: '',
+          })
+        "
+      >
+        <v-icon>mdi-text-box-multiple-outline</v-icon>
+      </v-btn>
+      <v-btn
+        small
+        fab
+        @click="
+          about.descriptions.push({
+            sort: about.descriptions.length - 1,
+            type: 'markdown',
+            val: '',
+          })
+        "
+      >
+        <v-icon>mdi-language-markdown-outline</v-icon>
+      </v-btn>
+      <v-btn
+        small
+        fab
+        @click="
+          about.descriptions.push({
+            sort: about.descriptions.length - 1,
+            type: 'code',
+            lang: { id: 'js', name: 'javascript' },
+            val: '',
+          })
+        "
+      >
+        <v-icon>mdi-code-tags</v-icon>
+      </v-btn>
+      <v-btn
+        small
+        fab
+        @click="
+          about.descriptions.push({
+            sort: about.descriptions.length - 1,
+            type: 'tiptap',
+            val: '',
+          })
+        "
+      >
+        <v-icon>mdi-text-recognition</v-icon>
+      </v-btn>
+      <v-btn
+        small
+        fab
+        @click="
+          about.descriptions.push({
+            sort: about.descriptions.length - 1,
+            type: 'image',
+            val: '',
+            width: 500,
+          })
+        "
+      >
+        <v-icon>mdi-image-outline</v-icon>
+      </v-btn>
+    </speed-dial>
   </v-container>
 </template>
 
@@ -244,6 +260,7 @@ export default {
     ImageBlock: () => import("@/components/Image"),
     UpdateAlert: () => import("@/components/Alert/UpdateAlert"),
     SubHeader: () => import(`@/layouts/header/SubHeader`),
+    SpeedDial: () => import(`@/components/SpeedDial.vue`),
   },
   data() {
     return {
@@ -260,11 +277,14 @@ export default {
         item: {},
       },
       isSave: false,
+      loading: false,
+      fab: false,
     };
   },
-  async created() {
-      if(!this.$store.getters.getAbout) await this.$store.dispatch("getApiAbout", this.$route.params.id);
-      this.about = this.$store.getters.getAbout;
+  async mounted() {
+    if (!this.$store.getters.getAbout)
+      await this.$store.dispatch("getApiAbout", this.$route.params.id);
+    this.about = this.$store.getters.getAbout;
   },
   methods: {
     handleSave() {
@@ -281,5 +301,5 @@ export default {
 };
 </script>
 
-<style lang="">
+<style scoped>
 </style>

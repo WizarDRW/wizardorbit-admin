@@ -158,7 +158,7 @@ export default {
     editItem(item) {
       this.$store.dispatch("putApiRelease", item);
       this.$router.push({
-        name: `UserEdit`,
+        name: `ReleaseEdit`,
         params: { id: item._id },
       });
     },
