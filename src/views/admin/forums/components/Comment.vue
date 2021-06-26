@@ -133,7 +133,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .v-card {
   margin: 15px 0;
 }

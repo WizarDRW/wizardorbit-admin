@@ -20,6 +20,7 @@
     <v-select
       v-model="about.type"
       :items="[
+        { label: 'Biz Kimiz', id: 'whoweare' },
         { label: 'Hikaye', id: 'ourhistory' },
         { label: 'Plan', id: 'ourplan' },
       ]"

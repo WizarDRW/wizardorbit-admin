@@ -29,7 +29,10 @@
             >
               <v-list-item-icon>
                 <v-badge
-                  v-if="item.to == '/drafts' && $store.getters.getUserDrafts.length > 0"
+                  v-if="
+                    item.to == '/drafts' &&
+                    $store.getters.getUserDrafts.length > 0
+                  "
                   bordered
                   left
                   color="error"
@@ -88,4 +91,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>

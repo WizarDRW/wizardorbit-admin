@@ -26,7 +26,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .route {
   display: inline;
   width: 100%;

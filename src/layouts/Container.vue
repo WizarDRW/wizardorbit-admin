@@ -26,7 +26,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .col {
   padding: 12px 0 0 0;
 }

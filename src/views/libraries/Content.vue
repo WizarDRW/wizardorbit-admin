@@ -77,7 +77,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .item-col {
   margin-bottom: 20px;
 }

@@ -1,20 +1,20 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import auth from "./auth.module";
-import chapter from "./chapter.module";
-import draft from "./draft.module";
-import forum from "./forum.module";
-import news from "./news.module";
-import option from "./option.module";
-import category from "./category.module";
-import library from "./library.module";
-import log from "./log.module";
-import user from './user.module';
-import useroption from './useroption.module';
-import theme from './theme.module';
-import multipart from './multipart.module';
-import about from './about.module';
+import auth from "./auth.module.js";
+import chapter from "./chapter.module.js";
+import draft from "./draft.module.js";
+import forum from "./forum.module.js";
+import news from "./news.module.js";
+import option from "./option.module.js";
+import category from "./category.module.js";
+import library from "./library.module.js";
+import log from "./log.module.js";
+import user from './user.module.js';
+import useroption from './useroption.module.js';
+import theme from './theme.module.js';
+import multipart from './multipart.module.js';
+import about from './about.module.js';
 
 Vue.use(Vuex);
 

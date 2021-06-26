@@ -418,7 +418,7 @@ export default {
 </script>
 
 
-<style lang="scss" scoped>
+<style scoped>
 .inline {
   display: inline-flex;
   flex-wrap: nowrap;

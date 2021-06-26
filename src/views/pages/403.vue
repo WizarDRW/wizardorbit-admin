@@ -9,7 +9,7 @@
 export default {};
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Nova+Oval&display=swap");
 .background {
   width: 100%;

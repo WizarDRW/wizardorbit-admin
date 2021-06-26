@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .alert {
   position: absolute;
   top: 100px;

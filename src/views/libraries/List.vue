@@ -243,7 +243,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .alerts {
   position: fixed !important;
   bottom: 10px;
