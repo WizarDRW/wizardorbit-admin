@@ -213,98 +213,9 @@
           <v-row>
             <v-col>
               <!-- İçerikler -->
-              <div v-for="(item, index) in news.descriptions" :key="index">
-                <!-- Card Title -->
-                <div v-if="item.type == 'v-card-title'">
-                  <v-text-field
-                    v-model="item.val"
-                    label="Kart Başlığı"
-                    placeholder="Kart Başlığı"
-                    append-icon="mdi-delete-variant"
-                    @click:append="
-                      () => {
-                        news.descriptions.splice(index, 1);
-                      }
-                    "
-                    solo
-                  ></v-text-field>
-                </div>
-                <!-- Card Subtitle -->
-                <div v-if="item.type == 'v-card-subtitle'">
-                  <v-text-field
-                    v-model="item.val"
-                    label="Kart Destek Başlığı"
-                    placeholder="Kart Destek Başlığı"
-                    append-icon="mdi-delete-variant"
-                    @click:append="
-                      () => {
-                        news.descriptions.splice(index, 1);
-                      }
-                    "
-                    solo
-                  ></v-text-field>
-                </div>
-                <!-- Card Text -->
-                <div v-if="item.type == 'v-card-text'">
-                  <v-textarea
-                    v-model="item.val"
-                    label="Kart Metni"
-                    placeholder="Kart Metni"
-                    append-icon="mdi-delete-variant"
-                    @click:append="
-                      () => {
-                        news.descriptions.splice(index, 1);
-                      }
-                    "
-                    solo
-                  ></v-textarea>
-                </div>
-                <!-- Markdown içeriği -->
-                <div v-if="item.type == 'markdown'">
-                  <markdown
-                    :_content="item"
-                    v-on:delete_item="
-                      () => {
-                        news.descriptions.splice(index, 1);
-                      }
-                    "
-                  ></markdown>
-                </div>
-                <!-- Code editor içeriği -->
-                <div v-if="item.type == 'code'">
-                  <code-block
-                    :_code="item"
-                    v-on:delete_item="
-                      () => {
-                        news.descriptions.splice(index, 1);
-                      }
-                    "
-                  ></code-block>
-                </div>
-                <!-- Tiptap içeriği -->
-                <div v-if="item.type == 'tiptap'">
-                  <tiptap
-                    :_content="item"
-                    v-on:delete_item="
-                      () => {
-                        news.descriptions.splice(index, 1);
-                      }
-                    "
-                  ></tiptap>
-                </div>
-                <!-- Image içeriği -->
-                <div v-if="item.type == 'image'">
-                  <image-block
-                    :_content="item"
-                    v-on:delete_item="
-                      () => {
-                        news.descriptions.splice(index, 1);
-                      }
-                    "
-                  ></image-block>
-                </div>
-                <br />
-              </div>
+              <create-content
+                :_descriptions="news.descriptions"
+              ></create-content>
               <!-- Önizleme dialoğu -->
               <preview
                 v-if="preview"
@@ -371,13 +282,10 @@ export default {
   name: "NewsCreate",
   components: {
     Preview: () => import("@/components/Preview"),
-    Markdown: () => import("@/components/Markdown"),
-    Tiptap: () => import("@/components/Tiptap"),
-    CodeBlock: () => import("@/components/Code"),
-    ImageBlock: () => import("@/components/Image"),
     AddAlert: () => import("@/components/Alert/AddAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
+    CreateContent: () => import(`@/components/CreateContent.vue`),
   },
   data() {
     return {

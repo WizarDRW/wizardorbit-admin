@@ -14,6 +14,7 @@
         <v-icon v-else> mdi-plus </v-icon>
       </v-btn>
     </template>
+    <slot name="prepend"></slot>
     <slot>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -158,6 +159,7 @@
         <span>Resim</span>
       </v-tooltip>
     </slot>
+    <slot name="append"></slot>
   </v-speed-dial>
 </template>
 

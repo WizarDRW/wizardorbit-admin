@@ -6,7 +6,7 @@
     "start": "webpack --watch --mode development",
     "webpack": "webpack",
     "serve": "vue-cli-service serve",
-    "build": "webpack --mode production",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

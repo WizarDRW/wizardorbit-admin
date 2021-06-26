@@ -1,5 +1,13 @@
 const zlib = require("zlib")
 module.exports = {
+  configureWebpack: {
+    optimization: {
+      splitChunks: {
+        minSize: 10000,
+        maxSize: 250000,
+      }
+    }
+  },
   transpileDependencies: [
     'vuetify'
   ],
