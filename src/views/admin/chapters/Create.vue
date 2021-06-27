@@ -54,113 +54,27 @@
     </sub-header>
     <v-row>
       <v-col md="3">
-        <h2><v-icon>mdi-shape</v-icon> Kategori</h2>
-        <v-treeview
-          v-model="chapter.categories"
-          :items="categories"
-          :selection-type="selectionType"
-          selectable
-          item-text="label"
-          open-all
-          return-object
+        <left-content
+          _type="chapter"
+          :_content="chapter"
+          v-on:selectedCategories="(val) => (chapter.categories = val)"
         >
-          <template v-slot:prepend="{ item }">
-            <v-icon>
-              {{ item.icon }}
-            </v-icon>
-            {{ item.label }}
-          </template>
-        </v-treeview>
-        <p></p>
-        <h2><v-icon>mdi-book-open-page-variant</v-icon> Vitrin</h2>
-        <v-treeview
-          v-model="chapter.showcases"
-          :items="[
-            { id: 'Carousel', label: 'Slayt' },
-            { id: 'Top6', label: 'En İyi 6' },
-          ]"
-          :selection-type="selectionType"
-          selectable
-          item-text="label"
-          open-all
-        >
-        </v-treeview>
-        <p></p>
-        <h2><v-icon>mdi-search-web</v-icon> SEO</h2>
-        <p></p>
-        <v-text-field
-          v-model="chapter.name"
-          label="Başlık"
-          placeholder="Başlık"
-          outlined
-          dense
-          disabled
-          prepend-inner-icon="mdi-format-title"
-        ></v-text-field>
-        <v-text-field
-          v-model="chapter.short_description"
-          label="Açıklama"
-          placeholder="Açıklama"
-          outlined
-          dense
-          disabled
-          hide-details
-          prepend-inner-icon="mdi-card-text-outline"
-        ></v-text-field>
-        <v-tooltip color="green" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="success"
-              icon
-              v-bind="attrs"
-              v-on="on"
-              @click="
-                () => {
-                  chapter.tags.push({ key: '', tag: '' });
-                }
-              "
+          <template #showcase>
+            <h2><v-icon>mdi-book-open-page-variant</v-icon> Vitrin</h2>
+            <v-treeview
+              v-model="chapter.showcases"
+              :items="[
+                { id: 'Carousel', label: 'Slayt' },
+                { id: 'Top6', label: 'En İyi 6' },
+              ]"
+              selection-type="leaf"
+              selectable
+              item-text="label"
+              open-all
             >
-              <v-icon> mdi-plus </v-icon>
-            </v-btn>
+            </v-treeview>
           </template>
-          <span>Etiket Ekle</span>
-        </v-tooltip>
-        <div v-for="(item, index) in chapter.tags" :key="index">
-          <v-text-field
-            v-model="item.key"
-            label="Anahtar"
-            placeholder="Anahtar"
-            outlined
-            dense
-            hide-details
-            prepend-inner-icon="mdi-key"
-            prepend-icon="mdi-minus"
-          >
-            <template #prepend>
-              <v-btn
-                color="error"
-                icon
-                @click="
-                  () => {
-                    chapter.tags.splice(index, 1);
-                  }
-                "
-              >
-                <v-icon>mdi-minus</v-icon>
-              </v-btn>
-            </template>
-          </v-text-field>
-          <v-text-field
-            v-model="item.tag"
-            label="Etiket"
-            placeholder="Etiket"
-            outlined
-            dense
-            hide-details
-            append-icon="mdi-tag-outline"
-          ></v-text-field>
-          <br />
-        </div>
+        </left-content>
       </v-col>
       <v-col md="9">
         <v-text-field
@@ -277,7 +191,6 @@
 </template>
 
 <script>
-import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 var ObjectID = require("bson-objectid");
 export default {
   name: "AdminChapterCreate",
@@ -287,14 +200,13 @@ export default {
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
     CreateContent: () => import(`@/components/CreateContent.vue`),
+    LeftContent: () => import(`@/components/LeftContent.vue`),
   },
   data() {
     return {
       drag: {
         col: 12,
       },
-      selectionType: "leaf",
-      selection: [],
       chapter: {
         descriptions: [],
         image_path: null,
@@ -303,10 +215,6 @@ export default {
         user_id: ObjectID(this.$store.getters.currentUser._id),
       },
       loading: false,
-      categories: [],
-      valueConsistsOf: "BRANCH_PRIORITY",
-      imageUrl: "",
-      htmlVision: false,
       preview: false,
       add: {
         status: false,
@@ -319,14 +227,6 @@ export default {
       imageFile: null,
       isSave: false,
     };
-  },
-  async created() {
-    if (
-      !this.$store.getters.getCategory ||
-      this.$store.getters.getCategory.type !== "chapter"
-    )
-      await this.$store.dispatch(GET_API_CATEGORY, "chapter");
-    this.categories = this.$store.getters.getCategory.categories;
   },
   methods: {
     reset() {
