@@ -34,6 +34,34 @@
         <v-icon color="header_theme_btn">mdi-magnify</v-icon>
       </v-btn>
 
+      <div class="lang">
+        <!-- I18N -->
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn fab x-small dark v-bind="attrs" v-on="on">
+              <v-img width="0px" :src="$store.getters.getLang.icon"></v-img>
+            </v-btn>
+          </template>
+          <div
+            v-for="(item, index) in languages.filter(
+              (x) => x.name != $store.getters.getLang.name
+            )"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <v-btn
+              fab
+              x-small
+              dark
+              v-bind="attrs"
+              v-on="on"
+              @click="setLang(item)"
+            >
+              <v-img width="0px" :src="item.icon"></v-img>
+            </v-btn>
+          </div>
+        </v-menu>
+      </div>
       <v-menu left bottom offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-avatar v-if="user.image_path" v-bind="attrs" v-on="on">
@@ -102,6 +130,24 @@ export default {
     return {
       user: {},
       resetDialog: false,
+      languages: [
+        {
+          name: "en",
+          icon: require("../../assets/vendor/svg/en.svg"),
+        },
+        {
+          name: "de",
+          icon: require("../../assets/vendor/svg/de.png"),
+        },
+        {
+          name: "fr",
+          icon: require("../../assets/vendor/svg/fr.svg"),
+        },
+        {
+          name: "tr",
+          icon: require("../../assets/vendor/svg/tr.svg"),
+        },
+      ],
     };
   },
   mounted() {
@@ -121,9 +167,15 @@ export default {
     themeMode(status) {
       this.$store.dispatch("changeUserTheme", status);
     },
+    setLang(item) {
+      this.$store.dispatch("lang", item);
+    },
   },
 };
 </script>
 
 <style scoped>
+.lang{
+  margin-right: 10px;
+}
 </style>

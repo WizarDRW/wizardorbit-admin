@@ -17,6 +17,26 @@ export default {
   }),
 
   beforeCreate() {},
+
+  metaInfo() {
+    return {
+      title: `${this.$i18n.t("title")}`,
+      meta: [
+        {
+          name: "description",
+          content:
+            "En yeni teknoloji haberleri, Bilgi öğrenmek için yazılar ve sorunlarınıza çözüm bulur. ",
+        },
+        {
+          property: "og:title",
+          content: "Wizard Orbit",
+        },
+        { property: "og:wizardorbit.com", content: "Sihirbaz" },
+        { property: "og:type", content: "website" },
+        { name: "robots", content: "index,follow" },
+      ],
+    };
+  },
 };
 </script>
 

@@ -15,6 +15,7 @@ import useroption from './useroption.module.js';
 import theme from './theme.module.js';
 import multipart from './multipart.module.js';
 import about from './about.module.js';
+import i18n from './i18n.module.js';
 
 Vue.use(Vuex);
 
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     theme,
     multipart,
     draft,
-    about
+    about,
+    i18n
   }
 });
