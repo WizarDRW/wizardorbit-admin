@@ -1,6 +1,11 @@
 const de = {
     title: "Panel | Umlaufbahn des Zauberers",
     message: {
+        tasks: 'Aufgaben',
+        messages: 'Mitteilungen',
+        resetPassword: 'Passwort zurücksetzen',
+        options: 'Optionen',
+        logout: 'Ausloggen',
         impression: {
             def: 'Meist gelesen {in}',
             inDaily: 'Heute am',

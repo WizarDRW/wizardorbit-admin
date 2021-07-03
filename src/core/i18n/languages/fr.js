@@ -1,6 +1,11 @@
 const fr = {
     title: "Panneau | Orbite du sorcier",
     message: {
+        tasks: 'Tâches',
+        messages: 'Annonces',
+        resetPassword: 'Réinitialisation du mot de passe',
+        options: 'Option',
+        logout: 'Se déconnecter',
         impression: {
             def: 'Le plus lu {in}',
             inDaily: "aujourd'hui",

@@ -74,13 +74,15 @@
         <v-list>
           <v-list-item @click="() => {}">
             <v-list-item-title
-              ><v-icon>mdi-car-shift-pattern</v-icon
-              >&nbsp;Görevler</v-list-item-title
+              ><v-icon>mdi-car-shift-pattern</v-icon>&nbsp;{{
+                $t("message.tasks")
+              }}</v-list-item-title
             >
           </v-list-item>
           <v-list-item @click="() => {}">
             <v-list-item-title
-              ><v-icon>mdi-message</v-icon>&nbsp; Mesajlar</v-list-item-title
+              ><v-icon>mdi-message</v-icon>&nbsp;
+              {{ $t("message.messages") }}</v-list-item-title
             >
           </v-list-item>
           <v-list-item
@@ -91,20 +93,20 @@
             "
           >
             <v-list-item-title
-              ><v-icon>mdi-lock-reset</v-icon>&nbsp; Şifre
-              Değiştir</v-list-item-title
+              ><v-icon>mdi-lock-reset</v-icon>&nbsp;
+              {{ $t("message.resetPassword") }}</v-list-item-title
             >
           </v-list-item>
           <v-list-item @click="$router.push({ name: 'UserOption' })">
             <v-list-item-title
               ><v-icon>mdi-cog-outline</v-icon>&nbsp;
-              Seçenekler</v-list-item-title
+              {{ $t("message.options") }}</v-list-item-title
             >
           </v-list-item>
           <v-divider></v-divider>
           <v-list-item @click="logout()">
             <v-list-item-title
-              ><v-icon>mdi-lock</v-icon>&nbsp;Çıkış</v-list-item-title
+              ><v-icon>mdi-lock</v-icon>&nbsp;{{ $t("message.logout") }}</v-list-item-title
             >
           </v-list-item>
         </v-list>
@@ -175,7 +177,7 @@ export default {
 </script>
 
 <style scoped>
-.lang{
+.lang {
   margin-right: 10px;
 }
 </style>

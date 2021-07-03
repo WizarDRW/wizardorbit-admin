@@ -1,6 +1,11 @@
 const en = {
     title: "Panel | Wizard's Orbit",
     message: {
+        tasks: 'Tasks',
+        messages: 'Messages',
+        resetPassword: 'Reset Password',
+        options: 'Options',
+        logout: 'Logout',
         impression: {
             def: 'Most read {in}',
             inDaily: 'Today',

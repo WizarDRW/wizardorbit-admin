@@ -1,6 +1,11 @@
 const tr = {
     title: 'Panel | Sihirbazın Yörüngesi',
     message: {
+        tasks: 'Görevler',
+        messages: 'Mesajlar',
+        resetPassword: 'Şifre Sıfırla',
+        options: 'Seçenekler',
+        logout: 'Çıkış',
         impression: {
             def: '{in} en çok okunanlar',
             inDaily: 'Bugün içerisinde',
