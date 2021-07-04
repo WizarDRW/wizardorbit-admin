@@ -6,76 +6,49 @@ const tr = {
         resetPassword: 'Şifre Sıfırla',
         options: 'Seçenekler',
         logout: 'Çıkış',
-        impression: {
-            def: '{in} en çok okunanlar',
-            inDaily: 'Bugün içerisinde',
-            inOneMonth: '1 Ay içerisinde',
-            inOneYear: '1 yıl içerisinde',
-        },
-        libraries: {
-            mostPopularBooks: "En popüler kitaplar",
-            mostReadThisWeek: "Bu hafta en çok okunanlar"
-        },
-        headerMenus: {
-            chapter: {
-                main: 'Bölümler',
-                children: 'Vitrin | Kategori',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            news: {
-                main: 'Haperler',
-                children: 'Vitrin | Kategori',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            forum: {
-                main: 'Forumlar',
-                children: 'Vitrin | Kategori',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            about: 'Hakkımızda',
-        },
-        headerSetting: {
-            loginButton: 'Giriş',
-            findText: "Ara"
-        },
-        login: {
-            title: 'Kullanıcı Girişi',
-            email: 'Email Adresi',
-            password: 'Şifreniz',
-        },
-        register: {
-            title: 'Kayıt Ol',
-            firstName: 'Adınız',
-            lastName: 'Soyadınız',
-            username: 'Kullanıcı Adı',
-            email: 'Email Adresi',
-            confirmEmail: 'Email Adresinizi Doğrulayın',
-            password: 'Şifreniz',
-            confirmPassword: 'Şifrenizi Doğrulayın',
-            agree: "Kişisel Verileri Koruma Kanununu {pdpl} kabul ediyor musunuz?",
-            sendBtn: 'Gonder'
-        },
-        aboutMenu: {
-            whoWeAre: 'Biz Kimiz',
-            ourHistory: 'Hikayemiz',
-            ourPlan: 'Planlarımız',
-            contact: 'İletişim',
-            release: 'Sürüm Notları',
-        },
-        forum: {
-            showcase: {
-                category: {
-                    title: 'Başlık',
-                    topic: 'Konu'
-                }
-            }
-        },
-        contents: {
+        sideMenus: {
+            userMenus: 'Kullanıcı Menüleri',
+            adminMenus: 'Admin Menüleri',
+            superUserMenus: 'Süper Kullanıcı Menüleri',
+            dashboard: 'Gösterge Paneli',
             chapters: 'Bölümler',
             chapter: 'Bölüm',
             news: 'Haberler',
             forums: 'Forumlar',
-            libraries: 'Kütüphane',
+            libraries: 'Kütüphaneler',
+            drafts: 'Taslaklar',
+            users: 'Kullanıcılar',
+            chapterOptions: 'Bölüm Seçenekleri',
+            newsOptions: 'Haber Seçenekleri',
+            forumOptions: 'Forum Seçenekleri',
+            release: 'Sürüm Notları',
+            about: 'Hakkında',
+        },
+    },
+    router: {
+        home: "Ev",
+        user: {
+            chapter: {
+                main: "Bölüm",
+                my: "Bölümlerim",
+                new: "Yeni Bölüm Oluştur",
+                edit: "({0}) Bölümünü Düzenle",
+                delete: "({0}) Bölümünü Sil"
+            },
+            news: {
+                main: "Haber",
+                my: "Haberlerim",
+                new: "Yeni Haber Oluştur",
+                edit: "({0}) Haberini Düzenle",
+                delete: "({0}) Haberini Sil"
+            },
+            forum: {
+                main: "Forum",
+                my: "Forumlarım",
+                new: "Yeni Forum Oluştur",
+                edit: "({0}) Forumunu Düzenle",
+                delete: "({0}) Forumunu Sil"
+            },
         }
     }
 }

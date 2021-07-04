@@ -6,75 +6,49 @@ const fr = {
         resetPassword: 'Réinitialisation du mot de passe',
         options: 'Option',
         logout: 'Se déconnecter',
-        impression: {
-            def: 'Le plus lu {in}',
-            inDaily: "aujourd'hui",
-            inOneMonth: 'en 1 mois',
-            inOneYear: 'en 1 an',
-        },
-        libraries: {
-            mostPopularBooks: "Livres les plus populaires",
-            mostReadThisWeek: "Le plus lu cette semaine"
-        },
-        headerMenus: {
-            chapter: {
-                main: 'Chapitres',
-                children: 'Vitrine | Catégorie',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            news: {
-                main: 'Nouvelles',
-                children: 'Vitrine | Catégorie',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            forum: {
-                main: 'Forum',
-                children: 'Vitrine | Catégorie',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            about: 'À propos',
-        },
-        headerSetting: {
-            loginButton: "S'identifier",
-            findText: "Rechercher"
-        },
-        login: {
-            title: 'Utilisateur en ligne',
-            email: 'Adresse e-mail',
-            password: 'Mot de passe',
-        },
-        register: {
-            title: "S'inscrire",
-            firstName: 'Votre nom',
-            lastName: 'Votre nom de famille',
-            username: "Nom d'utilisateur",
-            email: 'Adresse e-mail',
-            confirmEmail: 'Confirmez votre adresse email',
-            password: 'Mot de passe',
-            confirmPassword: 'Confirmez le mot de passe',
-            sendBtn: 'Envoyer'
-        },
-        aboutMenu: {
-            whoWeAre: 'Qui sommes nous',
-            ourHistory: 'Notre histoire',
-            ourPlan: 'Nos plans',
-            contact: 'Contacter',
-            release: 'Notes de version',
-        },
-        forum: {
-            showcase: {
-                category: {
-                    title: 'Capuche',
-                    topic: 'Sujet'
-                }
-            }
-        },
-        contents: {
+        sideMenus: {
+            userMenus: "Menus d'utilisateur",
+            adminMenus: "Menus d'administration",
+            superUserMenus: 'Menus super utilisateurs',
+            dashboard: 'Tableau de bord',
             chapters: 'Chapitres',
             chapter: 'Chapitre',
             news: 'Nouvelles',
-            forums: 'Forum',
+            forums: 'Forums',
             libraries: 'Bibliothèques',
+            drafts: 'Brouillons',
+            users: 'Utilisatrices',
+            chapterOptions: 'Chapitre Options',
+            newsOptions: 'Options de nouvelles',
+            forumOptions: 'Forum options',
+            release: 'Notes de version',
+            about: 'À propos',
+        },
+    },
+    router: {
+        home: "Domicile",
+        user: {
+            chapter: {
+                main: "Chapitre",
+                my: "Mes sections",
+                new: "Créer une nouvelle partition",
+                edit: "({0}) Modifier la section",
+                delete: "({0}) Supprimer la partition"
+            },
+            news: {
+                main: "Nouvelles",
+                my: "Mes nouvelles",
+                new: "Créer de nouvelles nouvelles",
+                edit: "({0}) Modifier les nouvelles",
+                delete: "({0}) Supprimer les nouvelles"
+            },
+            forum: {
+                main: "Forum",
+                my: "Mes forums",
+                new: "Créer un nouveau forum",
+                edit: "({0}) Modifier votre forum",
+                delete: "({0}) Supprimer le forum"
+            },
         }
     }
 }

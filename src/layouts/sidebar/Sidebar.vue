@@ -5,7 +5,7 @@
     <v-divider></v-divider>
     <v-list expand flat dense nav>
       <v-list-item-group mandatory color="warning">
-        <div v-for="(nav, i) in $options.nav" :key="i">
+        <div v-for="(nav, i) in navigation" :key="i">
           <v-list-group
             color="sidebar_list_group"
             v-if="nav._roles.includes(user.role)"
@@ -17,13 +17,13 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title>
-                  <h2 class="sidebar_list_menu_color--text">{{ nav._name }}</h2>
+                  <h2 class="sidebar_list_menu_color--text">{{ $t(nav._name) }}</h2>
                 </v-list-item-title>
               </v-list-item-content>
             </template>
             <v-list-item
-              v-for="item in nav.children"
-              :key="item._name"
+              v-for="(item, index) in nav.children"
+              :key="index"
               link
               @click="$router.push({ path: item.to })"
             >
@@ -50,7 +50,7 @@
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title class="sidebar_list_menu_color--text">{{
-                  item._name
+                  $t(item._name)
                 }}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -66,7 +66,6 @@
 import nav from "./_nav";
 export default {
   name: "Sidebar",
-  nav,
   props: {
     _hide: {
       type: Boolean,
@@ -77,9 +76,11 @@ export default {
     return {
       user: {},
       draftCount: 0,
+      navigation: []
     };
   },
   async beforeMount() {
+    this.navigation = nav;
     this.user = this.$store.getters.currentUser;
     if (!this.$store.getters.getUserDrafts)
       await this.$store.dispatch(

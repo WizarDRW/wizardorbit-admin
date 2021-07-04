@@ -12,7 +12,7 @@
               item.path === $route.matched[$route.matched.length - 1].path
             "
           >
-            {{ item.meta.description.toUpperCase() }}
+            {{ $t(item.meta.lang).toUpperCase() }}
           </v-breadcrumbs-item>
         </template>
       </v-breadcrumbs>

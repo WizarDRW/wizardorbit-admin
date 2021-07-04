@@ -1,92 +1,92 @@
 export default [
     {
-        _name: "Kullanıcı Menüsü",
+        _name: 'message.sideMenus.userMenus',
         _roles: ["Client", "Admin", "SuperUser"],
         children: [
             {
-                _name: "Panel",
+                _name: 'message.sideMenus.dashboard',
                 to: "/dashboard",
                 icon: "mdi-view-dashboard-variant"
             },
             {
-                _name: "Bölümler",
+                _name: 'message.sideMenus.chapters',
                 to: "/chapter",
                 icon: "mdi-post"
             },
             {
-                _name: "Haber",
+                _name: 'message.sideMenus.news',
                 to: "/news",
                 icon: "mdi-newspaper"
             },
             {
-                _name: "Forum",
+                _name: 'message.sideMenus.forums',
                 to: "/forum",
                 icon: "mdi-head-question-outline"
             },
             {
-                _name: "Kütüphanem",
+                _name: 'message.sideMenus.libraries',
                 to: "/library",
                 icon: "mdi-bookmark-multiple-outline"
             },
             {
-                _name: "Taslaklar",
+                _name: 'message.sideMenus.drafts',
                 to: "/drafts",
                 icon: "mdi-file"
             }
         ]
     },
     {
-        _name: "Yönetici Menüsü",
+        _name: 'message.sideMenus.adminMenus',
         _roles: ["Admin", "SuperUser"],
         children: [
             {
-                _name: "Bölümler",
+                _name: 'message.sideMenus.chapters',
                 to: "/admin/chapter",
                 icon: "mdi-text-box-check"
             },
             {
-                _name: "Haber",
+                _name: 'message.sideMenus.news',
                 to: "/admin/news",
                 icon: "mdi-text-box-check-outline"
             },
             {
-                _name: "Forum",
+                _name: 'message.sideMenus.forums',
                 to: "/admin/forum",
                 icon: "mdi-tooltip-check"
             }
         ]
     },
     {
-        _name: "Süper Kullanıcı",
+        _name: 'message.sideMenus.superUserMenus',
         _roles: ["SuperUser"],
         children: [
             {
-                _name: "Kullanıcılar",
+                _name: 'message.sideMenus.users',
                 to: "/superuser/users",
                 icon: "mdi-account-group"
             },
             {
-                _name: "Bölüm Seçenekleri",
+                _name: 'message.sideMenus.chapterOptions',
                 to: "/superuser/category/chapter-categories",
                 icon: "mdi-select-group"
             },
             {
-                _name: "Haber Seçenekleri",
+                _name: 'message.sideMenus.newsOptions',
                 to: "/superuser/category/news-categories",
                 icon: "mdi-select-group"
             },
             {
-                _name: "Forum Seçenekleri",
+                _name: 'message.sideMenus.forumOptions',
                 to: "/superuser/category/forum-categories",
                 icon: "mdi-select-group"
             },
             {
-                _name: "Sürüm Notu",
+                _name: 'message.sideMenus.release',
                 to: "/superuser/release",
                 icon: "mdi-alert-decagram"
             },
             {
-                _name: "Hakkında",
+                _name: 'message.sideMenus.about',
                 to: "/superuser/about",
                 icon: "mdi-information-outline"
             },

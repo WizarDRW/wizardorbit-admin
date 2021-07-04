@@ -43,7 +43,7 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      meta: { description: 'Ev' },
+      meta: { lang: 'router.home' },
       redirect: '/dashboard',
       beforeEnter: isAuth,
       component: () => import("./layouts/Container.vue"),
@@ -57,7 +57,7 @@ export default new Router({
         {
           path: '/chapter',
           name: 'Chapter',
-          meta: { description: 'Bölüm' },
+          meta: { lang: 'router.user.chapter.main' },
           redirect: '/my-chapters',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
@@ -67,21 +67,21 @@ export default new Router({
             {
               path: '/new-chapter/:draftid?',
               name: 'NewChapter',
-              meta: { description: 'Yeni Bölüm' },
+              meta: { lang: 'router.user.chapter.new' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/chapters/Create.vue")
             },
             {
               path: '/my-chapters',
               name: 'MyChapters',
-              meta: { description: 'Bölümlerim' },
+              meta: { lang: 'router.user.chapter.my' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/chapters/List.vue")
             },
             {
               path: '/chapter/edit/:id',
               name: 'EditChapter',
-              meta: { description: 'Düzenle' },
+              meta: { lang: 'router.user.chapter.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/chapters/Edit.vue"),
             }
@@ -90,7 +90,7 @@ export default new Router({
         {
           path: '/news',
           name: 'News',
-          meta: { description: 'Haberler' },
+          meta: { lang: 'router.news.main' },
           redirect: '/my-news',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
@@ -100,21 +100,21 @@ export default new Router({
             {
               path: '/new-news/:draftid?',
               name: 'NewNews',
-              meta: { description: 'Yeni' },
+              meta: { lang: 'router.user.news.new' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/news/Create.vue")
             },
             {
               path: '/my-news',
               name: 'MyNews',
-              meta: { description: 'Haberlerim' },
+              meta: { lang: 'router.user.news.my' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/news/List.vue")
             },
             {
               path: '/news/edit/:id',
               name: 'EditNews',
-              meta: { description: 'Düzenle' },
+              meta: { lang: 'router.user.news.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/news/Edit.vue"),
             }
@@ -123,7 +123,7 @@ export default new Router({
         {
           path: '/forum',
           name: 'Forum',
-          meta: { description: 'Forum' },
+          meta: { lang: 'router.user.forum.main' },
           redirect: '/my-forums',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
@@ -133,28 +133,28 @@ export default new Router({
             {
               path: '/new-forum/:draftid?',
               name: 'NewForum',
-              meta: { description: 'Yeni' },
+              meta: { lang: 'router.user.forum.new' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/forums/Create.vue")
             },
             {
               path: '/my-forums',
               name: 'MyForums',
-              meta: { description: 'Forumlarım' },
+              meta: { lang: 'router.user.forum.my' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/forums/List.vue")
             },
             {
               path: '/forum/edit/:id',
               name: 'EditForum',
-              meta: { description: 'Düzenle' },
+              meta: { lang: 'router.user.forum.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/forums/Edit.vue"),
             },
             {
               path: '/forum/detail/:id',
               name: 'DetailForum',
-              meta: { description: 'Detay' },
+              meta: { lang: 'router.user.forum.detail' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/client/forums/Detail.vue")
             }

@@ -6,76 +6,49 @@ const en = {
         resetPassword: 'Reset Password',
         options: 'Options',
         logout: 'Logout',
-        impression: {
-            def: 'Most read {in}',
-            inDaily: 'Today',
-            inOneMonth: 'in 1 Month',
-            inOneYear: 'in 1 Year',
-        },
-        libraries: {
-            mostPopularBooks: "Most popular books",
-            mostReadThisWeek: "Most read this week"
-        },
-        headerMenus: {
-            chapter: {
-                main: 'Chapters',
-                children: 'Showcase | Category',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            news: {
-                main: 'News',
-                children: 'Showcase | Category',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            forum: {
-                main: 'Forums',
-                children: 'Showcase | Category',
-                childrenDescriptions: 'Showcase | Category',
-            },
-            about: 'Our About',
-        },
-        headerSetting: {
-            loginButton: 'Sign in',
-            findText: "Search"
-        },
-        login: {
-            title: 'Sign in',
-            email: 'Email Address',
-            password: 'Password',
-        },
-        register: {
-            title: 'Sign up',
-            firstName: 'First Name',
-            lastName: 'Last Name',
-            username: 'User Name',
-            email: 'Email Address',
-            confirmEmail: 'Confirm Email Address',
-            password: 'Password',
-            confirmPassword: 'Confirm Password',
-            agree: "Do you agree? PDPL {pdpl}",
-            sendBtn: 'Send'
-        },
-        aboutMenu: {
-            whoWeAre: 'Who We Are',
-            ourHistory: 'Our History',
-            ourPlan: 'Our Plans',
-            contact: 'Contact',
-            release: 'Release',
-        },
-        forum: {
-            showcase: {
-                category: {
-                    title: 'Title',
-                    topic: 'Topic'
-                }
-            }
-        },
-        contents: {
+        sideMenus: {
+            userMenus: 'User Menus',
+            adminMenus: 'Admin Menus',
+            superUserMenus: 'Super User Menus',
+            dashboard: 'Dashboard',
             chapters: 'Chapters',
             chapter: 'Chapter',
             news: 'News',
             forums: 'Forums',
             libraries: 'Libraries',
+            drafts: 'Drafts',
+            users: 'Users',
+            chapterOptions: 'Chapter Options',
+            newsOptions: 'News Options',
+            forumOptions: 'Forum Options',
+            release: 'Release Notes',
+            about: 'About',
+        },
+    },
+    router: {
+        home: "Home",
+        user: {
+            chapter: {
+                main: "Chapter",
+                my: "My sections",
+                new: "Create new partition",
+                edit: "({0}) Edit section",
+                delete: "({0}) Delete partition"
+            },
+            news: {
+                main: "News",
+                my: "My news",
+                new: "Create new news",
+                edit: "({0}) Edit the news",
+                delete: "({0}) Delete the news"
+            },
+            forum: {
+                main: "Forum",
+                my: "My forums",
+                new: "Create new forum",
+                edit: "({0}) Edit your forum",
+                delete: "({0}) Delete the forum"
+            },
         }
     }
 }
