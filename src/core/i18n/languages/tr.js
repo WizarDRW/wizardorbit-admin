@@ -49,6 +49,95 @@ const tr = {
                 edit: "({0}) Forumunu Düzenle",
                 delete: "({0}) Forumunu Sil"
             },
+            library: {
+                main: "Kütüphane",
+                my: "Kitaplarım",
+                new: "Yeni kitap oluştur",
+                edit: "({0}) Kitabını düzenle",
+                delete: "({0}) Kitabı sil"
+            },
+            draft: "Taslaklar",
+            userOption: "Kullanıcı seçenekleri",
+        },
+        admin: {
+            chapter: {
+                main: "Bölüm",
+                total: "Bölüm",
+                new: "Yeni Bölüm Oluştur",
+                edit: "({0}) Bölüm Düzenle",
+                delete: "({0}) Bölüm Sil"
+            },
+            news: {
+                main: "Haberler",
+                total: "Haberler",
+                new: "Yeni Haberler Yarat",
+                edit: "({0}) Haberleri düzenle",
+                delete: "({0}) Haberleri sil"
+            },
+            forum: {
+                main: "Forum",
+                total: "Forumlar",
+                new: "Yeni Forum Oluştur",
+                edit: "({0}) Forumunuzu Düzenleyin",
+                delete: "({0}) Forumu Sil"
+            },
+        },
+        superUser: {
+            main: 'Süper Kullanıcı',
+            users: {
+                main: 'Kullanıcılar',
+                list: 'Kullanıcıların Listesi',
+                new: 'Kullanıcı Oluştur',
+                edit: 'Kullanıcı Düzenle'
+            },
+            about: {
+                main: 'Hakkında',
+                list: 'Hakkında Listesi',
+                new: "Hakkında Oluştur",
+                edit: "Hakkında Düzenle"
+            },
+            release: {
+                main: 'Sürüm Notu',
+                list: 'Sürüm Notları',
+                new: "Sürüm Oluştur",
+                edit: "Sürüm Düzenle"
+            },
+            category: {
+                chapter: 'Bölüm Kategorileri',
+                news: 'Haber Kategorileri',
+                forum: 'Forum Kategorileri',
+            }
+        }
+    },
+    chapter: {
+        list: {
+            title: 'Başlık',
+            createDate: 'Oluşturma Tarihi',
+            createdByUser: 'Oluşturan Kullanıcı',
+            status: {
+                main: 'Durum',
+                published: 'Yayında',
+                moderatorApproval: 'Moderatör Onayında',
+                blocked: 'Engellendi',
+            },
+            edit: 'Düzenle',
+            create: 'Yeni Bölüm Oluştur'
+        },
+        new: {
+            subheader: {
+                back: 'Geri',
+                preview: 'Önizle',
+                save: 'Kaydet'
+            },
+            category: 'Kategori',
+            addTag: {
+                main: 'Etiket Ekle',
+                key: 'Anahtar',
+                tag: 'Etiket',
+            },
+            title: 'Başlık',
+            description: 'Kısa Açıklama',
+            addImage: 'Resim Ekle'
         }
     }
 }

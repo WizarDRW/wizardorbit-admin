@@ -11,7 +11,7 @@
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
-              about.descriptions.splice(index, 1);
+              _descriptions.splice(index, 1);
             }
           "
           solo
@@ -26,7 +26,7 @@
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
-              about.descriptions.splice(index, 1);
+              _descriptions.splice(index, 1);
             }
           "
           solo
@@ -41,7 +41,7 @@
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
-              about.descriptions.splice(index, 1);
+              _descriptions.splice(index, 1);
             }
           "
           solo
@@ -53,7 +53,7 @@
           :_content="item"
           v-on:delete_item="
             () => {
-              about.descriptions.splice(index, 1);
+              _descriptions.splice(index, 1);
             }
           "
         ></markdown>
@@ -64,7 +64,7 @@
           :_code="item"
           v-on:delete_item="
             () => {
-              about.descriptions.splice(index, 1);
+              _descriptions.splice(index, 1);
             }
           "
         ></code-block>
@@ -75,7 +75,7 @@
           :_content="item"
           v-on:delete_item="
             () => {
-              about.descriptions.splice(index, 1);
+              _descriptions.splice(index, 1);
             }
           "
         ></tiptap>
@@ -86,7 +86,7 @@
           :_content="item"
           v-on:delete_item="
             () => {
-              about.descriptions.splice(index, 1);
+              _descriptions.splice(index, 1);
             }
           "
         ></image-block>

@@ -49,6 +49,95 @@ const en = {
                 edit: "({0}) Edit your forum",
                 delete: "({0}) Delete the forum"
             },
+            library: {
+                main: "Library",
+                my: "My books",
+                new: "Create new book",
+                edit: "({0}) Edit your book",
+                delete: "({0}) Delete the book"
+            },
+            draft: "Draft",
+            userOption: "User Options",
+        },
+        admin: {
+            chapter: {
+                main: "Chapter",
+                total: "Chapters",
+                new: "Create new chapter",
+                edit: "({0}) Edit chapter",
+                delete: "({0}) Delete chapter"
+            },
+            news: {
+                main: "News",
+                total: "News",
+                new: "Create new news",
+                edit: "({0}) Edit the news",
+                delete: "({0}) Delete the news"
+            },
+            forum: {
+                main: "Forum",
+                total: "Forums",
+                new: "Create new forum",
+                edit: "({0}) Edit your forum",
+                delete: "({0}) Delete the forum"
+            },
+        },
+        superUser: {
+            main: 'Super User',
+            users: {
+                main: 'User',
+                list: 'User List',
+                new: "Create User",
+                edit: "Edit User"
+            },
+            about: {
+                main: 'About',
+                list: 'About List',
+                new: "Create About",
+                edit: "Edit About"
+            },
+            release: {
+                main: 'Release',
+                list: 'Release List',
+                new: "Create Release",
+                edit: "Edit Release"
+            },
+            category: {
+                chapter: 'Chapter Categories',
+                news: 'News Categories',
+                forum: 'Forum Categories',
+            }
+        }
+    },
+    chapter: {
+        list: {
+            title: 'Title',
+            createDate: 'Create Date',
+            createdByUser: 'Created by User',
+            status: {
+                main: 'Status',
+                published: 'Published',
+                moderatorApproval: 'Moderator Approval',
+                blocked: 'Blocked',
+            },
+            edit: 'Edit',
+            create: 'Create New Chapter'
+        },
+        new: {
+            subheader: {
+                back: 'Back',
+                preview: 'Preview',
+                save: 'Save'
+            },
+            category: 'Category',
+            addTag: {
+                main: 'Add Tag',
+                key: 'Key',
+                tag: 'Tag'
+            },
+            title: 'Title',
+            description: 'Short Description',
+            addImage: 'Add a Picture'
         }
     }
 }

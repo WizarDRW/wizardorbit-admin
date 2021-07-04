@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Bölüm Oluştur</span>
+            <span>{{$t('chapter.list.create')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -32,8 +32,17 @@
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
+      <template #[`header.name`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.create_date`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.status`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.create_date`]="{ item }">
-        {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
+        {{ item.create_date | moment("DD MMM YYYY HH:mm") }}
       </template>
       <template #[`item.status`]="{ item }">
         <div
@@ -49,11 +58,11 @@
         >
           {{
             item.status == "Published"
-              ? "Yayında"
+              ? $t("chapter.list.status.published")
               : item.status == "ModeratorAcceping"
-              ? "Onay Bekliyor"
+              ? $t("chapter.list.status.moderatorApproval")
               : item.status == "Block"
-              ? "Yazı Bloklandı"
+              ? $t("chapter.list.status.blocked")
               : item.status
           }}
         </div>
@@ -71,7 +80,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{ $t("chapter.list.edit") }}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -84,7 +93,10 @@
 
 <script>
 import SubHeader from "@/layouts/header/SubHeader";
-import { CHAPTER, GET_API_USER_CHAPTERS } from "@/core/services/store/chapter.module";
+import {
+  CHAPTER,
+  GET_API_USER_CHAPTERS,
+} from "@/core/services/store/chapter.module";
 export default {
   data() {
     return {
@@ -93,16 +105,16 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "Başlık",
+          text: "chapter.list.title",
           value: "name",
         },
         {
-          text: "Oluşturma Zamanı",
+          text: "chapter.list.createDate",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "Durum",
+          text: "chapter.list.status.main",
           value: "status",
           sortable: true,
         },
@@ -120,18 +132,22 @@ export default {
     SubHeader,
   },
   async created() {
-    if (!this.$store.getters.getUserChapters) await this.$store.dispatch(GET_API_USER_CHAPTERS, this.$store.getters.currentUser._id)
+    if (!this.$store.getters.getUserChapters)
+      await this.$store.dispatch(
+        GET_API_USER_CHAPTERS,
+        this.$store.getters.currentUser._id
+      );
     this.data = this.$store.getters.getUserChapters;
-    this.loading = this.data ? false:true;
+    this.loading = this.data ? false : true;
   },
   methods: {
     editItem(item) {
       this.$store.dispatch(CHAPTER, item);
       this.$router.push({
         name: `EditChapter`,
-        params: { id: item._id }
+        params: { id: item._id },
       });
-    }
+    },
   },
 };
 </script>

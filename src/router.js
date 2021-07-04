@@ -163,7 +163,7 @@ export default new Router({
         {
           path: '/library',
           name: 'Library',
-          meta: { description: 'Kütüphane' },
+          meta: { lang: 'router.user.library.main' },
           redirect: '/library/book-shelves',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
@@ -173,28 +173,28 @@ export default new Router({
             {
               path: '/library/book-shelves',
               name: 'BookShelves',
-              meta: { description: 'Raftaki Kitaplar' },
+              meta: { lang: 'router.user.library.my' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/libraries/List.vue")
             },
             {
               path: '/library/new-book',
               name: 'NewBook',
-              meta: { description: 'Yeni Kitap' },
+              meta: { lang: 'router.user.library.new' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/libraries/Create.vue")
             },
             {
               path: '/library/content/:id',
               name: 'LibraryContent',
-              meta: { description: 'Kitap' },
+              meta: { lang: 'router.user.library.detail' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/libraries/Content.vue")
             },
             {
               path: '/library/edit/:id',
               name: 'LibraryEdit',
-              meta: { description: 'Kitap Düzenle' },
+              meta: { lang: 'router.user.library.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/libraries/Edit.vue")
             },
@@ -203,19 +203,19 @@ export default new Router({
         {
           path: '/drafts',
           name: 'Draft',
-          meta: { description: 'Teslaklar' },
+          meta: { lang: 'router.user.draft' },
           component: () => import(`./views/drafts/List.vue`)
         },
         {
           path: '/useroptions',
           name: 'UserOption',
-          meta: { description: 'Kullanıcı Seçenekleri' },
+          meta: { lang: 'router.user.userOption' },
           component: () => import(`./views/profile/ProfileOption.vue`)
         },
         {
           path: '/admin/chapter',
           name: 'AdminChapter',
-          meta: { description: 'Bölüm(Yönetici)' },
+          meta: { lang: 'router.admin.chapter.main' },
           redirect: '/admin/chapters',
           beforeEnter: async (to, from, next) => {
             await isAuth(to, from, next);
@@ -228,28 +228,28 @@ export default new Router({
             {
               path: '/admin/new-chapter',
               name: 'AdminNewChapter',
-              meta: { description: 'Yeni Bölüm' },
+              meta: { lang: 'router.admin.chapter.new' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/chapters/Create.vue")
             },
             {
               path: '/admin/chapters',
               name: 'AdminChapters',
-              meta: { description: 'Bölümler' },
+              meta: { lang: 'router.admin.chapter.total' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/chapters/List.vue")
             },
             {
               path: '/admin/chapter/edit/:id',
               name: 'AdminEditChapter',
-              meta: { description: 'Düzenle' },
+              meta: { lang: 'router.admin.chapter.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/chapters/Edit.vue"),
             },
             {
               path: '/admin/chapter/detail/:id',
               name: 'AdminDetailChapter',
-              meta: { description: 'Detay' },
+              meta: { lang: 'router.admin.chapter.detail' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/chapters/Detail.vue")
             }
@@ -258,7 +258,7 @@ export default new Router({
         {
           path: '/admin/news',
           name: 'AdminNews',
-          meta: { description: 'Yönetici Haberleri' },
+          meta: { lang: 'router.admin.news.main' },
           redirect: '/admin/my-news',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {
@@ -268,28 +268,28 @@ export default new Router({
             {
               path: '/admin/new-news',
               name: 'AdminNewNews',
-              meta: { description: 'Yeni' },
+              meta: { lang: 'router.admin.news.new' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/Create.vue")
             },
             {
-              path: '/admin/my-news',
+              path: '/admin/news',
               name: 'AdminTheNews',
-              meta: { description: 'Haberler' },
+              meta: { lang: 'router.admin.news.total' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/List.vue")
             },
             {
               path: '/admin/news/edit/:id',
               name: 'AdminEditNews',
-              meta: { description: 'Düzenle' },
+              meta: { lang: 'router.admin.chapter.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/Edit.vue"),
             },
             {
               path: '/admin/news/detail/:id',
               name: 'AdminDetailNews',
-              meta: { description: 'Detay' },
+              meta: { lang: 'router.admin.chapter.detail' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/Detail.vue")
             }
@@ -298,7 +298,7 @@ export default new Router({
         {
           path: '/admin/forum',
           name: 'AdminForum',
-          meta: { description: 'Yönetici Forumu' },
+          meta: { lang: 'router.admin.forum.main' },
           redirect: '/admin/forums',
           beforeEnter: (to, from, next) => {
             isAuth(to, from, next);
@@ -311,28 +311,28 @@ export default new Router({
             {
               path: '/admin/new-forum',
               name: 'AdminNewForm',
-              meta: { description: 'Yeni Forum' },
+              meta: { lang: 'router.admin.forum.new' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/forums/Create.vue")
             },
             {
               path: '/admin/forums',
               name: 'AdminForms',
-              meta: { description: 'Forumlar' },
+              meta: { lang: 'router.admin.forum.total' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/forums/List.vue")
             },
             {
               path: '/admin/forum/edit/:id',
               name: 'AdminEditForum',
-              meta: { description: 'Düzenle' },
+              meta: { lang: 'router.admin.forum.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/forums/Edit.vue"),
             },
             {
               path: '/admin/forum/detail/:id',
               name: 'AdminDetailForum',
-              meta: { description: 'Detay' },
+              meta: { lang: 'router.admin.forum.detail' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/forums/Detail.vue")
             }
@@ -341,7 +341,7 @@ export default new Router({
         {
           path: '/superuser',
           name: 'SuperUser',
-          meta: { description: 'Süper Kullanıcı' },
+          meta: { lang: 'router.superUser.main' },
           redirect: '/superuser/users',
           beforeEnter: (to, from, next) => {
             isAuth(to, from, next);
@@ -354,7 +354,7 @@ export default new Router({
             {
               path: '/superuser/users',
               name: 'Users',
-              meta: { description: 'Kullanıcılar' },
+              meta: { lang: 'router.superUser.users.main' },
               redirect: { name: "UsersList" },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: {
@@ -364,19 +364,19 @@ export default new Router({
                 {
                   path: "/superuser/users/list",
                   name: "UsersList",
-                  meta: { description: 'Kullanıcılar Listesi' },
+                  meta: { lang: 'router.superUser.users.list' },
                   component: () => import("@/views/superuser/users/List.vue")
                 },
                 {
                   path: "/superuser/users/create",
                   name: "UserCreate",
-                  meta: { description: 'Kullanıcı Oluştur' },
+                  meta: { lang: 'router.superUser.users.new' },
                   component: () => import("@/views/superuser/users/Create")
                 },
                 {
                   path: "/superuser/users/edit/:id",
                   name: "UserEdit",
-                  meta: { description: 'Kullanıcı Düzenle' },
+                  meta: { lang: 'router.superUser.users.edit' },
                   component: () => import("./views/superuser/users/Edit")
                 },
               ],
@@ -384,7 +384,7 @@ export default new Router({
             {
               path: '/superuser/about',
               name: 'About',
-              meta: { description: 'Hakkında' },
+              meta: { lang: 'router.superUser.about.main' },
               redirect: { name: "AboutList" },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: {
@@ -394,19 +394,19 @@ export default new Router({
                 {
                   path: "/superuser/about/list",
                   name: "AboutList",
-                  meta: { description: 'Hakkında Listesi' },
+                  meta: { lang: 'router.superUser.about.list' },
                   component: () => import("@/views/superuser/about/List.vue")
                 },
                 {
                   path: "/superuser/about/create",
                   name: "AboutCreate",
-                  meta: { description: 'Hakkında Oluştur' },
+                  meta: { lang: 'router.superUser.about.new' },
                   component: () => import("@/views/superuser/about/Create")
                 },
                 {
                   path: "/superuser/about/edit/:id",
                   name: "AboutEdit",
-                  meta: { description: 'Hakkında Düzenle' },
+                  meta: { lang: 'router.superUser.about.edit' },
                   component: () => import("./views/superuser/about/Edit")
                 },
               ],
@@ -414,7 +414,7 @@ export default new Router({
             {
               path: '/superuser/release',
               name: 'Release',
-              meta: { description: 'Sürüm Notu' },
+              meta: { lang: 'router.superUser.release.main' },
               redirect: { name: "ReleaseList" },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: {
@@ -424,19 +424,19 @@ export default new Router({
                 {
                   path: "/superuser/release/list",
                   name: "ReleaseList",
-                  meta: { description: 'Sürüm Notu Listesi' },
+                  meta: { lang: 'router.superUser.release.list' },
                   component: () => import("@/views/superuser/release/List.vue")
                 },
                 {
                   path: "/superuser/release/create",
                   name: "ReleaseCreate",
-                  meta: { description: 'Sürüm Notu Oluştur' },
+                  meta: { lang: 'router.superUser.release.new' },
                   component: () => import("@/views/superuser/release/Create")
                 },
                 {
                   path: "/superuser/release/edit/:id",
                   name: "ReleaseEdit",
-                  meta: { description: 'Sürüm Notu Düzenle' },
+                  meta: { lang: 'router.superUser.release.edit' },
                   component: () => import("./views/superuser/release/Edit")
                 },
               ],
@@ -444,21 +444,21 @@ export default new Router({
             {
               path: '/superuser/category/chapter-categories',
               name: 'SuperUserChapterCategories',
-              meta: { description: 'Bölüm Kategorileri' },
+              meta: { lang: 'router.superUser.category.chapter' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/chapters/Category.vue")
             },
             {
               path: '/superuser/category/news-categories',
               name: 'SuperUserNewsCategories',
-              meta: { description: 'Haber Kategorileri' },
+              meta: { lang: 'router.superUser.category.news' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/Category.vue")
             },
             {
               path: '/superuser/category/forum-categories',
               name: 'SuperUserForumCategories',
-              meta: { description: 'Forum Kategorileri' },
+              meta: { lang: 'router.superUser.category.forum' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/forums/Category.vue")
             }
