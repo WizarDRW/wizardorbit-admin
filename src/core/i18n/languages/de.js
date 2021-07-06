@@ -109,6 +109,15 @@ const de = {
             }
         }
     },
+    speedDial: {
+        cardTitle: 'Kartentitel',
+        cardSubTitle: 'Kartenuntertitel',
+        cardText: 'Textbereich.',
+        markdown: 'Markdown.',
+        code: 'Codeblock',
+        textEditor: 'Texteditor',
+        image: 'Bild'
+    },
     chapter: {
         list: {
             title: 'Titel',
@@ -122,6 +131,37 @@ const de = {
             },
             edit: 'Bearbeiten',
             create: 'Neues Kapitel erstellen'
+        },
+        new: {
+            subheader: {
+                back: 'Zurück',
+                preview: 'Vorschau',
+                save: 'speichern'
+            },
+            category: 'Kategorie',
+            addTag: {
+                main: 'Tag hinzufügen',
+                key: 'Schlüssel',
+                tag: 'Etikett'
+            },
+            title: 'Titel',
+            description: 'kurze Beschreibung',
+            addImage: 'Bild hinzufügen'
+        }
+    },
+    news: {
+        list: {
+            title: 'Titel',
+            createDate: 'Erstellungsdatum',
+            createdByUser: 'Vom Benutzer erstellt',
+            status: {
+                main: 'status',
+                published: 'Veröffentlicht',
+                moderatorApproval: 'Moderatorgenehmigung.',
+                blocked: 'verstopft',
+            },
+            edit: 'Bearbeiten',
+            create: 'Neue news erstellen.'
         },
         new: {
             subheader: {

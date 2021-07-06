@@ -109,6 +109,15 @@ const en = {
             }
         }
     },
+    speedDial: {
+        cardTitle: 'Card Title',
+        cardSubTitle: 'Card Subtitle',
+        cardText: 'Text Area',
+        markdown: 'Markdown',
+        code: 'Code Block',
+        textEditor: 'Text Editor',
+        image: 'Picture'
+    },
     chapter: {
         list: {
             title: 'Title',
@@ -122,6 +131,37 @@ const en = {
             },
             edit: 'Edit',
             create: 'Create New Chapter'
+        },
+        new: {
+            subheader: {
+                back: 'Back',
+                preview: 'Preview',
+                save: 'Save'
+            },
+            category: 'Category',
+            addTag: {
+                main: 'Add Tag',
+                key: 'Key',
+                tag: 'Tag'
+            },
+            title: 'Title',
+            description: 'Short Description',
+            addImage: 'Add a Picture'
+        }
+    },
+    news: {
+        list: {
+            title: 'Title',
+            createDate: 'Create Date',
+            createdByUser: 'Created by User',
+            status: {
+                main: 'Status',
+                published: 'Published',
+                moderatorApproval: 'Moderator Approval',
+                blocked: 'Blocked',
+            },
+            edit: 'Edit',
+            create: 'Create New News'
         },
         new: {
             subheader: {

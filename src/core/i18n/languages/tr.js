@@ -109,6 +109,15 @@ const tr = {
             }
         }
     },
+    speedDial: {
+        cardTitle: 'Kart Başlığı',
+        cardSubTitle: 'Kart Alt Başlığı',
+        cardText: 'Metin Alanı',
+        markdown: 'Markdown',
+        code: 'Kod Bloğu',
+        textEditor: 'Metin Editörü',
+        image: 'Resim'
+    },
     chapter: {
         list: {
             title: 'Başlık',
@@ -122,6 +131,37 @@ const tr = {
             },
             edit: 'Düzenle',
             create: 'Yeni Bölüm Oluştur'
+        },
+        new: {
+            subheader: {
+                back: 'Geri',
+                preview: 'Önizle',
+                save: 'Kaydet'
+            },
+            category: 'Kategori',
+            addTag: {
+                main: 'Etiket Ekle',
+                key: 'Anahtar',
+                tag: 'Etiket',
+            },
+            title: 'Başlık',
+            description: 'Kısa Açıklama',
+            addImage: 'Resim Ekle'
+        }
+    },
+    news: {
+        list: {
+            title: 'Başlık',
+            createDate: 'Oluşturma Tarihi',
+            createdByUser: 'Oluşturan Kullanıcı',
+            status: {
+                main: 'Durum',
+                published: 'Yayında',
+                moderatorApproval: 'Moderatör Onayında',
+                blocked: 'Engellendi',
+            },
+            edit: 'Düzenle',
+            create: 'Yeni Haber Oluştur'
         },
         new: {
             subheader: {

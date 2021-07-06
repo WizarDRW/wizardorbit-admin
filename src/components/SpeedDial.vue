@@ -34,7 +34,7 @@
             <v-icon>mdi-format-title</v-icon>
           </v-btn>
         </template>
-        <span>Kart Başlığı</span>
+        <span>{{ $t("speedDial.cardTitle") }}</span>
       </v-tooltip>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -54,7 +54,7 @@
             <v-icon>mdi-subtitles</v-icon>
           </v-btn>
         </template>
-        <span>Kart Alt Başlığı</span>
+        <span>{{ $t("speedDial.cardSubTitle") }}</span>
       </v-tooltip>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -74,7 +74,7 @@
             <v-icon>mdi-text-box-multiple-outline</v-icon>
           </v-btn>
         </template>
-        <span>Metin Alanı</span>
+        <span>{{ $t("speedDial.cardText") }}</span>
       </v-tooltip>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -94,7 +94,7 @@
             <v-icon>mdi-language-markdown-outline</v-icon>
           </v-btn>
         </template>
-        <span>Markdown</span>
+        <span>{{ $t("speedDial.markdown") }}</span>
       </v-tooltip>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -115,7 +115,7 @@
             <v-icon>mdi-code-tags</v-icon>
           </v-btn>
         </template>
-        <span>Kod Bloğu</span>
+        <span>{{ $t("speedDial.code") }}</span>
       </v-tooltip>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -135,7 +135,7 @@
             <v-icon>mdi-text-recognition</v-icon>
           </v-btn>
         </template>
-        <span>Metin Editörü</span>
+        <span>{{ $t("speedDial.textEditor") }}</span>
       </v-tooltip>
       <v-tooltip left>
         <template v-slot:activator="{ on, attrs }">
@@ -156,7 +156,7 @@
             <v-icon>mdi-image-outline</v-icon>
           </v-btn>
         </template>
-        <span>Resim</span>
+        <span>{{ $t("speedDial.image") }}</span>
       </v-tooltip>
     </slot>
     <slot name="append"></slot>
@@ -196,8 +196,8 @@ export default {
     },
     _contents: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     return {

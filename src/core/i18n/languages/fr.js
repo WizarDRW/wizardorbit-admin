@@ -109,6 +109,15 @@ const fr = {
             }
         }
     },
+    speedDial: {
+        cardTitle: 'Titre de la carte',
+        cardSubTitle: 'Sous-titre de la carte',
+        cardText: 'Zone de texte',
+        markdown: 'Réduction',
+        code: 'Bloc de codek',
+        textEditor: 'Éditeur de texte',
+        image: 'Photo'
+    },
     chapter: {
         list: {
             title: 'Titre',
@@ -122,6 +131,37 @@ const fr = {
             },
             edit: 'Éditer',
             create: 'Créer un nouveau chapitre'
+        },
+        new: {
+            subheader: {
+                back: 'Dos',
+                preview: 'Aperçu',
+                save: 'Sauvegarder'
+            },
+            category: 'Catégorie',
+            addTag: {
+                main: 'Ajouter une étiquette',
+                key: 'Clé',
+                tag: 'Étiqueter'
+            },
+            title: 'Titre',
+            description: 'brève description',
+            addImage: 'Ajouter une image'
+        }
+    },
+    news: {
+        list: {
+            title: 'Titre',
+            createDate: 'créer un rendez-vous',
+            createdByUser: "Créé par l'utilisateur",
+            status: {
+                main: 'Statut',
+                published: 'Publié',
+                moderatorApproval: 'Approbation du modérateur',
+                blocked: 'Bloquée',
+            },
+            edit: 'Éditer',
+            create: 'Créer de nouvelles nouvelles'
         },
         new: {
             subheader: {

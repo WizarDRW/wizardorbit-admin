@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Haber Oluştur</span>
+            <span>{{$t('news.list.create')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -32,6 +32,15 @@
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
+      <template #[`header.name`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.create_date`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.status`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.create_date`]="{ item }">
         {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
       </template>
@@ -95,16 +104,16 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "Başlık",
+          text: "news.list.title",
           value: "name",
         },
         {
-          text: "Oluşturma Zamanı",
+          text: "news.list.createDate",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "Durum",
+          text: "news.list.status.main",
           value: "status",
           sortable: true,
         },
