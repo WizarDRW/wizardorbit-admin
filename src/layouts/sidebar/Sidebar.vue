@@ -1,7 +1,11 @@
 <template>
   <v-navigation-drawer color="sidebar_menu_background" tile app v-model="_hide">
-    <img src="@/assets/logo.png" width="75%" alt="" />
-
+    <v-layout style="margin-top: 5px;" align-center justify-center wrap>
+      <div>
+        <v-img src="@/assets/logo.png" width="50px" :alt="$t('title')"></v-img>
+      </div>
+      <h2 class="text-center">{{ $t("title") }}</h2>
+    </v-layout>
     <v-divider></v-divider>
     <v-list expand flat dense nav>
       <v-list-item-group mandatory color="warning">
@@ -17,7 +21,9 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title>
-                  <h2 class="sidebar_list_menu_color--text">{{ $t(nav._name) }}</h2>
+                  <h2 class="sidebar_list_menu_color--text">
+                    {{ $t(nav._name) }}
+                  </h2>
                 </v-list-item-title>
               </v-list-item-content>
             </template>
@@ -76,7 +82,7 @@ export default {
     return {
       user: {},
       draftCount: 0,
-      navigation: []
+      navigation: [],
     };
   },
   async beforeMount() {
@@ -92,5 +98,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>
