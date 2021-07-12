@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <sub-header>
+    <sub-header :edit_title="chapter.name">
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
           <v-tooltip color="error" bottom>
@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>Geri</span>
+            <span>{{$t('chapter.new.subheader.back')}}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>Önizle</span>
+            <span>{{$t('chapter.new.subheader.preview')}}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -47,14 +47,14 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>Kaydet</span>
+            <span>{{$t('chapter.new.subheader.save')}}</span>
           </v-tooltip>
         </div>
       </template>
     </sub-header>
     <v-row>
       <v-col md="3">
-        <h2>Kategori</h2>
+        <h2>{{$t('chapter.new.category')}}</h2>
         <v-treeview
           v-model="chapter.categories"
           :items="categories"
@@ -68,7 +68,7 @@
             <v-icon>
               {{ item.icon }}
             </v-icon>
-            {{ item.label }}
+            {{ item.label[$store.getters.getLangName] }}
           </template>
         </v-treeview>
         <p></p>
@@ -76,8 +76,8 @@
         <p></p>
         <v-text-field
           v-model="chapter.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('chapter.new.title')"
+          :placeholder="$t('chapter.new.title')"
           outlined
           dense
           disabled
@@ -85,8 +85,8 @@
         ></v-text-field>
         <v-text-field
           v-model="chapter.short_description"
-          label="Açıklama"
-          placeholder="Açıklama"
+          :label="$t('chapter.new.description')"
+          :placeholder="$t('chapter.new.description')"
           outlined
           dense
           disabled
@@ -109,13 +109,13 @@
               <v-icon> mdi-plus </v-icon>
             </v-btn>
           </template>
-          <span>Etiket Ekle</span>
+          <span>{{$t('chapter.new.addTag.main')}}</span>
         </v-tooltip>
         <div v-for="(item, index) in chapter.tags" :key="item">
           <v-text-field
             v-model="item.key"
-            label="Anahtar"
-            placeholder="Anahtar"
+            :label="$t('chapter.new.addTag.key')"
+            :placeholder="$t('chapter.new.addTag.key')"
             outlined
             dense
             hide-details
@@ -138,8 +138,8 @@
           </v-text-field>
           <v-text-field
             v-model="item.tag"
-            label="Etiket"
-            placeholder="Etiket"
+            :label="$t('chapter.new.addTag.tag')"
+            :placeholder="$t('chapter.new.addTag.tag')"
             outlined
             dense
             hide-details
@@ -151,16 +151,16 @@
       <v-col md="9">
         <v-text-field
           v-model="chapter.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('chapter.new.title')"
+          :placeholder="$t('chapter.new.title')"
           outlined
           dense
           prepend-inner-icon="mdi-format-title"
         ></v-text-field>
         <v-text-field
           v-model="chapter.short_description"
-          label="Kısa Açıklama"
-          placeholder="Kısa Açıklama"
+          :label="$t('chapter.new.description')"
+          :placeholder="$t('chapter.new.description')"
           outlined
           dense
           prepend-inner-icon="mdi-subtitles-outline"
@@ -182,7 +182,7 @@
                   indeterminate
                   color="grey lighten-5"
                 ></v-progress-circular>
-                Yükleniyor...
+                {{$t('message.loading')}}...
               </v-row>
             </template>
             <v-fade-transition mode="out-in">
@@ -200,7 +200,7 @@
                   "
                   color="red"
                   tile
-                  >Sil</v-btn
+                  >{{$t('chapter.new.deleteImage')}}</v-btn
                 >
               </div>
             </v-fade-transition>
@@ -209,7 +209,7 @@
         <v-file-input
           v-else
           v-model="chapter.image_path"
-          label="Resim Ekle"
+          :label="$t('chapter.new.addImage')"
           outlined
           dense
           ref="image"

@@ -18,6 +18,7 @@ export default {
         [LANG]: async (context, payload) => {
             await loadLanguageAsync(payload.name);
             localStorage.setItem('lang', JSON.stringify(payload));
+            require(`moment/locale/${payload.name}`);
             context.commit(SET_LANG, payload);
         }
     },

@@ -26,7 +26,8 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      loading-text="Yükleniyor..."
+      :no-data-text="$t('message.noDataAvailable')"
+      :loading-text="`${$t('message.loading')}...`"
       hide-default-footer
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"

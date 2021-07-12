@@ -90,7 +90,7 @@ export default new Router({
         {
           path: '/news',
           name: 'News',
-          meta: { lang: 'router.news.main' },
+          meta: { lang: 'router.user.news.main' },
           redirect: '/my-news',
           beforeEnter: (to, from, next) => isAuth(to, from, next),
           component: {

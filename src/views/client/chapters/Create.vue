@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('chapter.new.subheader.back')}}</span>
+            <span>{{$t('message.back')}}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>{{$t('chapter.new.subheader.preview')}}</span>
+            <span>{{$t('message.preview')}}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -47,14 +47,14 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('chapter.new.subheader.save')}}</span>
+            <span>{{$t('message.save')}}</span>
           </v-tooltip>
         </div>
       </template>
     </sub-header>
     <v-row>
       <v-col md="3">
-        <h2>{{$t('chapter.new.category')}}</h2>
+        <h2>{{$t('message.category')}}</h2>
         <v-treeview
           v-model="chapter.categories"
           :items="categories"
@@ -68,7 +68,7 @@
             <v-icon>
               {{ item.icon }}
             </v-icon>
-            {{ item.label }}
+            {{ item.label[$store.getters.getLangName] }}
           </template>
         </v-treeview>
         <p></p>
@@ -178,7 +178,7 @@
                   indeterminate
                   color="grey lighten-5"
                 ></v-progress-circular>
-                Yükleniyor...
+                {{$t('message.loading')}}...
               </v-row>
             </template>
             <v-fade-transition mode="out-in">
@@ -192,7 +192,7 @@
                   "
                   color="red"
                   tile
-                  >Sil</v-btn
+                  >{{$t('chapter.new.deleteImage')}}</v-btn
                 >
               </div>
             </v-fade-transition>

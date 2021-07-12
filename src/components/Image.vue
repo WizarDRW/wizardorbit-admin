@@ -3,7 +3,7 @@
     <div v-if="_content.val">
       <v-text-field
         v-model="_content.width"
-        label="Genişlik(px)"
+        :label="$t('message.width') + '(px)'"
         placeholder="Placeholder"
         outlined
         dense
@@ -28,7 +28,7 @@
                 indeterminate
                 color="grey lighten-5"
               ></v-progress-circular>
-              Yükleniyor...
+              {{ $t("message.loading") }}...
             </v-row>
           </template>
           <v-fade-transition mode="out-in">
@@ -44,7 +44,7 @@
                 "
                 color="red"
                 tile
-                >Sil</v-btn
+                >{{ $t("message.deleteImage") }}</v-btn
               >
             </div>
           </v-fade-transition>
@@ -54,7 +54,7 @@
     <v-file-input
       v-else
       v-model="image"
-      label="Resim Ekle"
+      :label="$t('message.addImage')"
       outlined
       dense
       ref="image"

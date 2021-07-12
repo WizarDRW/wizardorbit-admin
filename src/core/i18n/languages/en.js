@@ -24,6 +24,15 @@ const en = {
             release: 'Release Notes',
             about: 'About',
         },
+        loading: 'Loading',
+        width: 'Width',
+        addImage: 'Add a Picture',
+        deleteImage: "Delete Picture",
+        back: 'Back',
+        preview: 'Preview',
+        save: 'Save',
+        category: 'Category',
+        noDataAvailable: 'No data available'
     },
     router: {
         home: "Home",
@@ -32,28 +41,28 @@ const en = {
                 main: "Chapter",
                 my: "My sections",
                 new: "Create new partition",
-                edit: "({0}) Edit section",
+                edit: "({edit}) Edit section",
                 delete: "({0}) Delete partition"
             },
             news: {
                 main: "News",
                 my: "My news",
                 new: "Create new news",
-                edit: "({0}) Edit the news",
+                edit: "({edit}) Edit the news",
                 delete: "({0}) Delete the news"
             },
             forum: {
                 main: "Forum",
                 my: "My forums",
                 new: "Create new forum",
-                edit: "({0}) Edit your forum",
+                edit: "({edit}) Edit your forum",
                 delete: "({0}) Delete the forum"
             },
             library: {
                 main: "Library",
                 my: "My books",
                 new: "Create new book",
-                edit: "({0}) Edit your book",
+                edit: "({edit}) Edit your book",
                 delete: "({0}) Delete the book"
             },
             draft: "Draft",
@@ -64,21 +73,21 @@ const en = {
                 main: "Chapter",
                 total: "Chapters",
                 new: "Create new chapter",
-                edit: "({0}) Edit chapter",
+                edit: "({edit}) Edit chapter",
                 delete: "({0}) Delete chapter"
             },
             news: {
                 main: "News",
                 total: "News",
                 new: "Create new news",
-                edit: "({0}) Edit the news",
+                edit: "({edit}) Edit the news",
                 delete: "({0}) Delete the news"
             },
             forum: {
                 main: "Forum",
                 total: "Forums",
                 new: "Create new forum",
-                edit: "({0}) Edit your forum",
+                edit: "({edit}) Edit your forum",
                 delete: "({0}) Delete the forum"
             },
         },
@@ -133,11 +142,6 @@ const en = {
             create: 'Create New Chapter'
         },
         new: {
-            subheader: {
-                back: 'Back',
-                preview: 'Preview',
-                save: 'Save'
-            },
             category: 'Category',
             addTag: {
                 main: 'Add Tag',
@@ -146,7 +150,8 @@ const en = {
             },
             title: 'Title',
             description: 'Short Description',
-            addImage: 'Add a Picture'
+            addImage: 'Add a Picture',
+            deleteImage: 'Delete Picture'
         }
     },
     news: {
@@ -164,20 +169,38 @@ const en = {
             create: 'Create New News'
         },
         new: {
-            subheader: {
-                back: 'Back',
-                preview: 'Preview',
-                save: 'Save'
-            },
-            category: 'Category',
             addTag: {
                 main: 'Add Tag',
                 key: 'Key',
                 tag: 'Tag'
             },
             title: 'Title',
-            description: 'Short Description',
-            addImage: 'Add a Picture'
+            description: 'Short Description'
+        }
+    },
+    forum: {
+        list: {
+            title: 'Title',
+            createDate: 'Create Date',
+            createdByUser: 'Created by User',
+            status: {
+                main: 'Status',
+                published: 'Published',
+                moderatorApproval: 'Moderator Approval',
+                blocked: 'Blocked',
+            },
+            edit: 'Edit',
+            comments: 'Comments',
+            create: 'Create New News'
+        },
+        new: {
+            addTag: {
+                main: 'Add Tag',
+                key: 'Key',
+                tag: 'Tag'
+            },
+            title: 'Title',
+            description: 'Short Description'
         }
     }
 }

@@ -24,6 +24,15 @@ const fr = {
             release: 'Notes de version',
             about: 'À propos',
         },
+        loading: 'Chargement',
+        width: 'Largeur',
+        addImage: 'Ajouter une image',
+        deleteImage: "Supprimer l'image",
+        back: 'Dos',
+        preview: 'Aperçu',
+        save: 'Sauvegarder',
+        category: 'Catégorie',
+        noDataAvailable: 'Pas de données disponibles'
     },
     router: {
         home: "Domicile",
@@ -32,28 +41,28 @@ const fr = {
                 main: "Chapitre",
                 my: "Mes sections",
                 new: "Créer une nouvelle partition",
-                edit: "({0}) Modifier la section",
+                edit: "({edit}) Modifier la section",
                 delete: "({0}) Supprimer la partition"
             },
             news: {
                 main: "Nouvelles",
                 my: "Mes nouvelles",
                 new: "Créer de nouvelles nouvelles",
-                edit: "({0}) Modifier les nouvelles",
+                edit: "({edit}) Modifier les nouvelles",
                 delete: "({0}) Supprimer les nouvelles"
             },
             forum: {
                 main: "Forum",
                 my: "Mes forums",
                 new: "Créer un nouveau forum",
-                edit: "({0}) Modifier votre forum",
+                edit: "({edit}) Modifier votre forum",
                 delete: "({0}) Supprimer le forum"
             },
             library: {
                 main: "Bibliothèque",
                 my: "Mes livres",
                 new: "Créer un nouveau livre",
-                edit: "({0}) Modifier votre livre",
+                edit: "({edit}) Modifier votre livre",
                 delete: "({0}) Supprimer le livre"
             },
             draft: "Brouillon",
@@ -64,21 +73,21 @@ const fr = {
                 main: "Chapitre",
                 total: "Chapitres",
                 new: "Créer un nouveau chapitre",
-                edit: "({0}) Modifier le chapitre",
+                edit: "({edit}) Modifier le chapitre",
                 delete: "({0}) Supprimer le chapitre"
             },
             news: {
                 main: "Nouvelles",
                 total: "Nouvelles",
                 new: "Créer de nouvelles nouvelles",
-                edit: "({0}) Modifier les nouvelles",
+                edit: "({edit}) Modifier les nouvelles",
                 delete: "({0}) Supprimer les nouvelles"
             },
             forum: {
                 main: "forum",
                 total: "forums",
                 new: "Créer un nouveau forum",
-                edit: "({0}) Modifier votre forum",
+                edit: "({edit}) Modifier votre forum",
                 delete: "({0}) Supprimer le forum"
             },
         },
@@ -133,11 +142,6 @@ const fr = {
             create: 'Créer un nouveau chapitre'
         },
         new: {
-            subheader: {
-                back: 'Dos',
-                preview: 'Aperçu',
-                save: 'Sauvegarder'
-            },
             category: 'Catégorie',
             addTag: {
                 main: 'Ajouter une étiquette',
@@ -146,7 +150,8 @@ const fr = {
             },
             title: 'Titre',
             description: 'brève description',
-            addImage: 'Ajouter une image'
+            addImage: 'Ajouter une image',
+            deleteImage: "Supprimer l'image"
         }
     },
     news: {
@@ -164,20 +169,38 @@ const fr = {
             create: 'Créer de nouvelles nouvelles'
         },
         new: {
-            subheader: {
-                back: 'Dos',
-                preview: 'Aperçu',
-                save: 'Sauvegarder'
-            },
-            category: 'Catégorie',
             addTag: {
                 main: 'Ajouter une étiquette',
                 key: 'Clé',
                 tag: 'Étiqueter'
             },
             title: 'Titre',
-            description: 'brève description',
-            addImage: 'Ajouter une image'
+            description: 'brève description'
+        }
+    },
+    forum: {
+        list: {
+            title: 'Titre',
+            createDate: 'créer un rendez-vous',
+            createdByUser: "Créé par l'utilisateur",
+            status: {
+                main: 'Statut',
+                published: 'Publié',
+                moderatorApproval: 'Approbation du modérateur',
+                blocked: 'Bloquée',
+            },
+            edit: 'Éditer',
+            comments: 'Commentaires',
+            create: 'Créer de nouvelles nouvelles'
+        },
+        new: {
+            addTag: {
+                main: 'Ajouter une étiquette',
+                key: 'Clé',
+                tag: 'Étiqueter'
+            },
+            title: 'Titre',
+            description: 'brève description'
         }
     }
 }

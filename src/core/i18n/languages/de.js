@@ -24,6 +24,15 @@ const de = {
             release: 'Versionshinweise',
             about: 'Über',
         },
+        loading: 'Wird geladen',
+        width: 'Breite',
+        addImage: 'Bild hinzufügen',
+        deleteImage: "Foto Löschen",
+        back: 'Zurück',
+        preview: 'Vorschau',
+        save: 'speichern',
+        category: 'Kategorie',
+        noDataAvailable: 'Keine Daten verfügbar'
     },
     router: {
         home: "Zuhause",
@@ -32,28 +41,28 @@ const de = {
                 main: "Kapitel",
                 my: "Meine Abschnitte",
                 new: "Neue Partition erstellen.",
-                edit: "({0}) Abschnitt bearbeiten",
+                edit: "({edit}) Abschnitt bearbeiten",
                 delete: "({0}) Partition löschen"
             },
             news: {
                 main: "Nachrichten",
                 my: "Meine Neuigkeiten",
                 new: "Neue news erstellen.",
-                edit: "({0}) Bearbeiten Sie die Nachrichten.",
+                edit: "({edit}) Bearbeiten Sie die Nachrichten.",
                 delete: "({0}) Löschen Sie die Nachrichten"
             },
             forum: {
                 main: "Forum",
                 my: "Meine Foren",
                 new: "Neues Forum erstellen.",
-                edit: "({0}) Bearbeiten Sie Ihr Forum",
+                edit: "({edit}) Bearbeiten Sie Ihr Forum",
                 delete: "({0}) Das Forum löschen"
             },
             library: {
                 main: "Bibliothek",
                 my: "Meine Bücher",
                 new: "Neues Buch erstellen.",
-                edit: "({0}) Bearbeiten Sie Ihr Buch",
+                edit: "({edit}) Bearbeiten Sie Ihr Buch",
                 delete: "({0}) Das Buch löschen"
             },
             draft: "Entwurf",
@@ -64,21 +73,21 @@ const de = {
                 main: "Kapitel",
                 total: "Kapitel",
                 new: "Neues Kapitel erstellen",
-                edit: "({0}) Kapitel bearbeiten",
+                edit: "({edit}) Kapitel bearbeiten",
                 delete: "({0}) Kapitel löschen"
             },
             news: {
                 main: "Nachrichten",
                 total: "Nachrichten",
                 new: "Neue news erstellen.",
-                edit: "({0}) Bearbeiten Sie die Nachrichten.",
+                edit: "({edit}) Bearbeiten Sie die Nachrichten.",
                 delete: "({0}) Löschen Sie die Nachrichten"
             },
             forum: {
                 main: "forum",
                 total: "Foren",
                 new: "Neues Forum erstellen.",
-                edit: "({0}) Bearbeiten Sie Ihr Forum",
+                edit: "({edit}) Bearbeiten Sie Ihr Forum",
                 delete: "({0}) Das Forum löschen"
             },
         },
@@ -133,11 +142,6 @@ const de = {
             create: 'Neues Kapitel erstellen'
         },
         new: {
-            subheader: {
-                back: 'Zurück',
-                preview: 'Vorschau',
-                save: 'speichern'
-            },
             category: 'Kategorie',
             addTag: {
                 main: 'Tag hinzufügen',
@@ -146,7 +150,8 @@ const de = {
             },
             title: 'Titel',
             description: 'kurze Beschreibung',
-            addImage: 'Bild hinzufügen'
+            addImage: 'Bild hinzufügen',
+            deleteImage: 'Foto Löschen'
         }
     },
     news: {
@@ -164,12 +169,6 @@ const de = {
             create: 'Neue news erstellen.'
         },
         new: {
-            subheader: {
-                back: 'Zurück',
-                preview: 'Vorschau',
-                save: 'speichern'
-            },
-            category: 'Kategorie',
             addTag: {
                 main: 'Tag hinzufügen',
                 key: 'Schlüssel',
@@ -177,7 +176,31 @@ const de = {
             },
             title: 'Titel',
             description: 'kurze Beschreibung',
-            addImage: 'Bild hinzufügen'
+        }
+    },
+    forum: {
+        list: {
+            title: 'Titel',
+            createDate: 'Erstellungsdatum',
+            createdByUser: 'Vom Benutzer erstellt',
+            status: {
+                main: 'status',
+                published: 'Veröffentlicht',
+                moderatorApproval: 'Moderatorgenehmigung.',
+                blocked: 'verstopft',
+            },
+            edit: 'Bearbeiten',
+            comments: 'Bemerkungen',
+            create: 'Neue news erstellen.'
+        },
+        new: {
+            addTag: {
+                main: 'Tag hinzufügen',
+                key: 'Schlüssel',
+                tag: 'Etikett'
+            },
+            title: 'Titel',
+            description: 'kurze Beschreibung',
         }
     }
 }

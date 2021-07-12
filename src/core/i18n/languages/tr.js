@@ -24,6 +24,15 @@ const tr = {
             release: 'Sürüm Notları',
             about: 'Hakkında',
         },
+        loading: 'Yükleniyor',
+        width: 'Genişlik',
+        addImage: 'Resim Ekle',
+        deleteImage: "Resmi Sil",
+        back: 'Geri',
+        preview: 'Önizle',
+        save: 'Kaydet',
+        category: 'Kategori',
+        noDataAvailable: 'Veri yok'
     },
     router: {
         home: "Ev",
@@ -32,28 +41,28 @@ const tr = {
                 main: "Bölüm",
                 my: "Bölümlerim",
                 new: "Yeni Bölüm Oluştur",
-                edit: "({0}) Bölümünü Düzenle",
+                edit: "({edit}) Bölümünü Düzenle",
                 delete: "({0}) Bölümünü Sil"
             },
             news: {
                 main: "Haber",
                 my: "Haberlerim",
                 new: "Yeni Haber Oluştur",
-                edit: "({0}) Haberini Düzenle",
+                edit: "({edit}) Haberini Düzenle",
                 delete: "({0}) Haberini Sil"
             },
             forum: {
                 main: "Forum",
                 my: "Forumlarım",
                 new: "Yeni Forum Oluştur",
-                edit: "({0}) Forumunu Düzenle",
+                edit: "({edit}) Forumunu Düzenle",
                 delete: "({0}) Forumunu Sil"
             },
             library: {
                 main: "Kütüphane",
                 my: "Kitaplarım",
                 new: "Yeni kitap oluştur",
-                edit: "({0}) Kitabını düzenle",
+                edit: "({edit}) Kitabını düzenle",
                 delete: "({0}) Kitabı sil"
             },
             draft: "Taslaklar",
@@ -64,21 +73,21 @@ const tr = {
                 main: "Bölüm",
                 total: "Bölüm",
                 new: "Yeni Bölüm Oluştur",
-                edit: "({0}) Bölüm Düzenle",
+                edit: "({edit}) Bölüm Düzenle",
                 delete: "({0}) Bölüm Sil"
             },
             news: {
                 main: "Haberler",
                 total: "Haberler",
                 new: "Yeni Haberler Yarat",
-                edit: "({0}) Haberleri düzenle",
+                edit: "({edit}) Haberleri düzenle",
                 delete: "({0}) Haberleri sil"
             },
             forum: {
                 main: "Forum",
                 total: "Forumlar",
                 new: "Yeni Forum Oluştur",
-                edit: "({0}) Forumunuzu Düzenleyin",
+                edit: "({edit}) Forumunuzu Düzenleyin",
                 delete: "({0}) Forumu Sil"
             },
         },
@@ -133,12 +142,6 @@ const tr = {
             create: 'Yeni Bölüm Oluştur'
         },
         new: {
-            subheader: {
-                back: 'Geri',
-                preview: 'Önizle',
-                save: 'Kaydet'
-            },
-            category: 'Kategori',
             addTag: {
                 main: 'Etiket Ekle',
                 key: 'Anahtar',
@@ -146,7 +149,6 @@ const tr = {
             },
             title: 'Başlık',
             description: 'Kısa Açıklama',
-            addImage: 'Resim Ekle'
         }
     },
     news: {
@@ -164,12 +166,6 @@ const tr = {
             create: 'Yeni Haber Oluştur'
         },
         new: {
-            subheader: {
-                back: 'Geri',
-                preview: 'Önizle',
-                save: 'Kaydet'
-            },
-            category: 'Kategori',
             addTag: {
                 main: 'Etiket Ekle',
                 key: 'Anahtar',
@@ -177,7 +173,31 @@ const tr = {
             },
             title: 'Başlık',
             description: 'Kısa Açıklama',
-            addImage: 'Resim Ekle'
+        }
+    },
+    forum: {
+        list: {
+            title: 'Başlık',
+            createDate: 'Oluşturma Tarihi',
+            createdByUser: 'Oluşturan Kullanıcı',
+            status: {
+                main: 'Durum',
+                published: 'Yayında',
+                moderatorApproval: 'Moderatör Onayında',
+                blocked: 'Engellendi',
+            },
+            edit: 'Düzenle',
+            comments: 'Yorumlar',
+            create: 'Yeni Forum Oluştur'
+        },
+        new: {
+            addTag: {
+                main: 'Etiket Ekle',
+                key: 'Anahtar',
+                tag: 'Etiket',
+            },
+            title: 'Başlık',
+            description: 'Kısa Açıklama',
         }
     }
 }

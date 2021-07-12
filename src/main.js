@@ -16,7 +16,6 @@ Vue.config.productionTip = false
 
 ApiService.init();
 const moment = require('moment')
-require('moment/locale/tr')
 Vue.use(VueMasonryPlugin);
 Vue.use(VueCookies)
 Vue.use(VueMoment, {

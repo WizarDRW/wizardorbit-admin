@@ -12,7 +12,7 @@
               item.path === $route.matched[$route.matched.length - 1].path
             "
           >
-            {{ $t(item.meta.lang).toUpperCase() }}
+            {{ edit_title ? $t(item.meta.lang, {edit: edit_title}).toUpperCase():$t(item.meta.lang).toUpperCase() }}
           </v-breadcrumbs-item>
         </template>
       </v-breadcrumbs>
@@ -23,6 +23,12 @@
 
 <script>
 export default {
+  props: {
+    edit_title: {
+      type: String,
+      default: null
+    }
+  }
 };
 </script>
 
