@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('chapter.new.subheader.back')}}</span>
+            <span>{{$t('message.back')}}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>{{$t('chapter.new.subheader.preview')}}</span>
+            <span>{{$t('message.preview')}}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -47,120 +47,33 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('chapter.new.subheader.save')}}</span>
+            <span>{{$t('message.save')}}</span>
           </v-tooltip>
         </div>
       </template>
     </sub-header>
     <v-row>
       <v-col md="3">
-        <h2>{{$t('chapter.new.category')}}</h2>
-        <v-treeview
-          v-model="chapter.categories"
-          :items="categories"
-          :selection-type="selectionType"
-          selectable
-          item-text="label"
-          open-all
-          return-object
+        <left-content
+          _type="chapter"
+          :_content="chapter"
+          v-on:selectedCategories="(val) => (chapter.categories = val)"
         >
-          <template v-slot:prepend="{ item }">
-            <v-icon>
-              {{ item.icon }}
-            </v-icon>
-            {{ item.label[$store.getters.getLangName] }}
-          </template>
-        </v-treeview>
-        <p></p>
-        <h2><v-icon>mdi-search-web</v-icon> SEO</h2>
-        <p></p>
-        <v-text-field
-          v-model="chapter.name"
-          :label="$t('chapter.new.title')"
-          :placeholder="$t('chapter.new.title')"
-          outlined
-          dense
-          disabled
-          prepend-inner-icon="mdi-format-title"
-        ></v-text-field>
-        <v-text-field
-          v-model="chapter.short_description"
-          :label="$t('chapter.new.description')"
-          :placeholder="$t('chapter.new.description')"
-          outlined
-          dense
-          disabled
-          hide-details
-          prepend-inner-icon="mdi-card-text-outline"
-        ></v-text-field>
-        <v-tooltip color="green" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="success"
-              icon
-              v-bind="attrs"
-              v-on="on"
-              @click="
-                () => {
-                  chapter.tags.push({ key: '', tag: '' });
-                }
-              "
-            >
-              <v-icon> mdi-plus </v-icon>
-            </v-btn>
-          </template>
-          <span>{{$t('chapter.new.addTag.main')}}</span>
-        </v-tooltip>
-        <div v-for="(item, index) in chapter.tags" :key="item">
-          <v-text-field
-            v-model="item.key"
-            :label="$t('chapter.new.addTag.key')"
-            :placeholder="$t('chapter.new.addTag.key')"
-            outlined
-            dense
-            hide-details
-            prepend-inner-icon="mdi-key"
-            prepend-icon="mdi-minus"
-          >
-            <template #prepend>
-              <v-btn
-                color="error"
-                icon
-                @click="
-                  () => {
-                    chapter.tags.splice(index, 1);
-                  }
-                "
-              >
-                <v-icon>mdi-minus</v-icon>
-              </v-btn>
-            </template>
-          </v-text-field>
-          <v-text-field
-            v-model="item.tag"
-            :label="$t('chapter.new.addTag.tag')"
-            :placeholder="$t('chapter.new.addTag.tag')"
-            outlined
-            dense
-            hide-details
-            append-icon="mdi-tag-outline"
-          ></v-text-field>
-          <br />
-        </div>
+        </left-content>
       </v-col>
       <v-col md="9">
         <v-text-field
           v-model="chapter.name"
-          :label="$t('chapter.new.title')"
-          :placeholder="$t('chapter.new.title')"
+          :label="$t('message.title')"
+          :placeholder="$t('message.title')"
           outlined
           dense
           prepend-inner-icon="mdi-format-title"
         ></v-text-field>
         <v-text-field
           v-model="chapter.short_description"
-          :label="$t('chapter.new.description')"
-          :placeholder="$t('chapter.new.description')"
+          :label="$t('message.description')"
+          :placeholder="$t('message.description')"
           outlined
           dense
           prepend-inner-icon="mdi-subtitles-outline"
@@ -200,7 +113,7 @@
                   "
                   color="red"
                   tile
-                  >{{$t('chapter.new.deleteImage')}}</v-btn
+                  >{{$t('message.deleteImage')}}</v-btn
                 >
               </div>
             </v-fade-transition>
@@ -209,7 +122,7 @@
         <v-file-input
           v-else
           v-model="chapter.image_path"
-          :label="$t('chapter.new.addImage')"
+          :label="$t('message.addImage')"
           outlined
           dense
           ref="image"
@@ -283,6 +196,7 @@ export default {
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
     CreateContent: () => import(`@/components/CreateContent.vue`),
+    LeftContent: () => import(`@/components/LeftContent.vue`),
   },
   data() {
     return {

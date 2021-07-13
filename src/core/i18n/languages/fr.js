@@ -31,8 +31,24 @@ const fr = {
         back: 'Dos',
         preview: 'Aperçu',
         save: 'Sauvegarder',
+        edit: 'Éditer',
+        delete: 'Les forces',
         category: 'Catégorie',
-        noDataAvailable: 'Pas de données disponibles'
+        noDataAvailable: 'Pas de données disponibles',
+        write: "L'été",
+        tag: 'Étiqueter',
+        key: 'Clé',
+        description: 'La description',
+        title: 'Titre',
+        showcase: 'Vitrine',
+        create_user: "Former l'utilisateur",
+        delete_message: `Si vous confirmez la suppression, vous avez effectué une transaction à inverser
+        Vous serez.Votre message est votre base de données de notre base de données
+        est effacé.`,
+        cancel: 'Annuler',
+        warning: 'Attention',
+        error: 'Erreur',
+        success: 'À succès'
     },
     router: {
         home: "Domicile",

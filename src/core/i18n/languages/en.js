@@ -31,8 +31,24 @@ const en = {
         back: 'Back',
         preview: 'Preview',
         save: 'Save',
+        edit: 'Edit',
+        delete: 'Delete',
         category: 'Category',
-        noDataAvailable: 'No data available'
+        noDataAvailable: 'No data available',
+        write: 'Write',
+        tag: 'Tag',
+        key: 'Key',
+        description: 'Description',
+        title: 'Title',
+        showcase: 'Showcase',
+        create_user: 'Forming User',
+        delete_message: `If you confirm the deletion, you have done a transaction to be reverse
+        You will be.Your post is your database from our database
+        is erased.`,
+        cancel: 'Cancel',
+        warning: 'Warning',
+        error: 'Error',
+        success: 'Success'
     },
     router: {
         home: "Home",

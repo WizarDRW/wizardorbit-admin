@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2><v-icon>mdi-shape</v-icon> Kategori</h2>
+    <h2><v-icon>mdi-shape</v-icon> {{ $t("message.category") }}</h2>
     <v-treeview
       v-model="inputCategories"
       :items="categories"
@@ -14,7 +14,7 @@
         <v-icon>
           {{ item.icon }}
         </v-icon>
-        {{ item.label }}
+        {{ item.label[$store.getters.getLangName] }}
       </template>
     </v-treeview>
     <p></p>
@@ -24,8 +24,8 @@
     <p></p>
     <v-text-field
       v-model="_content.name"
-      label="Başlık"
-      placeholder="Başlık"
+      :label="$t('message.title')"
+      :placeholder="$t('message.title')"
       outlined
       dense
       disabled
@@ -34,8 +34,8 @@
     <slot name="short_description">
       <v-text-field
         v-model="_content.short_description"
-        label="Açıklama"
-        placeholder="Açıklama"
+        :label="$t('message.description')"
+        :placeholder="$t('message.description')"
         outlined
         dense
         disabled
@@ -59,13 +59,13 @@
           <v-icon> mdi-plus </v-icon>
         </v-btn>
       </template>
-      <span>Etiket Ekle</span>
+      <span>{{ $t("message.tag") }}</span>
     </v-tooltip>
     <div v-for="(item, index) in _content.tags" :key="index">
       <v-text-field
         v-model="item.key"
-        label="Anahtar"
-        placeholder="Anahtar"
+        :label="$t('message.key')"
+        :placeholder="$t('message.key')"
         outlined
         dense
         hide-details
@@ -88,8 +88,8 @@
       </v-text-field>
       <v-text-field
         v-model="item.tag"
-        label="Etiket"
-        placeholder="Etiket"
+        :label="$t('message.tag')"
+        :placeholder="$t('message.tag')"
         outlined
         dense
         hide-details

@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Haber Oluştur</span>
+            <span>{{$t('news.list.create')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -26,12 +26,25 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      loading-text="Yükleniyor..."
+      :no-data-text="$t('message.noDataAvailable')"
+      :loading-text="`${$t('message.loading')}...`"
       hide-default-footer
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
+      <template #[`header.name`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.user_data`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.create_date`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.status`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.user_data`]="{ item }">
         {{ item.user_data.full_name }} ({{ item.user_data.email }})
       </template>
@@ -52,11 +65,11 @@
         >
           {{
             item.status == "Published"
-              ? "Yayında"
+              ? $t("news.list.status.published")
               : item.status == "ModeratorAcceping"
-              ? "Onay Bekliyor"
+              ? $t("news.list.status.moderatorApproval")
               : item.status == "Block"
-              ? "Yazı Bloklandı"
+              ? $t("news.list.status.blocked")
               : item.status
           }}
         </div>
@@ -79,7 +92,7 @@
               mdi-eye
             </v-icon>
           </template>
-          <span>Önizle</span>
+          <span>{{ $t("message.preview") }}</span>
         </v-tooltip>
         <v-tooltip color="blue" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -93,7 +106,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{ $t("message.edit") }}</span>
         </v-tooltip>
         <v-tooltip color="red" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -112,7 +125,7 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>Sil</span>
+          <span>{{ $t("message.delete") }}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -172,20 +185,20 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "Başlık",
+          text: "message.title",
           value: "name",
         },
         {
-          text: "Yazar",
+          text: "message.create_user",
           value: "user_data",
         },
         {
-          text: "Oluşturma Zamanı",
+          text: "news.list.createDate",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "Durum",
+          text: "news.list.status.main",
           value: "status",
           sortable: true,
         },

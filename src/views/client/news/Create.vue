@@ -201,7 +201,7 @@
         <v-file-input
           v-else
           v-model="news.image_path"
-          :label="$t('news.new.addImage')"
+          :label="$t('message.addImage')"
           outlined
           dense
           ref="image"

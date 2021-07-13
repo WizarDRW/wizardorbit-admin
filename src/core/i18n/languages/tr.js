@@ -31,8 +31,24 @@ const tr = {
         back: 'Geri',
         preview: 'Önizle',
         save: 'Kaydet',
+        edit: 'Düzenle',
+        delete: 'Sil',
         category: 'Kategori',
-        noDataAvailable: 'Veri yok'
+        noDataAvailable: 'Veri yok',
+        write: 'Yaz',
+        tag: 'Etiket',
+        key: 'Anahtar',
+        description: 'Açıklama',
+        title: 'Başlık',
+        showcase: 'Vitrin',
+        create_user: 'Oluşturan Kullanıcı',
+        delete_message: `Silme işlemini onaylarsanız geriye dönüşü olmana bir işlem yapmış
+        olacaksınız. Yazdığınız yazınız veritabanımızdan anlık
+        silinmektedir.`,
+        cancel: 'İptal',
+        warning: 'Dikkat',
+        error: 'Hata',
+        success: 'Başarılı'
     },
     router: {
         home: "Ev",

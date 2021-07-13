@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>Geri</span>
+            <span>{{$t('message.back')}}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>Önizle</span>
+            <span>{{$t('message.preview')}}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -47,7 +47,7 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>Kaydet</span>
+            <span>{{$t('message.save')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -60,16 +60,16 @@
           v-on:selectedCategories="(val) => (chapter.categories = val)"
         >
           <template #showcase>
-            <h2><v-icon>mdi-book-open-page-variant</v-icon> Vitrin</h2>
+            <h2><v-icon>mdi-book-open-page-variant</v-icon> {{$t('message.showcase')}}</h2>
             <v-treeview
               v-model="chapter.showcases"
               :items="[
-                { id: 'Carousel', label: 'Slayt' },
-                { id: 'Top6', label: 'En İyi 6' },
+                { id: 'Carousel', label: { tr: 'Slayt', en: 'Slide', fr: 'Faire glisser', de: 'Rutschen'} },
+                { id: 'Top6', label: { tr: 'En İyi 6', en: 'Top 6', fr: 'Top 6', de: 'Top 6'} },
               ]"
               selection-type="leaf"
               selectable
-              item-text="label"
+              :item-text="`label[${$store.getters.getLangName}]`"
               open-all
             >
             </v-treeview>
@@ -79,16 +79,16 @@
       <v-col md="9">
         <v-text-field
           v-model="chapter.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('message.title')"
+          :placeholder="$t('message.title')"
           outlined
           dense
           prepend-icon="mdi-format-title"
         ></v-text-field>
         <v-text-field
           v-model="chapter.short_description"
-          label="Kısa Açıklama"
-          placeholder="Kısa Açıklama"
+          :label="$t('message.description')"
+          :placeholder="$t('message.description')"
           outlined
           dense
           prepend-icon="mdi-subtitles-outline"
@@ -106,7 +106,7 @@
                   indeterminate
                   color="grey lighten-5"
                 ></v-progress-circular>
-                Yükleniyor...
+                {{$t('message.loading')}}...
               </v-row>
             </template>
             <v-fade-transition mode="out-in">
@@ -120,7 +120,7 @@
                   "
                   tile
                   color="red"
-                  >Sil</v-btn
+                  >{{$t('message.deleteImage')}}</v-btn
                 >
               </div>
             </v-fade-transition>
@@ -129,7 +129,7 @@
         <v-file-input
           v-else
           v-model="chapter.image_path"
-          label="Başlık Resimi Ekle"
+          :label="$t('message.addImage')"
           outlined
           dense
           ref="image"

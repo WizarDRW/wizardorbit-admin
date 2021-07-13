@@ -81,7 +81,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>{{ $t("chapter.list.edit") }}</span>
+          <span>{{ $t("message.edit") }}</span>
         </v-tooltip>
       </template>
     </v-data-table>

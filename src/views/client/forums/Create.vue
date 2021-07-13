@@ -19,7 +19,7 @@
     </sub-header>
     <v-row>
       <v-col md="3">
-        <h2><v-icon>mdi-shape</v-icon> Kategori</h2>
+        <h2>{{$t('message.category')}}</h2>
         <v-treeview
           v-model="forum.categories"
           :items="categories"
@@ -33,7 +33,7 @@
             <v-icon>
               {{ item.icon }}
             </v-icon>
-            {{ item.label }}
+            {{ item.label[$store.getters.getLangName] }}
           </template>
         </v-treeview>
         <p></p>
@@ -41,8 +41,8 @@
         <p></p>
         <v-text-field
           v-model="forum.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('forum.new.title')"
+          :placeholder="$t('forum.new.title')"
           outlined
           dense
           disabled
@@ -54,8 +54,8 @@
           dense
           hide-details
           rows="3"
-          label="Açıklama"
-          placeholder="Açıklama"
+          :label="$t('forum.new.description')"
+          :placeholder="$t('forum.new.description')"
           prepend-inner-icon="mdi-card-text-outline"
         ></v-textarea>
         <v-tooltip color="green" bottom>
@@ -74,13 +74,13 @@
               <v-icon> mdi-plus </v-icon>
             </v-btn>
           </template>
-          <span>Etiket Ekle</span>
+          <span>{{$t('forum.new.addTag.main')}}</span>
         </v-tooltip>
         <div v-for="(item, index) in forum.tags" :key="index">
           <v-text-field
             v-model="item.key"
-            label="Anahtar"
-            placeholder="Anahtar"
+            :label="$t('forum.new.addTag.key')"
+            :placeholder="$t('forum.new.addTag.key')"
             outlined
             dense
             hide-details
@@ -103,8 +103,8 @@
           </v-text-field>
           <v-text-field
             v-model="item.tag"
-            label="Etiket"
-            placeholder="Etiket"
+            :label="$t('forum.new.addTag.tag')"
+            :placeholder="$t('forum.new.addTag.tag')"
             outlined
             dense
             hide-details
@@ -116,8 +116,8 @@
       <v-col md="9">
         <v-text-field
           v-model="forum.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('forum.new.title')"
+          :placeholder="$t('forum.new.title')"
           outlined
           dense
           prepend-inner-icon="mdi-format-title"
@@ -126,7 +126,7 @@
           <template #default="{ extensions }">
             <tiptap-vuetify
               v-model="forum.description"
-              placeholder="Yazınız…"
+              :placeholder="`${$t('message.write')}…`"
               :extensions="extensions"
               :toolbar-attributes="{ color: 'black' }"
             >

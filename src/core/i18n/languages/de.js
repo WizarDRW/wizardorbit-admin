@@ -22,7 +22,7 @@ const de = {
             newsOptions: 'Nachrichtenoptionen',
             forumOptions: 'Forum-Optionen',
             release: 'Versionshinweise',
-            about: 'Über',
+            about: 'Über'
         },
         loading: 'Wird geladen',
         width: 'Breite',
@@ -30,9 +30,25 @@ const de = {
         deleteImage: "Foto Löschen",
         back: 'Zurück',
         preview: 'Vorschau',
-        save: 'speichern',
+        save: 'Speichern',
+        edit: 'Bearbeiten',
+        delete: 'Kräfte',
         category: 'Kategorie',
-        noDataAvailable: 'Keine Daten verfügbar'
+        noDataAvailable: 'Keine Daten verfügbar',
+        write: 'Sommer',
+        tag: 'Etikette',
+        key: 'Schlüssel',
+        description: 'Beschreibung',
+        title: 'Titel',
+        showcase: 'Vitrine',
+        create_user: 'Benutzer bilden',
+        delete_message: `Wenn Sie den Löschvorgang bestätigen, haben Sie eine Transaktion durchgeführt, um umgekehrt zu sein
+        Sie werden sein. Ihr Beitrag ist Ihre Datenbank aus unserer Datenbank
+        wird gelöscht.`,
+        cancel: 'Stornieren',
+        warning: 'Beachtung',
+        error: 'Error',
+        success: 'Erfolgreich'
     },
     router: {
         home: "Zuhause",

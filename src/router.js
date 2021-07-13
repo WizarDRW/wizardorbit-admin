@@ -245,13 +245,6 @@ export default new Router({
               meta: { lang: 'router.admin.chapter.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/chapters/Edit.vue"),
-            },
-            {
-              path: '/admin/chapter/detail/:id',
-              name: 'AdminDetailChapter',
-              meta: { lang: 'router.admin.chapter.detail' },
-              beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/chapters/Detail.vue")
             }
           ]
         },
@@ -285,13 +278,6 @@ export default new Router({
               meta: { lang: 'router.admin.chapter.edit' },
               beforeEnter: (to, from, next) => isAuth(to, from, next),
               component: () => import("./views/admin/news/Edit.vue"),
-            },
-            {
-              path: '/admin/news/detail/:id',
-              name: 'AdminDetailNews',
-              meta: { lang: 'router.admin.chapter.detail' },
-              beforeEnter: (to, from, next) => isAuth(to, from, next),
-              component: () => import("./views/admin/news/Detail.vue")
             }
           ]
         },
