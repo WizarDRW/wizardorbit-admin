@@ -48,7 +48,13 @@ const tr = {
         cancel: 'İptal',
         warning: 'Dikkat',
         error: 'Hata',
-        success: 'Başarılı'
+        success: 'Başarılı',
+        add_content: '"{name}" başlıklı içerik ekleniyor.',
+        add_content_success: '"{name}" başlıklı içerik başarı ile eklenmiştir.',
+        update_content: '{id} ID numaralı içerik güncelleniyor.',
+        update_content_success: '{id} ID numaralı içerik başarı ile güncellenmiştir.',
+        delete_content: '{id} ID numaralı içerik siliniyor.',
+        delete_content_success: '{id} ID numaralı içerik başarı ile silinmiştir.'
     },
     router: {
         home: "Ev",

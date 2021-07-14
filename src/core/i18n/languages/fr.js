@@ -48,7 +48,13 @@ const fr = {
         cancel: 'Annuler',
         warning: 'Attention',
         error: 'Erreur',
-        success: 'À succès'
+        success: 'À succès',
+        add_content: 'Ajout de contenu intitulé "{name}".',
+        add_content_success: 'Le contenu intitulé "{name}" a été ajouté avec succès.',
+        update_content: "Mise à jour du contenu avec l'ID {id}.",
+        update_content_success: "Le contenu avec l'ID {id} a été mis à jour avec succès.",
+        delete_content: "Le contenu avec l'ID {id} est en cours de suppression.",
+        delete_content_success: "Le contenu avec l'ID {id} a été supprimé avec succès."
     },
     router: {
         home: "Domicile",

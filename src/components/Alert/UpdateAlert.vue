@@ -7,7 +7,7 @@
   >
     <v-row align="center">
       <v-col class="grow">
-        {{ msg }}
+        {{ type == 'success' ? $t('message.update_content_success'):$t("message.update_content", { msg: msg }) }}
         <v-progress-linear
           v-if="type != 'success'"
           :buffer-value="100"

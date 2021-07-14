@@ -48,7 +48,8 @@ const de = {
         cancel: 'Stornieren',
         warning: 'Beachtung',
         error: 'Error',
-        success: 'Erfolgreich'
+        success: 'Erfolgreich',
+        add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.'
     },
     router: {
         home: "Zuhause",

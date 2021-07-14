@@ -28,10 +28,20 @@
             <h2><v-icon>mdi-book-open-page-variant</v-icon> Vitrin</h2>
             <v-treeview
               v-model="forum.showcases"
-              :items="[{ id: 'Advertisement', label: 'Reklam' }]"
+              :items="[
+                {
+                  id: 'Advertisement',
+                  label: {
+                    tr: 'Reklam',
+                    en: 'Advertisement',
+                    de: 'Werbung',
+                    fr: 'Publicité',
+                  },
+                },
+              ]"
               selection-type="leaf"
               selectable
-              item-text="label"
+              :item-text="`label[${$store.getters.getLangName}]`"
               open-all
             >
             </v-treeview>
@@ -43,8 +53,8 @@
               dense
               hide-details
               rows="3"
-              label="Açıklama"
-              placeholder="Açıklama"
+              :label="$t('message.description')"
+              :placeholder="$t('message.description')"
               prepend-inner-icon="mdi-card-text-outline"
             ></v-textarea>
           </template>
@@ -53,8 +63,8 @@
       <v-col md="9">
         <v-text-field
           v-model="forum.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('message.title')"
+          :placeholder="$t('message.title')"
           outlined
           dense
           prepend-inner-icon="mdi-format-title"
@@ -63,7 +73,7 @@
           <template #default="{ extensions }">
             <tiptap-vuetify
               v-model="forum.description"
-              placeholder="Yazınız…"
+              :placeholder="`${$t('message.write')}…`"
               :extensions="extensions"
               :toolbar-attributes="{ color: 'black' }"
             >

@@ -48,7 +48,13 @@ const en = {
         cancel: 'Cancel',
         warning: 'Warning',
         error: 'Error',
-        success: 'Success'
+        success: 'Success',
+        add_content: 'Adding content titled "{name}".',
+        add_content_success: '"Content titled "{name}" has been successfully added',
+        update_content: 'Updating content with ID {id}.',
+        update_content_success: 'The content with ID {id} has been successfully updated.',
+        delete_content: 'Content with ID {id} is being deleted.',
+        delete_content_success: 'Content with ID {id} has been deleted successfully.'
     },
     router: {
         home: "Home",

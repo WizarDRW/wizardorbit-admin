@@ -7,7 +7,7 @@
   >
     <v-row align="center">
       <v-col class="grow">
-        {{ msg }}
+        {{ $t("message.add_content", { msg: msg }) }}
         <v-progress-linear
           v-if="type != 'success'"
           :buffer-value="100"
@@ -62,7 +62,7 @@ export default {
       value: 100,
       type: "",
       msg: "",
-      loading: false
+      loading: false,
     };
   },
   created() {
