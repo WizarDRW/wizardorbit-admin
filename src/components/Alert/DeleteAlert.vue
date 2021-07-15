@@ -7,7 +7,7 @@
   >
     <v-row align="center">
       <v-col class="grow">
-        {{ $t("message.delete_content", { msg: msg }) }}
+        {{ $t("message.delete_content", { id: msg }) }}
         <v-progress-linear
           v-if="type != 'success'"
           :buffer-value="100"

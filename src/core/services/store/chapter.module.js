@@ -89,6 +89,7 @@ export default {
       }
     },
     [SET_DELETE_CHAPTER]: (state, payload) => {
+      console.log(payload);
       if (state.chapters) state.chapters.splice(state.chapters.findIndex(x => x._id == payload), 1)
       if (state.user_chapters) state.user_chapters.splice(state.user_chapters.findIndex(x => x._id == payload), 1)
     }

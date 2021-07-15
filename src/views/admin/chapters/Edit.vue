@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <sub-header>
+    <sub-header :edit_title="chapter.name">
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
           <v-tooltip color="error" bottom>

@@ -54,7 +54,8 @@ const en = {
         update_content: 'Updating content with ID {id}.',
         update_content_success: 'The content with ID {id} has been successfully updated.',
         delete_content: 'Content with ID {id} is being deleted.',
-        delete_content_success: 'Content with ID {id} has been deleted successfully.'
+        delete_content_success: 'Content with ID {id} has been deleted successfully.',
+        content: 'Content'
     },
     router: {
         home: "Home",
@@ -78,7 +79,8 @@ const en = {
                 my: "My forums",
                 new: "Create new forum",
                 edit: "({edit}) Edit your forum",
-                delete: "({0}) Delete the forum"
+                delete: "({0}) Delete the forum",
+                detail: "({edit}) Details"
             },
             library: {
                 main: "Library",

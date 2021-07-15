@@ -54,7 +54,8 @@ const tr = {
         update_content: '{id} ID numaralı içerik güncelleniyor.',
         update_content_success: '{id} ID numaralı içerik başarı ile güncellenmiştir.',
         delete_content: '{id} ID numaralı içerik siliniyor.',
-        delete_content_success: '{id} ID numaralı içerik başarı ile silinmiştir.'
+        delete_content_success: '{id} ID numaralı içerik başarı ile silinmiştir.',
+        content: 'İçerik'
     },
     router: {
         home: "Ev",
@@ -78,7 +79,8 @@ const tr = {
                 my: "Forumlarım",
                 new: "Yeni Forum Oluştur",
                 edit: "({edit}) Forumunu Düzenle",
-                delete: "({0}) Forumunu Sil"
+                delete: "({0}) Forumunu Sil",
+                detail: "({edit}) Detayları"
             },
             library: {
                 main: "Kütüphane",

@@ -21,7 +21,7 @@
               </v-card-subtitle>
             </v-col>
             <v-col>
-              <h3>İçerik</h3>
+              <h3>{{ $t("message.content") }}</h3>
               <v-card-text>
                 <div v-html="item.description"></div>
               </v-card-text>

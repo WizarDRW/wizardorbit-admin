@@ -210,7 +210,7 @@ export default {
       preview: false,
       add: {
         status: false,
-        msg: "Ekleme işlemi yaklaşık 5sn içinde gerçekleşecektir.",
+        msg: null,
         second: 100,
         type: "warning",
         func: "postApiChapter",
@@ -245,6 +245,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.add.item = this.chapter;
+      this.add.msg = this.chapter.name;
       this.add.second = 100;
       this.add.status = true;
     },

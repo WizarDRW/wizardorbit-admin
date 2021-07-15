@@ -54,7 +54,8 @@ const fr = {
         update_content: "Mise à jour du contenu avec l'ID {id}.",
         update_content_success: "Le contenu avec l'ID {id} a été mis à jour avec succès.",
         delete_content: "Le contenu avec l'ID {id} est en cours de suppression.",
-        delete_content_success: "Le contenu avec l'ID {id} a été supprimé avec succès."
+        delete_content_success: "Le contenu avec l'ID {id} a été supprimé avec succès.",
+        content: 'Contenu'
     },
     router: {
         home: "Domicile",
@@ -78,7 +79,8 @@ const fr = {
                 my: "Mes forums",
                 new: "Créer un nouveau forum",
                 edit: "({edit}) Modifier votre forum",
-                delete: "({0}) Supprimer le forum"
+                delete: "({0}) Supprimer le forum",
+                detail: "({edit}) Des détails"
             },
             library: {
                 main: "Bibliothèque",

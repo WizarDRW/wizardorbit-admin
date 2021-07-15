@@ -49,7 +49,8 @@ const de = {
         warning: 'Beachtung',
         error: 'Error',
         success: 'Erfolgreich',
-        add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.'
+        add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.',
+        content: 'Inhalt'
     },
     router: {
         home: "Zuhause",
@@ -73,7 +74,8 @@ const de = {
                 my: "Meine Foren",
                 new: "Neues Forum erstellen.",
                 edit: "({edit}) Bearbeiten Sie Ihr Forum",
-                delete: "({0}) Das Forum löschen"
+                delete: "({0}) Das Forum löschen",
+                detail: "({edit}) Einzelheiten"
             },
             library: {
                 main: "Bibliothek",

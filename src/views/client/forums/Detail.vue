@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <sub-header>
+    <sub-header :edit_title="forum.name">
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
           <v-btn
@@ -18,7 +18,7 @@
       </template>
     </sub-header>
     <br />
-    <comment v-if="this.forum._id" :_datas="forum.comments"></comment>
+    <comment v-if="forum._id" :_datas="forum.comments"></comment>
     <div class="alerts">
       <update-alert
         v-if="update.status"

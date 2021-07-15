@@ -243,7 +243,7 @@ export default {
     },
     handleDelete(itemid) {
       this.deleteItems.push({
-        msg: "Silinme işlemi için",
+        msg: itemid,
         type: "error",
         second: 100,
         func: "deleteApiChapter",
