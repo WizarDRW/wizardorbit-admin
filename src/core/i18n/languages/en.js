@@ -1,61 +1,97 @@
 const en = {
     title: "Panel | Wizard's Orbit",
-    message: {
+    keywords: {
         tasks: 'Tasks',
         messages: 'Messages',
-        resetPassword: 'Reset Password',
         options: 'Options',
         logout: 'Logout',
-        sideMenus: {
-            userMenus: 'User Menus',
-            adminMenus: 'Admin Menus',
-            superUserMenus: 'Super User Menus',
-            dashboard: 'Dashboard',
-            chapters: 'Chapters',
-            chapter: 'Chapter',
-            news: 'News',
-            forums: 'Forums',
-            libraries: 'Libraries',
-            drafts: 'Drafts',
-            users: 'Users',
-            chapterOptions: 'Chapter Options',
-            newsOptions: 'News Options',
-            forumOptions: 'Forum Options',
-            release: 'Release Notes',
-            about: 'About',
-        },
-        loading: 'Loading',
         width: 'Width',
-        addImage: 'Add a Picture',
-        deleteImage: "Delete Picture",
         back: 'Back',
         preview: 'Preview',
         save: 'Save',
         edit: 'Edit',
         delete: 'Delete',
         category: 'Category',
-        noDataAvailable: 'No data available',
         write: 'Write',
         tag: 'Tag',
         key: 'Key',
         description: 'Description',
         title: 'Title',
         showcase: 'Showcase',
-        create_user: 'Forming User',
-        delete_message: `If you confirm the deletion, you have done a transaction to be reverse
-        You will be.Your post is your database from our database
-        is erased.`,
         cancel: 'Cancel',
         warning: 'Warning',
         error: 'Error',
         success: 'Success',
+        content: 'Content',
+        status: 'Status',
+        comment: 'Comment',
+        comments: 'Comments',
+        block: 'Block',
+        unblock: 'Unblock',
+        publish: 'Publish',
+        process: 'Process',
+        data: 'Data',
+        date: 'Date',
+        class: 'Class',
+        flow: 'Flow',
+        sequence: 'Sequence',
+        gantt: 'Gantt',
+        state: 'State',
+        pie: 'Pie',
+        integral: 'Integral',
+        pow: 'Pow',
+        sqrt: 'Sqrt',
+        logarithm: 'Logarithm',
+        m_h1: 'Title 1',
+        m_h2: 'Title 2',
+        m_h3: 'Title 3',
+    },
+    phrases: {
+        resetPassword: 'Reset Password',
+        loading: 'Loading',
+        addImage: 'Add a Picture',
+        deleteImage: "Delete Picture",
+        noDataAvailable: 'No data available',
+        create_user: 'Forming User',
+        create_date: 'Create Date',
+        published: 'Published',
+        moderatorApproval: 'Moderator Approval',
+        blocked: 'Blocked',
+        short_description: 'Short Description',
+        card_title: 'Card Title',
+        card_subtitle: 'Card Subtitle',
+        card_text: 'Card Text',
+        content_markdown: 'Content(Markdown)',
+        user_journey: 'User Journey'
+    },
+    sideMenus: {
+        userMenus: 'User Menus',
+        adminMenus: 'Admin Menus',
+        superUserMenus: 'Super User Menus',
+        dashboard: 'Dashboard',
+        chapters: 'Chapters',
+        chapter: 'Chapter',
+        news: 'News',
+        forums: 'Forums',
+        libraries: 'Libraries',
+        drafts: 'Drafts',
+        users: 'Users',
+        chapterOptions: 'Chapter Options',
+        newsOptions: 'News Options',
+        forumOptions: 'Forum Options',
+        release: 'Release Notes',
+        about: 'About',
+    },
+    message: {
+        delete_message: `If you confirm the deletion, you have done a transaction to be reverse
+        You will be.Your post is your database from our database
+        is erased.`,
         add_content: 'Adding content titled "{name}".',
         add_content_success: '"Content titled "{name}" has been successfully added',
         update_content: 'Updating content with ID {id}.',
         update_content_success: 'The content with ID {id} has been successfully updated.',
         delete_content: 'Content with ID {id} is being deleted.',
         delete_content_success: 'Content with ID {id} has been deleted successfully.',
-        content: 'Content'
     },
     router: {
         home: "Home",
@@ -152,80 +188,13 @@ const en = {
         image: 'Picture'
     },
     chapter: {
-        list: {
-            title: 'Title',
-            createDate: 'Create Date',
-            createdByUser: 'Created by User',
-            status: {
-                main: 'Status',
-                published: 'Published',
-                moderatorApproval: 'Moderator Approval',
-                blocked: 'Blocked',
-            },
-            edit: 'Edit',
-            create: 'Create New Chapter'
-        },
-        new: {
-            category: 'Category',
-            addTag: {
-                main: 'Add Tag',
-                key: 'Key',
-                tag: 'Tag'
-            },
-            title: 'Title',
-            description: 'Short Description',
-            addImage: 'Add a Picture',
-            deleteImage: 'Delete Picture'
-        }
+        new: 'New Chapter'
     },
     news: {
-        list: {
-            title: 'Title',
-            createDate: 'Create Date',
-            createdByUser: 'Created by User',
-            status: {
-                main: 'Status',
-                published: 'Published',
-                moderatorApproval: 'Moderator Approval',
-                blocked: 'Blocked',
-            },
-            edit: 'Edit',
-            create: 'Create New News'
-        },
-        new: {
-            addTag: {
-                main: 'Add Tag',
-                key: 'Key',
-                tag: 'Tag'
-            },
-            title: 'Title',
-            description: 'Short Description'
-        }
+        new: 'New News'
     },
     forum: {
-        list: {
-            title: 'Title',
-            createDate: 'Create Date',
-            createdByUser: 'Created by User',
-            status: {
-                main: 'Status',
-                published: 'Published',
-                moderatorApproval: 'Moderator Approval',
-                blocked: 'Blocked',
-            },
-            edit: 'Edit',
-            comments: 'Comments',
-            create: 'Create New News'
-        },
-        new: {
-            addTag: {
-                main: 'Add Tag',
-                key: 'Key',
-                tag: 'Tag'
-            },
-            title: 'Title',
-            description: 'Short Description'
-        }
+        new: 'New Forum'
     }
 }
 

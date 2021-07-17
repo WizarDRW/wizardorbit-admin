@@ -1,56 +1,96 @@
 const de = {
     title: "Panel | Umlaufbahn des Zauberers",
-    message: {
+    keywords: {
         tasks: 'Aufgaben',
         messages: 'Mitteilungen',
-        resetPassword: 'Passwort zurücksetzen',
         options: 'Optionen',
         logout: 'Ausloggen',
-        sideMenus: {
-            userMenus: 'Benutzermenüs',
-            adminMenus: 'Admin-Menüs',
-            superUserMenus: 'Superbenutzermenüs',
-            dashboard: 'Instrumententafel',
-            chapters: 'Kapitel',
-            chapter: 'Kapitel',
-            news: 'Nachrichten',
-            forums: 'Foren',
-            libraries: 'Bibliotheken',
-            drafts: 'Entwürfe',
-            users: 'Benutzer',
-            chapterOptions: 'Kapitel Optionen',
-            newsOptions: 'Nachrichtenoptionen',
-            forumOptions: 'Forum-Optionen',
-            release: 'Versionshinweise',
-            about: 'Über'
-        },
-        loading: 'Wird geladen',
         width: 'Breite',
-        addImage: 'Bild hinzufügen',
-        deleteImage: "Foto Löschen",
         back: 'Zurück',
         preview: 'Vorschau',
         save: 'Speichern',
         edit: 'Bearbeiten',
         delete: 'Kräfte',
         category: 'Kategorie',
-        noDataAvailable: 'Keine Daten verfügbar',
         write: 'Sommer',
         tag: 'Etikette',
         key: 'Schlüssel',
         description: 'Beschreibung',
         title: 'Titel',
         showcase: 'Vitrine',
-        create_user: 'Benutzer bilden',
-        delete_message: `Wenn Sie den Löschvorgang bestätigen, haben Sie eine Transaktion durchgeführt, um umgekehrt zu sein
-        Sie werden sein. Ihr Beitrag ist Ihre Datenbank aus unserer Datenbank
-        wird gelöscht.`,
         cancel: 'Stornieren',
         warning: 'Beachtung',
         error: 'Error',
         success: 'Erfolgreich',
+        content: 'Inhalt',
+        status: 'Status',
+        comment: 'Kommentar',
+        comments: 'Bemerkungen',
+        block: 'Den Block setzen!',
+        unblock: 'Aufheben',
+        publish: 'Veröffentlichen',
+        process: 'Prozess',
+        data: 'Daten',
+        date: 'Datum',
+        class: 'Klasse',
+        flow: 'Fließen',
+        sequence: 'Reihenfolge',
+        gantt: 'Gantt',
+        state: 'Zustand',
+        pie: 'Kuchen',
+        integral: 'Integral',
+        pow: 'Pow',
+        sqrt: 'Sqrt',
+        logarithm: 'Logarithmus',
+        m_h1: 'Titel 1',
+        m_h2: 'Titel 2',
+        m_h3: 'Titel 3',
+    },
+    phrases: {
+        resetPassword: 'Passwort zurücksetzen',
+        loading: 'Wird geladen',
+        addImage: 'Bild hinzufügen',
+        deleteImage: "Foto Löschen",
+        noDataAvailable: 'Keine Daten verfügbar',
+        create_user: 'Benutzer bilden',
+        create_date: 'Erstellungsdatum',
+        published: 'Veröffentlicht',
+        moderatorApproval: 'Moderatorgenehmigung.',
+        blocked: 'verstopft',
+        card_title: 'Kartentitel',
+        card_subtitle: 'Kartenuntertitel',
+        card_text: 'Kartentext',
+        content_markdown: 'Inhalt(Markdown)',
+        user_journey: 'Benutzerreise'
+    },
+    sideMenus: {
+        userMenus: 'Benutzermenüs',
+        adminMenus: 'Admin-Menüs',
+        superUserMenus: 'Superbenutzermenüs',
+        dashboard: 'Instrumententafel',
+        chapters: 'Kapitel',
+        chapter: 'Kapitel',
+        news: 'Nachrichten',
+        forums: 'Foren',
+        libraries: 'Bibliotheken',
+        drafts: 'Entwürfe',
+        users: 'Benutzer',
+        chapterOptions: 'Kapitel Optionen',
+        newsOptions: 'Nachrichtenoptionen',
+        forumOptions: 'Forum-Optionen',
+        release: 'Versionshinweise',
+        about: 'Über'
+    },
+    message: {
+        delete_message: `Wenn Sie den Löschvorgang bestätigen, haben Sie eine Transaktion durchgeführt, um umgekehrt zu sein
+        Sie werden sein. Ihr Beitrag ist Ihre Datenbank aus unserer Datenbank
+        wird gelöscht.`,
         add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.',
-        content: 'Inhalt'
+        add_content_success: '"Inhalt Titel "{name}" wurde erfolgreich hinzugefügt',
+        update_content: 'Inhalt mit ID {ID} aktualisieren.',
+        update_content_success: 'Der Inhalt mit ID {ID} wurde erfolgreich aktualisiert.',
+        delete_content: 'Inhalt mit ID {ID} wird gelöscht.',
+        delete_content_success: 'Inhalt mit ID {ID} wurde erfolgreich gelöscht.',
     },
     router: {
         home: "Zuhause",
@@ -147,80 +187,13 @@ const de = {
         image: 'Bild'
     },
     chapter: {
-        list: {
-            title: 'Titel',
-            createDate: 'Erstellungsdatum',
-            createdByUser: 'Vom Benutzer erstellt',
-            status: {
-                main: 'status',
-                published: 'Veröffentlicht',
-                moderatorApproval: 'Moderatorgenehmigung.',
-                blocked: 'verstopft',
-            },
-            edit: 'Bearbeiten',
-            create: 'Neues Kapitel erstellen'
-        },
-        new: {
-            category: 'Kategorie',
-            addTag: {
-                main: 'Tag hinzufügen',
-                key: 'Schlüssel',
-                tag: 'Etikett'
-            },
-            title: 'Titel',
-            description: 'kurze Beschreibung',
-            addImage: 'Bild hinzufügen',
-            deleteImage: 'Foto Löschen'
-        }
+        new: 'Neues Kapitel'
     },
     news: {
-        list: {
-            title: 'Titel',
-            createDate: 'Erstellungsdatum',
-            createdByUser: 'Vom Benutzer erstellt',
-            status: {
-                main: 'status',
-                published: 'Veröffentlicht',
-                moderatorApproval: 'Moderatorgenehmigung.',
-                blocked: 'verstopft',
-            },
-            edit: 'Bearbeiten',
-            create: 'Neue news erstellen.'
-        },
-        new: {
-            addTag: {
-                main: 'Tag hinzufügen',
-                key: 'Schlüssel',
-                tag: 'Etikett'
-            },
-            title: 'Titel',
-            description: 'kurze Beschreibung',
-        }
+        new: 'Neue News'
     },
     forum: {
-        list: {
-            title: 'Titel',
-            createDate: 'Erstellungsdatum',
-            createdByUser: 'Vom Benutzer erstellt',
-            status: {
-                main: 'status',
-                published: 'Veröffentlicht',
-                moderatorApproval: 'Moderatorgenehmigung.',
-                blocked: 'verstopft',
-            },
-            edit: 'Bearbeiten',
-            comments: 'Bemerkungen',
-            create: 'Neue news erstellen.'
-        },
-        new: {
-            addTag: {
-                main: 'Tag hinzufügen',
-                key: 'Schlüssel',
-                tag: 'Etikett'
-            },
-            title: 'Titel',
-            description: 'kurze Beschreibung',
-        }
+        new: 'Neues Forum'
     }
 }
 

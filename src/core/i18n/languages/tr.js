@@ -1,61 +1,96 @@
 const tr = {
     title: 'Panel | Sihirbazın Yörüngesi',
-    message: {
+    keywords: {
         tasks: 'Görevler',
         messages: 'Mesajlar',
-        resetPassword: 'Şifre Sıfırla',
         options: 'Seçenekler',
         logout: 'Çıkış',
-        sideMenus: {
-            userMenus: 'Kullanıcı Menüleri',
-            adminMenus: 'Admin Menüleri',
-            superUserMenus: 'Süper Kullanıcı Menüleri',
-            dashboard: 'Gösterge Paneli',
-            chapters: 'Bölümler',
-            chapter: 'Bölüm',
-            news: 'Haberler',
-            forums: 'Forumlar',
-            libraries: 'Kütüphaneler',
-            drafts: 'Taslaklar',
-            users: 'Kullanıcılar',
-            chapterOptions: 'Bölüm Seçenekleri',
-            newsOptions: 'Haber Seçenekleri',
-            forumOptions: 'Forum Seçenekleri',
-            release: 'Sürüm Notları',
-            about: 'Hakkında',
-        },
-        loading: 'Yükleniyor',
         width: 'Genişlik',
-        addImage: 'Resim Ekle',
-        deleteImage: "Resmi Sil",
         back: 'Geri',
         preview: 'Önizle',
         save: 'Kaydet',
         edit: 'Düzenle',
         delete: 'Sil',
         category: 'Kategori',
-        noDataAvailable: 'Veri yok',
         write: 'Yaz',
         tag: 'Etiket',
         key: 'Anahtar',
         description: 'Açıklama',
         title: 'Başlık',
         showcase: 'Vitrin',
-        create_user: 'Oluşturan Kullanıcı',
-        delete_message: `Silme işlemini onaylarsanız geriye dönüşü olmana bir işlem yapmış
-        olacaksınız. Yazdığınız yazınız veritabanımızdan anlık
-        silinmektedir.`,
         cancel: 'İptal',
         warning: 'Dikkat',
         error: 'Hata',
         success: 'Başarılı',
+        content: 'İçerik',
+        status: 'Durum',
+        comment: 'Yorum',
+        comments: 'Yorumlar',
+        block: 'Blokla',
+        unblock: 'Bloke Kaldır',
+        publish: 'Yayına Al',
+        process: 'İşlem',
+        data: 'Veri',
+        date: 'Tarih',
+        class: 'Sınıf',
+        flow: 'Akış',
+        sequence: 'Sıra',
+        gantt: 'Gantt',
+        state: 'Durum',
+        pie: 'Pasta',
+        integral: 'İntegral',
+        pow: 'Üst',
+        sqrt: 'Karekök',
+        logarithm: 'Logaritma',
+        m_h1: 'Başlık 1',
+        m_h2: 'Başlık 2',
+        m_h3: 'Başlık 3',
+    },
+    phrases: {
+        resetPassword: 'Şifre Sıfırla',
+        loading: 'Yükleniyor',
+        addImage: 'Resim Ekle',
+        deleteImage: "Resmi Sil",
+        noDataAvailable: 'Veri yok',
+        create_user: 'Oluşturan Kullanıcı',
+        create_date: 'Oluşturma Tarihi',
+        published: 'Yayında',
+        moderatorApproval: 'Moderatör Onayında',
+        blocked: 'Engellendi',
+        card_title: 'Kart Başlığı',
+        card_subtitle: 'Kart Destek Başlığı',
+        card_text: 'Kart Metni',
+        content_markdown: 'İçerik(Markdown)',
+        user_journey: 'Kullanıcı Yolculuğu'
+    },
+    sideMenus: {
+        userMenus: 'Kullanıcı Menüleri',
+        adminMenus: 'Admin Menüleri',
+        superUserMenus: 'Süper Kullanıcı Menüleri',
+        dashboard: 'Gösterge Paneli',
+        chapters: 'Bölümler',
+        chapter: 'Bölüm',
+        news: 'Haberler',
+        forums: 'Forumlar',
+        libraries: 'Kütüphaneler',
+        drafts: 'Taslaklar',
+        users: 'Kullanıcılar',
+        chapterOptions: 'Bölüm Seçenekleri',
+        newsOptions: 'Haber Seçenekleri',
+        forumOptions: 'Forum Seçenekleri',
+        release: 'Sürüm Notları',
+        about: 'Hakkında',
+    },
+    messages: {
+        delete_message: `Silme işlemini onaylarsanız geriye dönüşü olmana bir işlem yapmış
+        olacaksınız. Yazdığınız yazınız veritabanımızdan anlık
+        silinmektedir.`,
         add_content: '"{name}" başlıklı içerik ekleniyor.',
         add_content_success: '"{name}" başlıklı içerik başarı ile eklenmiştir.',
         update_content: '{id} ID numaralı içerik güncelleniyor.',
         update_content_success: '{id} ID numaralı içerik başarı ile güncellenmiştir.',
         delete_content: '{id} ID numaralı içerik siliniyor.',
         delete_content_success: '{id} ID numaralı içerik başarı ile silinmiştir.',
-        content: 'İçerik'
     },
     router: {
         home: "Ev",
@@ -152,77 +187,13 @@ const tr = {
         image: 'Resim'
     },
     chapter: {
-        list: {
-            title: 'Başlık',
-            createDate: 'Oluşturma Tarihi',
-            createdByUser: 'Oluşturan Kullanıcı',
-            status: {
-                main: 'Durum',
-                published: 'Yayında',
-                moderatorApproval: 'Moderatör Onayında',
-                blocked: 'Engellendi',
-            },
-            edit: 'Düzenle',
-            create: 'Yeni Bölüm Oluştur'
-        },
-        new: {
-            addTag: {
-                main: 'Etiket Ekle',
-                key: 'Anahtar',
-                tag: 'Etiket',
-            },
-            title: 'Başlık',
-            description: 'Kısa Açıklama',
-        }
+        new: 'Yeni Bölüm'
     },
     news: {
-        list: {
-            title: 'Başlık',
-            createDate: 'Oluşturma Tarihi',
-            createdByUser: 'Oluşturan Kullanıcı',
-            status: {
-                main: 'Durum',
-                published: 'Yayında',
-                moderatorApproval: 'Moderatör Onayında',
-                blocked: 'Engellendi',
-            },
-            edit: 'Düzenle',
-            create: 'Yeni Haber Oluştur'
-        },
-        new: {
-            addTag: {
-                main: 'Etiket Ekle',
-                key: 'Anahtar',
-                tag: 'Etiket',
-            },
-            title: 'Başlık',
-            description: 'Kısa Açıklama',
-        }
+        new: 'Yeni Haber'
     },
     forum: {
-        list: {
-            title: 'Başlık',
-            createDate: 'Oluşturma Tarihi',
-            createdByUser: 'Oluşturan Kullanıcı',
-            status: {
-                main: 'Durum',
-                published: 'Yayında',
-                moderatorApproval: 'Moderatör Onayında',
-                blocked: 'Engellendi',
-            },
-            edit: 'Düzenle',
-            comments: 'Yorumlar',
-            create: 'Yeni Forum Oluştur'
-        },
-        new: {
-            addTag: {
-                main: 'Etiket Ekle',
-                key: 'Anahtar',
-                tag: 'Etiket',
-            },
-            title: 'Başlık',
-            description: 'Kısa Açıklama',
-        }
+        new: 'Yeni Forum'
     }
 }
 

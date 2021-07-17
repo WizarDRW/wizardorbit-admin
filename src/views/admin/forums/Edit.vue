@@ -43,8 +43,8 @@
               dense
               hide-details
               rows="3"
-              label="Açıklama"
-              placeholder="Açıklama"
+              :label="$t('message.description')"
+              :placeholder="$t('message.description')"
               prepend-inner-icon="mdi-card-text-outline"
             ></v-textarea>
           </template>
@@ -53,8 +53,8 @@
       <v-col md="9">
         <v-text-field
           v-model="forum.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('keywords.title')"
+          :placeholder="$t('keywords.title')"
           outlined
           dense
           prepend-inner-icon="mdi-format-title"
@@ -63,7 +63,7 @@
           <template #default="{ extensions }">
             <tiptap-vuetify
               v-model="forum.description"
-              placeholder="Yazınız…"
+              :placeholder="`${$t('keywords.write')}…`"
               :extensions="extensions"
               :toolbar-attributes="{ color: 'black' }"
             >
@@ -110,7 +110,7 @@ export default {
       loading: true,
       update: {
         status: false,
-        msg: "Güncelleme işlemi yaklaşık 10sn içinde gerçekleşecektir.",
+        msg: "",
         second: 100,
         type: "warning",
         func: "putApiForum",
@@ -132,6 +132,7 @@ export default {
       this.forum.status = "ModeratorAcceping";
       this.loading = true;
       this.update.item = this.forum;
+      this.update.msg = this.forum.name;
       this.update.second = 100;
       this.update.status = true;
     },

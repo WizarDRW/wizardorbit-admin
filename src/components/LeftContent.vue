@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2><v-icon>mdi-shape</v-icon> {{ $t("message.category") }}</h2>
+    <h2><v-icon>mdi-shape</v-icon> {{ $t("keywords.category") }}</h2>
     <v-treeview
       v-model="inputCategories"
       :items="categories"
@@ -24,8 +24,8 @@
     <p></p>
     <v-text-field
       v-model="_content.name"
-      :label="$t('message.title')"
-      :placeholder="$t('message.title')"
+      :label="$t('keywords.title')"
+      :placeholder="$t('keywords.title')"
       outlined
       dense
       disabled
@@ -34,8 +34,8 @@
     <slot name="short_description">
       <v-text-field
         v-model="_content.short_description"
-        :label="$t('message.description')"
-        :placeholder="$t('message.description')"
+        :label="$t('keywords.description')"
+        :placeholder="$t('keywords.description')"
         outlined
         dense
         disabled
@@ -59,13 +59,13 @@
           <v-icon> mdi-plus </v-icon>
         </v-btn>
       </template>
-      <span>{{ $t("message.tag") }}</span>
+      <span>{{ $t("keywords.tag") }}</span>
     </v-tooltip>
     <div v-for="(item, index) in _content.tags" :key="index">
       <v-text-field
         v-model="item.key"
-        :label="$t('message.key')"
-        :placeholder="$t('message.key')"
+        :label="$t('keywords.key')"
+        :placeholder="$t('keywords.key')"
         outlined
         dense
         hide-details
@@ -88,8 +88,8 @@
       </v-text-field>
       <v-text-field
         v-model="item.tag"
-        :label="$t('message.tag')"
-        :placeholder="$t('message.tag')"
+        :label="$t('keywords.tag')"
+        :placeholder="$t('keywords.tag')"
         outlined
         dense
         hide-details

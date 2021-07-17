@@ -3,7 +3,7 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-tooltip color="green" bottom>
+          <v-tooltip color="green" left>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 icon
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Forum Oluştur</span>
+            <span>{{$t('forum.new')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -26,12 +26,25 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      loading-text="Yükleniyor..."
+      :no-data-text="$t('phrases.noDataAvailable')"
+      :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
+      <template #[`header.name`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.user_data`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.create_date`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.status`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.user_data`]="{ item }">
         {{ item.user_data.full_name }} ({{ item.user_data.email }})
       </template>
@@ -52,11 +65,11 @@
         >
           {{
             item.status == "Published"
-              ? "Yayında"
+              ? $t("phrases.published")
               : item.status == "ModeratorAcceping"
-              ? "Onay Bekliyor"
+              ? $t("phrases.moderatorApproval")
               : item.status == "Block"
-              ? "Yazı Bloklandı"
+              ? $t("phrases.blocked")
               : item.status
           }}
         </div>
@@ -79,7 +92,7 @@
               mdi-eye
             </v-icon>
           </template>
-          <span>Önizle</span>
+          <span>{{ $t("keywords.preview") }}</span>
         </v-tooltip>
         <v-tooltip color="blue" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -93,7 +106,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{ $t("keywords.edit") }}</span>
         </v-tooltip>
         <v-tooltip color="orange" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -107,7 +120,7 @@
               mdi-comment-multiple-outline
             </v-icon>
           </template>
-          <span>Yorumlar</span>
+          <span>{{ $t("keywords.comments") }}</span>
         </v-tooltip>
         <v-tooltip color="red" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -126,7 +139,7 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>Sil</span>
+          <span>{{ $t("keywords.delete") }}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -185,20 +198,20 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "Başlık",
+          text: "keywords.title",
           value: "name",
         },
         {
-          text: "Forum Sahibi",
+          text: "phrases.create_user",
           value: "user_data",
         },
         {
-          text: "Oluşturma Zamanı",
+          text: "phrases.create_date",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "Durum",
+          text: "keywords.status",
           value: "status",
           sortable: true,
         },
@@ -241,7 +254,7 @@ export default {
     },
     handleDelete(itemid) {
       this.deleteItems.push({
-        msg: "Silinme işlemi için",
+        msg: itemid,
         type: "error",
         second: 100,
         func: "deleteApiForum",

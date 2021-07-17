@@ -2,7 +2,7 @@ export default [
     {
         id: "class",
         icon: "mdi-book-variant",
-        name: "Sınıf",
+        name: "keywords.class",
         value: `\`\`\`mermaid
         classDiagram
         Class01 <|-- AveryLongClass : Cool
@@ -24,7 +24,7 @@ export default [
     {
         id: "flow",
         icon: "mdi-flower-outline",
-        name: "Çiçek",
+        name: "keywords.flow",
         value: `\`\`\`mermaid
         graph TD
         A[Hard] -->|Text| B(Round)
@@ -35,7 +35,7 @@ export default [
     {
         id: "sequence",
         icon: "mdi-view-sequential-outline",
-        name: "Çiçek",
+        name: "keywords.sequence",
         value: `\`\`\`mermaid
         sequenceDiagram
         Alice->>John: Hello John, how are you?
@@ -50,7 +50,7 @@ export default [
     {
         id: "gantt",
         icon: "mdi-chart-gantt",
-        name: "Çizerge",
+        name: "keywords.gantt",
         value: `\`\`\`mermaid
         gantt
         section Section
@@ -64,7 +64,7 @@ export default [
     {
         id: "state",
         icon: "mdi-state-machine",
-        name: "Konum",
+        name: "keywords.state",
         value: `\`\`\`mermaid
         stateDiagram-v2
         [*] --> Still
@@ -77,7 +77,7 @@ export default [
     {
         id: "Pie",
         icon: "mdi-chart-pie",
-        name: "Pasta",
+        name: "keywords.pie",
         value: `\`\`\`mermaid
         pie
         "Dogs" : 386
@@ -87,7 +87,7 @@ export default [
     {
         id: "userJourney",
         icon: "mdi-human-scooter",
-        name: "Kullanıcı Yolculuğu",
+        name: "phrases.user_journey",
         value: `\`\`\`mermaid
         journey
         title My working day

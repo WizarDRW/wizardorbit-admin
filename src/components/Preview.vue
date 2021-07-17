@@ -14,14 +14,14 @@
             "
             :content="
               _content.status == 'Published'
-                ? 'Yayında'
+                ? $t('phrases.published')
                 : _content.status == 'Block'
-                ? 'Bloklandı'
-                : 'Onay Bekliyor'
+                ? $t('phrases.blocked')
+                : $t('phrases.moderatorApproval')
             "
-            >Önizleme
+            >{{$t('keywords.preview')}}
           </v-badge>
-          <div v-else>Önizleme</div>
+          <div v-else>{{$t('keywords.preview')}}</div>
         </v-card-title>
 
         <slot>
@@ -62,7 +62,7 @@
                 text
                 @click="handleProcess('Block')"
               >
-                Bloke Koy!
+                {{$t('keywords.block')}}!
               </v-btn>
               <v-btn
                 v-else-if="_content.status == 'Block'"
@@ -71,7 +71,7 @@
                 text
                 @click="handleProcess('Published')"
               >
-                Bloke Kaldır
+                {{$t('keywords.unblock')}}
               </v-btn>
               <v-btn
                 v-else-if="_content.status == 'ModeratorAcceping'"
@@ -80,7 +80,7 @@
                 text
                 @click="handleProcess('Published')"
               >
-                Yayına Al
+                {{$t('keywords.publish')}}
               </v-btn>
             </div>
           </slot>
@@ -110,7 +110,6 @@
 
 
 <script>
-import ApiService from "@/core/services/api.service.js";
 import marked from "marked";
 export default {
   components: {
@@ -148,7 +147,7 @@ export default {
       },
       update: {
         status: false,
-        msg: "İşlem yaklaşık 10sn içinde gerçekleşecektir.",
+        msg: "",
         second: 100,
         type: "warning",
         func: "",
@@ -181,10 +180,6 @@ export default {
     compiledMarkdown(item) {
       return marked(item.val);
     },
-    process(value) {
-      this._content.status = value;
-      ApiService.put(`${this._apiurl}/id/${this._content._id}`, this._content);
-    },
     handleProcess(value) {
       this.proc = value;
       var data = {
@@ -193,6 +188,7 @@ export default {
       };
       this.loading = true;
       this.update.item = data;
+      this.update.msg = data._id;
       this.update.second = 100;
       this.update.func = this._api;
       this.update.status = true;

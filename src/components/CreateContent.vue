@@ -6,8 +6,8 @@
       <div v-if="item.type == 'v-card-title'">
         <v-text-field
           v-model="item.val"
-          label="Kart Başlığı"
-          placeholder="Kart Başlığı"
+          :label="$t('phrases.card_title')"
+          :placeholder="$t('phrases.card_title')"
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
@@ -21,8 +21,8 @@
       <div v-if="item.type == 'v-card-subtitle'">
         <v-text-field
           v-model="item.val"
-          label="Kart Destek Başlığı"
-          placeholder="Kart Destek Başlığı"
+          :label="$t('phrases.card_subtitle')"
+          :placeholder="$t('phrases.card_subtitle')"
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
@@ -36,8 +36,8 @@
       <div v-if="item.type == 'v-card-text'">
         <v-textarea
           v-model="item.val"
-          label="Kart Metni"
-          placeholder="Kart Metni"
+          :label="$t('phrases.card_text')"
+          :placeholder="$t('phrases.card_text')"
           append-icon="mdi-delete-variant"
           @click:append="
             () => {

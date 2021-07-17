@@ -3,7 +3,7 @@
     <slot v-bind:extensions="extensions">
       <tiptap-vuetify
         v-model="_content.val"
-        placeholder="Yazınız…"
+        :placeholder="`${$t('keywords.write')}…`"
         :extensions="extensions"
         :toolbar-attributes="{ color: 'black' }"
       >

@@ -1,92 +1,92 @@
 export default [
     {
-        _name: 'message.sideMenus.userMenus',
+        _name: 'sideMenus.userMenus',
         _roles: ["Client", "Admin", "SuperUser"],
         children: [
             {
-                _name: 'message.sideMenus.dashboard',
+                _name: 'sideMenus.dashboard',
                 to: "/dashboard",
                 icon: "mdi-view-dashboard-variant"
             },
             {
-                _name: 'message.sideMenus.chapters',
+                _name: 'sideMenus.chapters',
                 to: "/chapter",
                 icon: "mdi-post"
             },
             {
-                _name: 'message.sideMenus.news',
+                _name: 'sideMenus.news',
                 to: "/news",
                 icon: "mdi-newspaper"
             },
             {
-                _name: 'message.sideMenus.forums',
+                _name: 'sideMenus.forums',
                 to: "/forum",
                 icon: "mdi-head-question-outline"
             },
             {
-                _name: 'message.sideMenus.libraries',
+                _name: 'sideMenus.libraries',
                 to: "/library",
                 icon: "mdi-bookmark-multiple-outline"
             },
             {
-                _name: 'message.sideMenus.drafts',
+                _name: 'sideMenus.drafts',
                 to: "/drafts",
                 icon: "mdi-file"
             }
         ]
     },
     {
-        _name: 'message.sideMenus.adminMenus',
+        _name: 'sideMenus.adminMenus',
         _roles: ["Admin", "SuperUser"],
         children: [
             {
-                _name: 'message.sideMenus.chapters',
+                _name: 'sideMenus.chapters',
                 to: "/admin/chapter",
                 icon: "mdi-text-box-check"
             },
             {
-                _name: 'message.sideMenus.news',
+                _name: 'sideMenus.news',
                 to: "/admin/news",
                 icon: "mdi-text-box-check-outline"
             },
             {
-                _name: 'message.sideMenus.forums',
+                _name: 'sideMenus.forums',
                 to: "/admin/forum",
                 icon: "mdi-tooltip-check"
             }
         ]
     },
     {
-        _name: 'message.sideMenus.superUserMenus',
+        _name: 'sideMenus.superUserMenus',
         _roles: ["SuperUser"],
         children: [
             {
-                _name: 'message.sideMenus.users',
+                _name: 'sideMenus.users',
                 to: "/superuser/users",
                 icon: "mdi-account-group"
             },
             {
-                _name: 'message.sideMenus.chapterOptions',
+                _name: 'sideMenus.chapterOptions',
                 to: "/superuser/category/chapter-categories",
                 icon: "mdi-select-group"
             },
             {
-                _name: 'message.sideMenus.newsOptions',
+                _name: 'sideMenus.newsOptions',
                 to: "/superuser/category/news-categories",
                 icon: "mdi-select-group"
             },
             {
-                _name: 'message.sideMenus.forumOptions',
+                _name: 'sideMenus.forumOptions',
                 to: "/superuser/category/forum-categories",
                 icon: "mdi-select-group"
             },
             {
-                _name: 'message.sideMenus.release',
+                _name: 'sideMenus.release',
                 to: "/superuser/release",
                 icon: "mdi-alert-decagram"
             },
             {
-                _name: 'message.sideMenus.about',
+                _name: 'sideMenus.about',
                 to: "/superuser/about",
                 icon: "mdi-information-outline"
             },

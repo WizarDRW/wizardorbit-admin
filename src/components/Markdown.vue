@@ -18,7 +18,7 @@
                 </v-icon></v-btn
               >
             </template>
-            <span>{{ process.name }}</span>
+            <span>{{ process.label[$store.getters.getLangName] }}</span>
           </v-tooltip>
         </template>
         <v-list>
@@ -29,7 +29,7 @@
           >
             <div @click="addMarkdowns(item.value)">
               <v-icon>{{ item.icon }}</v-icon
-              ><v-list-item-action> {{ item.name }}</v-list-item-action>
+              ><v-list-item-action> {{ $t(item.name) }}</v-list-item-action>
             </div>
           </v-list-item>
         </v-list>
@@ -38,7 +38,7 @@
         <v-btn
           @click="
             () => {
-              $emit('delete_item')
+              $emit('delete_item');
             }
           "
           icon
@@ -48,7 +48,7 @@
     </v-card>
     <!-- Markdown içeriği -->
     <v-textarea
-      label="İçerik(Markdown)"
+      :label="$t('phrases.content_markdown')"
       v-model="_content.val"
       outlined
       hide-details
@@ -93,22 +93,37 @@ export default {
       processes: [
         {
           icon: "mdi-sigma",
-          name: "Matematik",
+          label: { tr: "Matematik", en: "Math", de: "Mathematik", fr: "Math" },
           data: "math",
         },
         {
           icon: "mdi-language-markdown-outline",
-          name: "Markdown",
+          label: {
+            tr: "Markdown",
+            en: "Markdown",
+            de: "Markdown",
+            fr: "Réduction",
+          },
           data: "markdown",
         },
         {
           icon: "mdi-set-none",
-          name: "Diagram",
+          label: {
+            tr: "Diagram",
+            en: "Diagram",
+            de: "Diagramm",
+            fr: "Diagramme",
+          },
           data: "diagram",
         },
         {
           icon: "mdi-code-tags",
-          name: "Kod Bluğu",
+          label: {
+            tr: "Kod Bluğu",
+            en: "Code Block",
+            de: "Codeblock",
+            fr: "Bloc de code",
+          },
           data: "code",
         },
       ],

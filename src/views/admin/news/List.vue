@@ -3,7 +3,7 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-tooltip color="green" bottom>
+          <v-tooltip color="green" left>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 icon
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('news.list.create')}}</span>
+            <span>{{$t('news.new')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -26,8 +26,8 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      :no-data-text="$t('message.noDataAvailable')"
-      :loading-text="`${$t('message.loading')}...`"
+      :no-data-text="$t('phrases.noDataAvailable')"
+      :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
@@ -65,11 +65,11 @@
         >
           {{
             item.status == "Published"
-              ? $t("news.list.status.published")
+              ? $t("phrases.published")
               : item.status == "ModeratorAcceping"
-              ? $t("news.list.status.moderatorApproval")
+              ? $t("phrases.moderatorApproval")
               : item.status == "Block"
-              ? $t("news.list.status.blocked")
+              ? $t("phrases.blocked")
               : item.status
           }}
         </div>
@@ -92,7 +92,7 @@
               mdi-eye
             </v-icon>
           </template>
-          <span>{{ $t("message.preview") }}</span>
+          <span>{{ $t("keywords.preview") }}</span>
         </v-tooltip>
         <v-tooltip color="blue" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -106,7 +106,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>{{ $t("message.edit") }}</span>
+          <span>{{ $t("keywords.edit") }}</span>
         </v-tooltip>
         <v-tooltip color="red" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -125,7 +125,7 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>{{ $t("message.delete") }}</span>
+          <span>{{ $t("keywords.delete") }}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -185,20 +185,20 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "message.title",
+          text: "keywords.title",
           value: "name",
         },
         {
-          text: "message.create_user",
+          text: "phrases.create_user",
           value: "user_data",
         },
         {
-          text: "news.list.createDate",
+          text: "phrases.create_date",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "news.list.status.main",
+          text: "keywords.status",
           value: "status",
           sortable: true,
         },
@@ -237,7 +237,7 @@ export default {
     },
     handleDelete(itemid) {
       this.deleteItems.push({
-        msg: "Silinme işlemi için",
+        msg: itemid,
         type: "error",
         second: 100,
         func: "deleteApiNews",

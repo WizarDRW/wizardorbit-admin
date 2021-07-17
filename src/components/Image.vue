@@ -3,7 +3,7 @@
     <div v-if="_content.val">
       <v-text-field
         v-model="_content.width"
-        :label="$t('message.width') + '(px)'"
+        :label="$t('phrases.width') + '(px)'"
         placeholder="Placeholder"
         outlined
         dense
@@ -28,7 +28,7 @@
                 indeterminate
                 color="grey lighten-5"
               ></v-progress-circular>
-              {{ $t("message.loading") }}...
+              {{ $t("phrases.loading") }}...
             </v-row>
           </template>
           <v-fade-transition mode="out-in">
@@ -44,7 +44,7 @@
                 "
                 color="red"
                 tile
-                >{{ $t("message.deleteImage") }}</v-btn
+                >{{ $t("phrases.deleteImage") }}</v-btn
               >
             </div>
           </v-fade-transition>
@@ -54,7 +54,7 @@
     <v-file-input
       v-else
       v-model="image"
-      :label="$t('message.addImage')"
+      :label="$t('phrases.addImage')"
       outlined
       dense
       ref="image"

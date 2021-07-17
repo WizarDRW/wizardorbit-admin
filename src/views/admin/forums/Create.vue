@@ -25,7 +25,7 @@
           v-on:selectedCategories="(val) => (forum.categories = val)"
         >
           <template #showcase>
-            <h2><v-icon>mdi-book-open-page-variant</v-icon> Vitrin</h2>
+            <h2><v-icon>mdi-book-open-page-variant</v-icon> {{$t('keywords.showcase')}}</h2>
             <v-treeview
               v-model="forum.showcases"
               :items="[
@@ -63,8 +63,8 @@
       <v-col md="9">
         <v-text-field
           v-model="forum.name"
-          :label="$t('message.title')"
-          :placeholder="$t('message.title')"
+          :label="$t('keywords.title')"
+          :placeholder="$t('keywords.title')"
           outlined
           dense
           prepend-inner-icon="mdi-format-title"
@@ -73,7 +73,7 @@
           <template #default="{ extensions }">
             <tiptap-vuetify
               v-model="forum.description"
-              :placeholder="`${$t('message.write')}…`"
+              :placeholder="`${$t('keywords.write')}…`"
               :extensions="extensions"
               :toolbar-attributes="{ color: 'black' }"
             >
@@ -131,7 +131,7 @@ export default {
       loading: false,
       add: {
         status: false,
-        msg: "Ekleme işlemi yaklaşık 5sn içinde gerçekleşecektir.",
+        msg: "",
         second: 100,
         type: "warning",
         func: "postApiForum",
@@ -144,6 +144,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.add.item = this.forum;
+      this.add.msg = this.forum.name;
       this.add.second = 100;
       this.add.status = true;
     },

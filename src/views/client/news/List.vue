@@ -3,7 +3,7 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-tooltip color="green" bottom>
+          <v-tooltip color="green" left>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 icon
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('news.list.create')}}</span>
+            <span>{{$t('news.new')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -26,8 +26,8 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      :no-data-text="$t('message.noDataAvailable')"
-      :loading-text="`${$t('message.loading')}...`"
+      :no-data-text="$t('phrases.noDataAvailable')"
+      :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
@@ -59,11 +59,11 @@
         >
           {{
             item.status == "Published"
-              ? "Yayında"
+              ? $t("phrases.published")
               : item.status == "ModeratorAcceping"
-              ? "Onay Bekliyor"
+              ? $t("phrases.moderatorApproval")
               : item.status == "Block"
-              ? "Yazı Bloklandı"
+              ? $t("phrases.blocked")
               : item.status
           }}
         </div>
@@ -81,7 +81,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{ $t("keywords.edit") }}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -105,16 +105,16 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "news.list.title",
+          text: "keywords.title",
           value: "name",
         },
         {
-          text: "news.list.createDate",
+          text: "phrases.create_date",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "news.list.status.main",
+          text: "keywords.status",
           value: "status",
           sortable: true,
         },

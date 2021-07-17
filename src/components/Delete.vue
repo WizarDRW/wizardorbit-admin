@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <v-card>
-        <v-card-title class="headline dark lighten-2"> {{$t('message.warning')}}!!! </v-card-title>
+        <v-card-title class="headline dark lighten-2"> {{$t('keywords.warning')}}!!! </v-card-title>
 
         <v-card-text
           >{{$t('message.delete_message')}}</v-card-text
@@ -13,8 +13,8 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <slot name="buttons">
-            <v-btn color="success" text @click="dialog = false"> {{$t('message.cancel')}} </v-btn>
-            <v-btn color="error" text @click="save()"> {{$t('message.delete')}} </v-btn>
+            <v-btn color="success" text @click="dialog = false"> {{$t('keywords.cancel')}} </v-btn>
+            <v-btn color="error" text @click="save()"> {{$t('keywords.delete')}} </v-btn>
           </slot>
         </v-card-actions>
       </v-card>

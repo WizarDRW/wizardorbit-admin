@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('message.back')}}</span>
+            <span>{{$t('keywords.back')}}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>{{$t('message.preview')}}</span>
+            <span>{{$t('keywords.preview')}}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -47,7 +47,7 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('message.save')}}</span>
+            <span>{{$t('keywords.save')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -60,7 +60,7 @@
           v-on:selectedCategories="(val) => (news.categories = val)"
         >
           <template #showcase>
-            <h2><v-icon>mdi-book-open-page-variant</v-icon> {{$t('message.showcase')}}</h2>
+            <h2><v-icon>mdi-book-open-page-variant</v-icon> {{$t('keywords.showcase')}}</h2>
             <v-treeview
               v-model="news.showcases"
               :items="[
@@ -79,16 +79,16 @@
       <v-col md="9">
         <v-text-field
           v-model="news.name"
-          :label="$t('message.title')"
-          :placeholder="$t('message.title')"
+          :label="$t('keywords.title')"
+          :placeholder="$t('keywords.title')"
           outlined
           dense
           prepend-inner-icon="mdi-format-title"
         ></v-text-field>
         <v-text-field
           v-model="news.short_description"
-          :label="$t('message.description')"
-          :placeholder="$t('message.description')"
+          :label="$t('keywords.description')"
+          :placeholder="$t('keywords.description')"
           outlined
           dense
           prepend-inner-icon="mdi-subtitles-outline"
@@ -106,7 +106,7 @@
                   indeterminate
                   color="grey lighten-5"
                 ></v-progress-circular>
-                {{$t('message.loading')}}...
+                {{$t('phrases.loading')}}...
               </v-row>
             </template>
             <v-fade-transition mode="out-in">
@@ -120,7 +120,7 @@
                   "
                   color="red"
                   tile
-                  >{{$t('message.deleteImage')}}</v-btn
+                  >{{$t('phrases.deleteImage')}}</v-btn
                 >
               </div>
             </v-fade-transition>
@@ -129,7 +129,7 @@
         <v-file-input
           v-else
           v-model="news.image_path"
-          :label="$t('message.addImage')"
+          :label="$t('phrases.addImage')"
           outlined
           dense
           ref="image"
@@ -219,7 +219,7 @@ export default {
       preview: false,
       add: {
         status: false,
-        msg: "Ekleme işlemi yaklaşık 5sn içinde gerçekleşecektir.",
+        msg: "",
         second: 100,
         type: "warning",
         func: "postApiNews",
@@ -247,6 +247,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.add.item = this.news;
+      this.add.msg = this.news.name;
       this.add.second = 100;
       this.add.status = true;
     },

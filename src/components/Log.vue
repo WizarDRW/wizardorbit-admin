@@ -3,9 +3,9 @@
     <table v-if="_datas.length > 0">
       <thead>
         <tr width="100%">
-          <th width="20%" align="start">İşlem</th>
-          <th width="50%" align="start">Veri</th>
-          <th width="20%" align="start">Tarih</th>
+          <th width="20%" align="start">{{ $t("keywords.process") }}</th>
+          <th width="50%" align="start">{{ $t("keywords.data") }}</th>
+          <th width="20%" align="start">{{ $t("keywords.date") }}</th>
           <th width="10%"></th>
         </tr>
       </thead>
@@ -19,7 +19,8 @@
               max-height="600"
             >
               <v-container style="height: 200px">
-            <pre class="language-json"> {{ item.data }} </pre></v-container>
+                <pre class="language-json"> {{ item.data }} </pre>
+              </v-container>
             </v-sheet>
           </td>
           <td>{{ item.date | moment("DD/MM/YYYY HH:mm") }}</td>
