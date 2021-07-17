@@ -20,12 +20,31 @@
     <v-select
       v-model="about.type"
       :items="[
-        { label: 'Biz Kimiz', id: 'whoweare' },
-        { label: 'Hikaye', id: 'ourhistory' },
-        { label: 'Plan', id: 'ourplan' },
+        {
+          label: {
+            tr: 'Biz Kimiz',
+            en: 'Who We Are?',
+            de: 'Wer wir sind?',
+            fr: 'Qui nous sommes?',
+          },
+          id: 'whoweare',
+        },
+        {
+          label: {
+            tr: 'Hikaye',
+            en: 'History',
+            de: 'Geschichte',
+            fr: 'Histoire',
+          },
+          id: 'ourhistory',
+        },
+        {
+          label: { tr: 'Plan', en: 'Plan', de: 'Planen', fr: 'Plan' },
+          id: 'ourplan',
+        },
       ]"
-      label="Tip"
-      item-text="label"
+      :item-text="`label[${$store.getters.getLangName}]`"
+      :label="$t('keywords.type')"
       item-value="id"
       solo
       hide-details
@@ -81,7 +100,7 @@ export default {
       },
       update: {
         status: false,
-        msg: "Ekleme işlemi yaklaşık 10sn içinde gerçekleşecektir.",
+        msg: null,
         second: 100,
         type: "warning",
         func: "putApiAbout",
@@ -100,6 +119,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.update.item = this.about;
+      this.update.msg = this.about.type;
       this.update.second = 100;
       this.update.status = true;
     },

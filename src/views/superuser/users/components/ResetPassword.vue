@@ -8,20 +8,18 @@
     <v-dialog v-model="dialog" width="500">
       <v-card>
         <v-card-title class="headline dark lighten-2">
-          Şifre Sıfırlama
+          {{ $t("phrases.resetPassword") }}
         </v-card-title>
 
-        <v-card-text
-          >Şifrenizi aylık olarak sıfırlamanızı öneririz.</v-card-text
-        >
+        <v-card-text>{{ $t("message.reset_password_monthly") }}</v-card-text>
 
         <v-text-field
           v-model="password.key"
           :type="password.type ? 'password' : 'text'"
           :append-icon="password.type ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="password.type = !password.type"
-          label="Şifre"
-          placeholder="Şifre"
+          :label="$t('keywords.password')"
+          :placeholder="$t('keywords.password')"
           outlined
           dense
           prepend-icon="mdi-lock-outline"
@@ -31,8 +29,8 @@
           :type="password_confirm.type ? 'password' : 'text'"
           :append-icon="password_confirm.type ? 'mdi-eye' : 'mdi-eye-off'"
           @click:append="password_confirm.type = !password_confirm.type"
-          label="Şifre Onay"
-          placeholder="Şifre Onay"
+          :label="$t('keywords.confirm_password')"
+          :placeholder="$t('keywords.confirm_password')"
           outlined
           dense
           prepend-icon="mdi-lock-outline"
@@ -43,8 +41,8 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <slot name="buttons">
-            <v-btn color="error" text @click="cancel()"> İptal </v-btn>
-            <v-btn color="success" text @click="save()"> Sıfırla </v-btn>
+            <v-btn color="error" text @click="cancel()"> {{$t('keywords.cancel')}} </v-btn>
+            <v-btn color="success" text @click="save()"> {{$t('keywords.reset')}} </v-btn>
           </slot>
         </v-card-actions>
       </v-card>
@@ -133,9 +131,9 @@ export default {
         }, 3000);
       }
     },
-    cancel(){
-      this.dialog = false
-    }
+    cancel() {
+      this.dialog = false;
+    },
   },
 };
 </script>

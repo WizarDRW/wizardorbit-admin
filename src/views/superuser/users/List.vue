@@ -3,7 +3,7 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-tooltip color="green" bottom>
+          <v-tooltip color="green" left>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 icon
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Kullanıcı Oluştur</span>
+            <span>{{$t('user.new')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -26,21 +26,39 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      loading-text="Yükleniyor..."
+      :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
       class="elevation-1"
       @page-count="pageCount = $event"
     >
+      <template #[`header.email`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.first_name`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.last_name`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.create_date`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.role`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.status`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.create_date`]="{ item }">
         {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
       </template>
       <template #[`item.role`]="{ item }">
         {{
           item.role == "SuperUser"
-            ? "Süper Kullanıcı"
+            ? $t('keywords.super_user')
             : item.role == "Admin"
-            ? "Yetkili"
-            : "Kullanıcı"
+            ? $t('keywords.admin')
+            : $t('keywords.client')
         }}
       </template>
       <template #[`item.status`]="{ item }">
@@ -55,10 +73,10 @@
         >
           {{
             item.status == "Online"
-              ? "Çevrimiçi"
+              ? $t('keywords.online')
               : item.status == "Offline"
-              ? "Çevrimdışı"
-              : "Bloklandı"
+              ? $t('keywords.offline')
+              : $t('phrases.blocked')
           }}
         </div>
       </template>
@@ -76,7 +94,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{$t('keywords.edit')}}</span>
         </v-tooltip>
         <v-tooltip
           :color="item.status == 'Online' ? `error` : `success`"
@@ -99,7 +117,7 @@
             </v-icon>
           </template>
           <span>{{
-            item.status == "Online" ? "Bloke koy!" : "Blokeyi kaldır!"
+            item.status == "Online" ? $t('keywords.block') : $t('keywords.unblock')
           }}</span>
         </v-tooltip>
         <v-tooltip v-if="item.type == 'internal'" color="warning" bottom>
@@ -120,7 +138,7 @@
               mdi-lock-reset
             </v-icon>
           </template>
-          <span>Şifre değiştir</span>
+          <span>{{$t('phrases.resetPassword')}}</span>
         </v-tooltip>
         <v-tooltip color="error" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -140,7 +158,7 @@
               mdi-delete-outline
             </v-icon>
           </template>
-          <span>Sil</span>
+          <span>{{$t('keywords.delete')}}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -192,29 +210,29 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "Mail",
+          text: "keywords.email",
           value: "email",
         },
         {
-          text: "İlk Ad",
+          text: "keywords.first_name",
           value: "first_name",
         },
         {
-          text: "Son Ad",
+          text: "keywords.last_name",
           value: "last_name",
         },
         {
-          text: "Oluşturma Zamanı",
+          text: "phrases.create_date",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "Yetki",
+          text: "keywords.role",
           value: "role",
           sortable: true,
         },
         {
-          text: "Durum",
+          text: "keywords.status",
           value: "status",
           sortable: true,
         },
@@ -263,7 +281,7 @@ export default {
     },
     handleDelete(itemid) {
       this.deleteItems.push({
-        msg: "Silinme işlemi için",
+        msg: itemid,
         type: "error",
         second: 100,
         func: "deleteApiUser",

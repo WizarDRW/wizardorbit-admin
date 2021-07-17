@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Profil</h1>
+    <h1>{{ $t("keywords.profile") }}</h1>
     <v-card class="rounded-t-xl" rounded="0" color="v_card_background">
       <div class="img-w-100">
         <v-avatar size="100">
@@ -40,7 +40,7 @@
         </v-card-text>
       </div>
     </v-card>
-    <h1>İçerik</h1>
+    <h1>{{ $t("keywords.content") }}</h1>
     <v-card class="content">
       <div class="user-image">
         <v-avatar size="150">
@@ -81,7 +81,7 @@
         </v-card-subtitle>
       </div>
     </v-card>
-    <h1>Forum</h1>
+    <h1>{{ $t("keywords.forum") }}</h1>
     <!-- ------------FORUM-------------- -->
     <v-card>
       <v-row>
@@ -143,23 +143,13 @@
                   <span class="mr-1">·</span>
                   <span class="mr-1">·</span>
                   <span class="mr-1">·</span>
-                  <v-tooltip color="orange" top>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
-                        <v-icon class="mr-1"> mdi-share-variant </v-icon>
-                      </v-btn>
-                    </template>
-                    <span>Paylaş</span>
-                  </v-tooltip>
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon class="mr-1"> mdi-share-variant </v-icon>
+                  </v-btn>
                   <span class="mr-1">·</span>
-                  <v-tooltip color="blue" top>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn icon v-bind="attrs" v-on="on">
-                        <v-icon class="mr-1"> mdi-cogs </v-icon>
-                      </v-btn>
-                    </template>
-                    <span>Seçenekler</span>
-                  </v-tooltip>
+                  <v-btn icon v-bind="attrs" v-on="on">
+                    <v-icon class="mr-1"> mdi-cogs </v-icon>
+                  </v-btn>
                 </div>
               </v-row>
             </v-list-item>
@@ -168,7 +158,7 @@
         </v-col>
       </v-row>
     </v-card>
-    <h1>Zaman Çizergesi</h1>
+    <h1>{{ $t("keywords.timeline") }}</h1>
     <v-card>
       <v-timeline align-top dense>
         <v-timeline-item color="white" small>
@@ -178,7 +168,7 @@
             </v-col>
             <v-col>
               <div class="click">
-                <strong>Content</strong>
+                <strong>{{ $t("keywords.content") }}</strong>
               </div>
               <div class="caption">
                 <ul>
@@ -335,7 +325,7 @@ h2 {
   padding: 10px 0 0 0;
 }
 
-.timeline-user-info .v-card__subtitle{
+.timeline-user-info .v-card__subtitle {
   text-align: left !important;
 }
 </style>

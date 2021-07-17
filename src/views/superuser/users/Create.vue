@@ -33,7 +33,11 @@
                 :class="{ 'on-hover': hover }"
               >
                 <v-img
-                  :src="changeImage ? changeImage:`https://i4.hurimg.com/i/hurriyet/75/0x0/600965400f25443f0406f3ab.jpg`"
+                  :src="
+                    changeImage
+                      ? changeImage
+                      : `https://i4.hurimg.com/i/hurriyet/75/0x0/600965400f25443f0406f3ab.jpg`
+                  "
                 >
                   <v-fade-transition>
                     <v-overlay
@@ -52,13 +56,22 @@
             </v-hover>
           </template>
           <v-card>
-            <drag-drop-image v-on:image="(val) => {changeImage = val}"></drag-drop-image>
+            <drag-drop-image
+              v-on:image="
+                (val) => {
+                  changeImage = val;
+                }
+              "
+            ></drag-drop-image>
           </v-card>
         </v-menu>
         <v-radio-group v-model="user.role" mandatory>
-          <v-radio label="Kullanıcı" value="Client"></v-radio>
-          <v-radio label="Yetkili Kullanıcı" value="Admin"></v-radio>
-          <v-radio label="Süper Kullanıcı" value="SuperUser"></v-radio>
+          <v-radio :label="$t('keywords.client')" value="Client"></v-radio>
+          <v-radio :label="$t('keywords.admin')" value="Admin"></v-radio>
+          <v-radio
+            :label="$t('keywords.super_user')"
+            value="SuperUser"
+          ></v-radio>
         </v-radio-group>
       </v-col>
       <v-col cols="9">
@@ -66,8 +79,8 @@
           <v-col>
             <v-text-field
               v-model="user.first_name"
-              label="Adı"
-              placeholder="Adı"
+              :label="$t('keywords.first_name')"
+              :placeholder="$t('keywords.first_name')"
               outlined
               dense
             ></v-text-field>
@@ -75,8 +88,8 @@
           <v-col>
             <v-text-field
               v-model="user.last_name"
-              label="Soyadı"
-              placeholder="Soyadı"
+              :label="$t('keywords.last_name')"
+              :placeholder="$t('keywords.last_name')"
               outlined
               dense
             ></v-text-field>
@@ -84,15 +97,15 @@
         </v-row>
         <v-text-field
           v-model="user.email"
-          label="Mail Adresi"
-          placeholder="Mail Adresi"
+          :label="$t('keywords.email')"
+          :placeholder="$t('keywords.email')"
           outlined
           dense
         ></v-text-field>
         <v-text-field
           v-model="user.username"
-          label="Kullanıcı Adı"
-          placeholder="Kullanıcı Adı"
+          :label="$t('keywords.username')"
+          :placeholder="$t('keywords.username')"
           outlined
           dense
         ></v-text-field>
@@ -100,8 +113,8 @@
           <v-col>
             <v-text-field
               v-model="user.password"
-              label="Şifre"
-              placeholder="Şifre"
+          :label="$t('keywords.password')"
+          :placeholder="$t('keywords.password')"
               type="password"
               outlined
               dense
@@ -110,8 +123,8 @@
           <v-col>
             <v-text-field
               v-model="user.confirm_password"
-              label="Şifre Onay"
-              placeholder="Şifre Onay"
+          :label="$t('keywords.confirm_password')"
+          :placeholder="$t('keywords.confirm_password')"
               type="password"
               outlined
               dense
@@ -147,19 +160,19 @@ export default {
   components: {
     SubHeader: () => import(`@/layouts/header/SubHeader`),
     DragDropImage: () => import(`./components/UploadImage`),
-    AddAlert: () => import(`@/components/Alert/AddAlert`)
+    AddAlert: () => import(`@/components/Alert/AddAlert`),
   },
   data() {
     return {
       user: {
-        image_path: null
+        image_path: null,
       },
       transparent: "rgba(255, 255, 255, 0)",
       menu: false,
       loading: false,
       add: {
         status: false,
-        msg: "Ekleme işlemi yaklaşık 5sn içinde gerçekleşecektir.",
+        msg: null,
         second: 100,
         type: "warning",
         func: "postApiUser",
@@ -175,13 +188,14 @@ export default {
       set(value) {
         this.user.image_path = value;
         this.menu = false;
-      }
-    }
+      },
+    },
   },
   methods: {
     handleSave() {
       this.loading = true;
       this.add.item = this.user;
+      this.add.msg = this.user.email;
       this.add.second = 100;
       this.add.status = true;
     },

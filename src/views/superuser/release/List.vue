@@ -3,7 +3,7 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-tooltip color="green" bottom>
+          <v-tooltip color="green" left>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 icon
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Kullanıcı Oluştur</span>
+            <span>{{$t('release.new')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -26,11 +26,20 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      loading-text="Yükleniyor..."
+      :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
       class="elevation-1"
       @page-count="pageCount = $event"
     >
+      <template #[`header._id`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.option.version`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.create_date`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.create_date`]="{ item }">
         {{ item.create_date | moment("DD MMM YYYY HH:mm") }}
       </template>
@@ -48,7 +57,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{$t('keywords.edit')}}</span>
         </v-tooltip>
         <v-tooltip color="error" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -68,7 +77,7 @@
               mdi-delete-outline
             </v-icon>
           </template>
-          <span>Sil</span>
+          <span>{{$t('keywords.delete')}}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -113,16 +122,16 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "ID",
+          text: "keywords.identity",
           value: "_id",
         },
         {
-          text: "Sürüm Notu",
+          text: "keywords.version",
           value: "option.version",
           sortable: true,
         },
         {
-          text: "Tarih",
+          text: "phrases.create_date",
           value: "create_date",
           sortable: true,
         },

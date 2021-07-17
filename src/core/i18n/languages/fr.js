@@ -49,7 +49,35 @@ const fr = {
         chapter: 'Chapitre',
         news: 'Nouvelles',
         forum: 'Forum',
-        type: 'Taper'
+        type: 'Taper',
+        chapters: 'Chapitres',
+        the_news: 'Nouvelles',
+        forums: 'Forums',
+        public: 'Publique',
+        private: 'Privée',
+        first_name: 'Prénom',
+        last_name: 'Nom de famille',
+        email: 'E-mail',
+        role: 'Rôle',
+        super_user: 'Super-utilisateur',
+        admin: 'Administratrice',
+        client: 'Cliente',
+        online: 'En ligne',
+        offline: 'Hors ligne',
+        identity: 'Identité',
+        version: 'Version',
+        username: "Nom d'utilisateur",
+        password: 'Mot de passe',
+        confirm_password: 'Confirmez le mot de passe',
+        reset: 'Réinitialiser',
+        close: 'Fermer',
+        icon: 'Icône',
+        views: 'Prévisualisation',
+        biography: 'Biographie',
+        degree: 'Degré',
+        theme: 'Thème',
+        profile: 'Profil',
+        timeline: 'Chronologie'
     },
     phrases: {
         resetPassword: 'Réinitialisation du mot de passe',
@@ -66,7 +94,11 @@ const fr = {
         card_subtitle: 'Sous-titre de la carte',
         card_text: 'Texte de carte',
         content_markdown: 'Contenu(Markdown)',
-        user_journey: "Voyage de l'utilisateur"
+        user_journey: "Voyage de l'utilisateur",
+        version_number: 'Numéro de version(v0.1.0)',
+        user_view_settings: 'Paramètres de la vue utilisateur.',
+        user_image: 'Image utilisateur',
+        reverse_full_name: 'Nom complet inverse'
     },
     sideMenus: {
         userMenus: "Menus d'utilisateur",
@@ -96,6 +128,8 @@ const fr = {
         update_content_success: "Le contenu avec l'ID {id} a été mis à jour avec succès.",
         delete_content: "Le contenu avec l'ID {id} est en cours de suppression.",
         delete_content_success: "Le contenu avec l'ID {id} a été supprimé avec succès.",
+        reset_password_monthly: 'Nous vous recommandons de réinitialiser votre mot de passe mensuellement.',
+        theme_select: "Vous ne pouvez sélectionner que 1 seulement du mode noir et du mode lumineux."
     },
     router: {
         home: "Domicile",
@@ -199,6 +233,18 @@ const fr = {
     },
     forum: {
         new: 'Nouveau Forum'
+    },
+    library: {
+        new: 'Nouveau livre'
+    },
+    user: {
+        new: 'Nouvel utilisateur'
+    },
+    release: {
+        new: 'Note de nouvelle version'
+    },
+    about: {
+        new: 'Nouveau sur Note'
     }
 }
 

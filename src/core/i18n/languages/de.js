@@ -49,7 +49,35 @@ const de = {
         chapter: 'Kapitel',
         news: 'Nachrichten',
         forum: 'Forum',
-        type: 'Art'
+        type: 'Art',
+        chapters: 'Kapitel',
+        the_news: 'Nachrichten',
+        forums: 'Foren',
+        public: 'Öffentlichkeit',
+        private: 'Privatgelände',
+        first_name: 'Vorname',
+        last_name: 'Nachname',
+        email: 'Email',
+        role: 'Rolle',
+        super_user: 'Super-Benutzer',
+        admin: 'Administratorin',
+        client: 'Klientin',
+        online: 'Online',
+        offline: 'Offline',
+        identity: 'Identität',
+        version: 'Ausführung',
+        username: 'Nutzername',
+        password: 'Passwort',
+        confirm_password: 'Kennwort bestätigen',
+        reset: 'Zurücksetzen',
+        close: 'Schließen',
+        icon: 'Symbol',
+        views: 'Vorschauen',
+        biography: 'Biografie',
+        degree: 'Grad',
+        theme: 'Thema',
+        profile: 'Profil',
+        timeline: 'Zeitleiste'
     },
     phrases: {
         resetPassword: 'Passwort zurücksetzen',
@@ -66,7 +94,11 @@ const de = {
         card_subtitle: 'Kartenuntertitel',
         card_text: 'Kartentext',
         content_markdown: 'Inhalt(Markdown)',
-        user_journey: 'Benutzerreise'
+        user_journey: 'Benutzerreise',
+        version_number: 'Versionsnummer(v0.1.0)',
+        user_view_settings: 'Benutzeransicht-Einstellungen.',
+        user_image: 'Benutzerisch',
+        reverse_full_name: 'Umgekehrter vollständiger Name'
     },
     sideMenus: {
         userMenus: 'Benutzermenüs',
@@ -96,6 +128,8 @@ const de = {
         update_content_success: 'Der Inhalt mit ID {ID} wurde erfolgreich aktualisiert.',
         delete_content: 'Inhalt mit ID {ID} wird gelöscht.',
         delete_content_success: 'Inhalt mit ID {ID} wurde erfolgreich gelöscht.',
+        reset_password_monthly: 'Wir empfehlen, dass Sie Ihr Passwort monatlich zurücksetzen.',
+        theme_select: "Sie können nur nur 1 des dunklen Modus und des hellen Modus auswählen."
     },
     router: {
         home: "Zuhause",
@@ -199,6 +233,18 @@ const de = {
     },
     forum: {
         new: 'Neues Forum'
+    },
+    library: {
+        new: 'Neues Buch'
+    },
+    user: {
+        new: 'Neuer Benutzer'
+    },
+    release: {
+        new: 'Neuer Release-Note'
+    },
+    about: {
+        new: 'Neu über Anmerkung'
     }
 }
 

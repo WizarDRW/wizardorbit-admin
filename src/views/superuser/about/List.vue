@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Kullanıcı Oluştur</span>
+            <span>{{$t('about.new')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -26,11 +26,17 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      loading-text="Yükleniyor..."
+      :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
       class="elevation-1"
       @page-count="pageCount = $event"
     >
+      <template #[`header._id`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.type`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.actions`]="{ item }">
         <v-tooltip color="blue" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -45,7 +51,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{$t('keywords.edit')}}</span>
         </v-tooltip>
         <v-tooltip color="error" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -65,7 +71,7 @@
               mdi-delete-outline
             </v-icon>
           </template>
-          <span>Sil</span>
+          <span>{{$t('keywords.delete')}}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -110,11 +116,11 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "ID",
+          text: "keywords.identity",
           value: "_id",
         },
         {
-          text: "Tip",
+          text: "keywords.type",
           value: "type",
           sortable: true,
         },
@@ -156,7 +162,7 @@ export default {
     },
     handleDelete(itemid) {
       this.deleteItems.push({
-        msg: "Silinme işlemi için",
+        msg: itemid,
         type: "error",
         second: 100,
         func: "deleteApiAbout",

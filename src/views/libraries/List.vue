@@ -3,7 +3,7 @@
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
-          <v-tooltip color="green" bottom>
+          <v-tooltip color="green" left>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 icon
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>Yeni Kitaplık Oluştur</span>
+            <span>{{$t('library.new')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -66,7 +66,7 @@
           </v-carousel>
           <v-card-title> {{ item.name }} </v-card-title>
           <div v-if="item.chapters.length > 0">
-            <v-card-text>Bölümler</v-card-text>
+            <v-card-text>{{$t('keywords.chapters')}}</v-card-text>
             <v-row dense no-gutters>
               <v-col
                 v-for="(content_item, content_index) in item.chapters.slice(
@@ -91,7 +91,7 @@
             </v-row>
           </div>
           <div v-if="item.news.length > 0">
-            <v-card-text>Haberler</v-card-text>
+            <v-card-text>{{$t('keywords.the_news')}}</v-card-text>
             <v-row dense no-gutters>
               <v-col
                 v-for="(content_item, content_index) in item.news.slice(0, 7)"
@@ -127,7 +127,7 @@
                   <v-icon>mdi-circle-edit-outline</v-icon>
                 </v-btn>
               </template>
-              <span> Düzenle </span>
+              <span> {{$t('keywords.edit')}} </span>
             </v-tooltip>
             <v-tooltip color="red" bottom>
               <template v-slot:activator="{ on, attrs }">
@@ -146,7 +146,7 @@
                   <v-icon>mdi-delete-outline</v-icon>
                 </v-btn>
               </template>
-              <span> Sil </span>
+              <span> {{$t('keywords.delete')}} </span>
             </v-tooltip>
           </v-card-actions>
         </v-card>
@@ -222,7 +222,7 @@ export default {
     },
     handleDelete(itemid) {
       this.deleteItems.push({
-        msg: "Silinme işlemi için",
+        msg: itemid,
         type: "error",
         func: "deleteApiLibrary",
         second: 100,

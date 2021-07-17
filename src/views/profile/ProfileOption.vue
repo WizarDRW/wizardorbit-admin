@@ -16,7 +16,7 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>Kaydet</span>
+            <span>{{$t('keywords.save')}}</span>
           </v-tooltip>
         </div>
       </template>
@@ -25,57 +25,57 @@
       <v-col md="3">
         <v-expansion-panels v-model="panel" inset>
           <v-expansion-panel>
-            <v-expansion-panel-header>Görünümler</v-expansion-panel-header>
+            <v-expansion-panel-header>{{$t('keywords.views')}}</v-expansion-panel-header>
             <v-expansion-panel-content>
-              <p>Kullanıcı görünümü ayarlar.</p>
+              <p>{{$t('phrases.user_view_settings')}}</p>
               <v-checkbox
                 v-model="option.isViewImagePath"
                 hide-details
-                :label="`Kullanıcı Resmi`"
+                :label="$t('phrases.user_image')"
               ></v-checkbox>
               <v-checkbox
                 v-model="option.isViewFirstName"
                 hide-details
-                :label="`İlk ad`"
+                :label="$t('keywords.first_name')"
               ></v-checkbox>
               <v-checkbox
                 v-model="option.isViewLastName"
                 hide-details
-                :label="`Son ad`"
+                :label="$t('keywords.last_name')"
               ></v-checkbox>
               <v-checkbox
                 v-if="option.isViewFirstName && option.isViewLastName"
                 v-model="option.isReveseFullName"
                 hide-details
-                :label="`Tam adı ters yaz`"
+                :label="$t('keywords.reverse_full_name')"
               ></v-checkbox>
               <v-checkbox
                 v-model="option.isViewUserName"
                 hide-details
-                :label="`Kullanıcı adı`"
+                :label="$t('keywords.username')"
               ></v-checkbox>
               <v-checkbox
                 v-model="option.isViewEmail"
                 hide-details
-                :label="`E-Posta adresi`"
+                :label="$t('keywords.email')"
               ></v-checkbox>
               <v-checkbox
                 v-model="option.isViewDescription"
                 hide-details
-                :label="`Biyografi`"
+                :label="$t('keywords.biography')"
               ></v-checkbox>
               <v-checkbox
                 v-model="option.isViewTitle"
                 hide-details
-                :label="`Ünvan`"
+                :label="$t('keywords.degree')"
               ></v-checkbox>
             </v-expansion-panel-content>
           </v-expansion-panel>
           <v-expansion-panel>
-            <v-expansion-panel-header>Tema</v-expansion-panel-header>
+            <v-expansion-panel-header>{{$t('keywords.theme')}}</v-expansion-panel-header>
             <v-expansion-panel-content>
               <p>
-                Karanlık mod ve aydınlık moddan sadece 1'er adet seçebilirsiniz.
+                {{$t('message.theme_select')}}
               </p>
             </v-expansion-panel-content>
           </v-expansion-panel>

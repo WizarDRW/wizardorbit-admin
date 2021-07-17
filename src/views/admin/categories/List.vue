@@ -16,7 +16,7 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>Değişiklikleri Kaydet</span>
+            <span>{{ $t("keywords.save") }}</span>
           </v-tooltip>
         </div>
       </template>
@@ -31,7 +31,7 @@
           hoverable
           open-on-click
           selected-color="success"
-          item-text="label"
+          :item-text="`label[${$store.getters.getLangName}]`"
           return-object
           dense
           :open-all="open"
@@ -40,7 +40,7 @@
             <v-icon>
               {{ item.icon }}
             </v-icon>
-            {{ item.label }}
+            {{ item.label[$store.getters.getLangName] }}
           </template>
           <template v-slot:append="{ item, hover }">
             <div class="inline">
@@ -109,12 +109,6 @@
         <log :_datas="log" v-on:undo="undo"></log>
       </v-col>
     </v-row>
-    <delete
-      :_dialog="deleteDialog"
-      :_name="deleteRes.name"
-      v-on:handleDelete="handleDelete"
-      v-on:dialogClose="(value) => (deleteDialog = value)"
-    ></delete>
     <content-edit
       v-if="dialog"
       :_dialog="dialog"
@@ -139,7 +133,6 @@ export default {
   name: "SuperUserCategoryList",
   components: {
     SubHeader: () => import("@/layouts/header/SubHeader"),
-    Delete: () => import("./Delete"),
     ContentEdit: () => import("./ContentEdit"),
     CTreeview: () => import("@/mixins/CTreeview"),
     Log: () => import("@/components/Log"),

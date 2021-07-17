@@ -66,9 +66,12 @@
           </v-card>
         </v-menu>
         <v-radio-group v-model="user.role" mandatory>
-          <v-radio label="Kullanıcı" value="Client"></v-radio>
-          <v-radio label="Yetkili Kullanıcı" value="Admin"></v-radio>
-          <v-radio label="Süper Kullanıcı" value="SuperUser"></v-radio>
+          <v-radio :label="$t('keywords.client')" value="Client"></v-radio>
+          <v-radio :label="$t('keywords.admin')" value="Admin"></v-radio>
+          <v-radio
+            :label="$t('keywords.super_user')"
+            value="SuperUser"
+          ></v-radio>
         </v-radio-group>
       </v-col>
       <v-col cols="9">
@@ -76,8 +79,8 @@
           <v-col>
             <v-text-field
               v-model="user.first_name"
-              label="Adı"
-              placeholder="Adı"
+              :label="$t('keywords.first_name')"
+              :placeholder="$t('keywords.first_name')"
               outlined
               dense
             ></v-text-field>
@@ -85,8 +88,8 @@
           <v-col>
             <v-text-field
               v-model="user.last_name"
-              label="Soyadı"
-              placeholder="Soyadı"
+              :label="$t('keywords.last_name')"
+              :placeholder="$t('keywords.last_name')"
               outlined
               dense
             ></v-text-field>
@@ -94,15 +97,15 @@
         </v-row>
         <v-text-field
           v-model="user.email"
-          label="Mail Adresi"
-          placeholder="Mail Adresi"
+          :label="$t('keywords.email')"
+          :placeholder="$t('keywords.email')"
           outlined
           dense
         ></v-text-field>
         <v-text-field
           v-model="user.username"
-          label="Kullanıcı Adı"
-          placeholder="Kullanıcı Adı"
+          :label="$t('keywords.username')"
+          :placeholder="$t('keywords.username')"
           outlined
           dense
         ></v-text-field>
@@ -145,7 +148,7 @@ export default {
       loading: false,
       update: {
         status: false,
-        msg: "Güncelleme işlemi yaklaşık 10sn içinde gerçekleşecektir.",
+        msg: null,
         second: 100,
         type: "warning",
         func: "putApiUser",
@@ -173,6 +176,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.update.item = this.user;
+      this.update.msg = this.user.email;
       this.update.second = 100;
       this.update.status = true;
     },

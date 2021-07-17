@@ -20,8 +20,8 @@
     <v-text-field
       v-model="release.option.version"
       prefix="v"
-      label="Versiyon Numarası(v0.1.0)"
-      placeholder="Versiyon Numarası(v0.1.0)"
+      :label="$t('phrases.version_number')"
+      :placeholder="$t('phrases.version_number')"
       solo
     ></v-text-field>
     <create-content :_descriptions="release.descriptions"></create-content>

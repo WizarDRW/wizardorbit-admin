@@ -17,6 +17,13 @@
         </div>
       </template>
     </sub-header>
+    <v-text-field
+      v-model="release.option.version"
+      prefix="v"
+      :label="$t('phrases.version_number')"
+      :placeholder="$t('phrases.version_number')"
+      solo
+    ></v-text-field>
     <create-content
       :_descriptions="release.descriptions"
     ></create-content>

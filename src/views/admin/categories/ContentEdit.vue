@@ -3,25 +3,25 @@
     <v-card>
       <v-card-text></v-card-text>
       <v-text-field
-        v-model="item.label"
-        label="Kategori adı"
-        placeholder="Kategori adı"
+        v-model="item.label[$store.getters.getLangName]"
+        :label="$t('keywords.title')"
+        :placeholder="$t('keywords.title')"
         outlined
         dense
       ></v-text-field>
       <v-text-field
         v-model="item.icon"
-        label="Icon adı"
-        placeholder="Icon adı"
+        :label="$t('keywords.icon')"
+        :placeholder="$t('keywords.icon')"
         hide-details
         outlined
         dense
       ></v-text-field>
     </v-card>
     <v-card-actions>
-      <v-btn color="warning" text @click="close()">Kapat</v-btn>
+      <v-btn color="warning" text @click="close()">{{$t('keywords.close')}}</v-btn>
       <v-btn color="success" :disabled="disabled" text @click="save()"
-        >Kaydet</v-btn
+        >{{$t('keywords.save')}}</v-btn
       >
     </v-card-actions>
   </v-dialog>

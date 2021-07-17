@@ -20,17 +20,34 @@
     <v-select
       v-model="about.type"
       :items="[
-        { label: 'Biz Kimiz', id: 'whoweare' },
-        { label: 'Hikaye', id: 'ourhistory' },
-        { label: 'Plan', id: 'ourplan' },
+        {
+          label: {
+            tr: 'Biz Kimiz',
+            en: 'Who We Are?',
+            de: 'Wer wir sind?',
+            fr: 'Qui nous sommes?',
+          },
+          id: 'whoweare',
+        },
+        {
+          label: {
+            tr: 'Hikaye',
+            en: 'History',
+            de: 'Geschichte',
+            fr: 'Histoire',
+          },
+          id: 'ourhistory',
+        },
+        {
+          label: { tr: 'Plan', en: 'Plan', de: 'Planen', fr: 'Plan' },
+          id: 'ourplan',
+        },
       ]"
-      item-text="label"
-      label="Tip"
+      :item-text="`label[${$store.getters.getLangName}]`"
+      :label="$t('keywords.type')"
       solo
     ></v-select>
-    <create-content
-      :_descriptions="about.descriptions"
-    ></create-content>
+    <create-content :_descriptions="about.descriptions"></create-content>
     <div class="alerts">
       <add-alert
         v-if="add.status"
@@ -69,7 +86,7 @@ export default {
     AddAlert: () => import("@/components/Alert/AddAlert"),
     SubHeader: () => import(`@/layouts/header/SubHeader`),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
-    CreateContent: () => import(`@/components/CreateContent.vue`)
+    CreateContent: () => import(`@/components/CreateContent.vue`),
   },
   data() {
     return {
@@ -79,7 +96,7 @@ export default {
       },
       add: {
         status: false,
-        msg: "Ekleme işlemi yaklaşık 5sn içinde gerçekleşecektir.",
+        msg: null,
         second: 100,
         type: "warning",
         func: "postApiRelease",
@@ -92,6 +109,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.add.item = this.about;
+      this.add.msg = this.about.type;
       this.add.second = 100;
       this.add.status = true;
     },

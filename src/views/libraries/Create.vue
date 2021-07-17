@@ -16,16 +16,16 @@
       <v-col cols="12" sm="6" md="3">
         <v-text-field
           v-model="library.name"
-          label="Başlık"
-          placeholder="Başlık"
+          :label="$t('keywords.title')"
+          :placeholder="$t('keywords.title')"
           outlined
           dense
           prepend-icon="mdi-format-title"
         ></v-text-field>
         <v-text-field
           v-model="library.description"
-          label="Açıklama"
-          placeholder="Açıklama"
+          :label="$t('keywords.description')"
+          :placeholder="$t('keywords.description')"
           outlined
           dense
           prepend-icon="mdi-subtitles-outline"
@@ -45,7 +45,7 @@
                     }
                   "
                   color="red"
-                  >Sil</v-btn
+                  >{{ $t("keywords.delete") }}</v-btn
                 >
               </div>
             </v-fade-transition>
@@ -54,7 +54,7 @@
         <v-file-input
           v-else
           v-model="library.image_path"
-          label="Resim Ekle"
+          :label="$t('phrases.addImage')"
           outlined
           dense
           hide-details
@@ -66,7 +66,9 @@
           v-model="library.private"
           on-icon="mdi-lock-outline"
           off-icon="mdi-lock-open-variant-outline"
-          :label="`${library.private ? 'Gizli' : 'Herkes'}`"
+          :label="`${
+            library.private ? $t('keywords.private') : $t('keywords.public')
+          }`"
           dense
         >
         </v-checkbox>
