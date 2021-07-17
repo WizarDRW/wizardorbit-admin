@@ -7,13 +7,22 @@
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
-      loading-text="Yükleniyor..."
-      no-data-text="Taslak bulunmamaktadır!"
+      :no-data-text="$t('phrases.noDataAvailable')"
+      :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
+      <template #[`header.data.name`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.create_date`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
+      <template #[`header.type`]="{ header }">
+        {{ $t(`${header.text}`) }}
+      </template>
       <template #[`item.create_date`]="{ item }">
         {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
       </template>
@@ -31,11 +40,11 @@
         >
           {{
             item.type == "chapter"
-              ? "Bölüm"
+              ? $t('keywords.chapter')
               : item.type == "news"
-              ? "Haber"
+              ? $t('keywords.news')
               : item.type == "forum"
-              ? "Forum"
+              ? $t('keywords.forum')
               : item.type
           }}
         </div>
@@ -54,7 +63,7 @@
               mdi-pencil
             </v-icon>
           </template>
-          <span>Düzenle</span>
+          <span>{{ $t("keywords.edit") }}</span>
         </v-tooltip>
         <v-tooltip color="error" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -74,7 +83,7 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>Sil</span>
+          <span>{{ $t("keywords.delete") }}</span>
         </v-tooltip>
       </template>
     </v-data-table>
@@ -115,17 +124,17 @@ export default {
       itemsPerPage: 10,
       headers: [
         {
-          text: "Başlık",
+          text: "keywords.title",
           value: "data.name",
           sortable: true,
         },
         {
-          text: "Oluşturma Zamanı",
+          text: "phrases.create_date",
           value: "create_date",
           sortable: true,
         },
         {
-          text: "Tip",
+          text: "keywords.type",
           value: "type",
           sortable: true,
         },
@@ -171,7 +180,7 @@ export default {
     },
     handleDelete(itemid) {
       this.deleteItems.push({
-        msg: "Silinme işlemi için",
+        msg: itemid,
         type: "error",
         second: 100,
         func: "deleteApiDraft",

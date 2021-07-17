@@ -24,12 +24,12 @@
                       ><v-icon>mdi-check</v-icon></v-btn
                     >
                   </template>
-                  <span>Çözüm</span>
+                  <span>{{ $t("keywords.solution") }}</span>
                 </v-tooltip>
               </v-card-subtitle>
             </v-col>
             <v-col>
-              <h3>İçerik</h3>
+              <h3>{{ $t("keywords.content") }}</h3>
               <v-card-text>
                 <div v-html="item.description"></div>
               </v-card-text>
@@ -49,7 +49,7 @@
                   <v-icon> mdi-delete-outline </v-icon>
                 </v-btn>
               </template>
-              <span>Sil</span>
+              <span>{{ $t("keywords.delete") }}</span>
             </v-tooltip>
           </v-card-actions>
         </v-card>

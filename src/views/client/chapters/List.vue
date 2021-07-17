@@ -110,7 +110,7 @@ export default {
           value: "name",
         },
         {
-          text: "phrases.createDate",
+          text: "phrases.create_date",
           value: "create_date",
           sortable: true,
         },

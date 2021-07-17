@@ -45,6 +45,11 @@ const de = {
         m_h1: 'Titel 1',
         m_h2: 'Titel 2',
         m_h3: 'Titel 3',
+        solution: 'Lösung',
+        chapter: 'Kapitel',
+        news: 'Nachrichten',
+        forum: 'Forum',
+        type: 'Art'
     },
     phrases: {
         resetPassword: 'Passwort zurücksetzen',

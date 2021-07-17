@@ -53,8 +53,8 @@
               dense
               hide-details
               rows="3"
-              :label="$t('message.description')"
-              :placeholder="$t('message.description')"
+              :label="$t('keywords.description')"
+              :placeholder="$t('keywords.description')"
               prepend-inner-icon="mdi-card-text-outline"
             ></v-textarea>
           </template>

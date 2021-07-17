@@ -45,6 +45,11 @@ const fr = {
         m_h1: 'Titre 1',
         m_h2: 'Titre 2',
         m_h3: 'Titre 3',
+        solution: 'Solution',
+        chapter: 'Chapitre',
+        news: 'Nouvelles',
+        forum: 'Forum',
+        type: 'Taper'
     },
     phrases: {
         resetPassword: 'Réinitialisation du mot de passe',

@@ -19,99 +19,24 @@
     </sub-header>
     <v-row>
       <v-col md="3">
-        <h2>{{$t('message.category')}}</h2>
-        <v-treeview
-          v-model="forum.categories"
-          :items="categories"
-          :selection-type="selectionType"
-          selectable
-          return-object
-          item-text="label"
-          open-all
+        <left-content
+          _type="forum"
+          :_content="forum"
+          v-on:selectedCategories="(val) => (forum.categories = val)"
         >
-          <template v-slot:prepend="{ item }">
-            <v-icon>
-              {{ item.icon }}
-            </v-icon>
-            {{ item.label[$store.getters.getLangName] }}
+          <template #short_description>
+            <v-textarea
+              v-model="forum.short_description"
+              outlined
+              dense
+              hide-details
+              rows="3"
+              :label="$t('keywords.description')"
+              :placeholder="$t('keywords.description')"
+              prepend-inner-icon="mdi-card-text-outline"
+            ></v-textarea>
           </template>
-        </v-treeview>
-        <p></p>
-        <h2><v-icon>mdi-semantic-web</v-icon> SEO</h2>
-        <p></p>
-        <v-text-field
-          v-model="forum.name"
-          :label="$t('forum.new.title')"
-          :placeholder="$t('forum.new.title')"
-          outlined
-          dense
-          disabled
-          prepend-inner-icon="mdi-format-title"
-        ></v-text-field>
-        <v-textarea
-          v-model="forum.short_description"
-          outlined
-          dense
-          hide-details
-          rows="3"
-          :label="$t('forum.new.description')"
-          :placeholder="$t('forum.new.description')"
-          prepend-inner-icon="mdi-card-text-outline"
-        ></v-textarea>
-        <v-tooltip color="green" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="success"
-              icon
-              v-bind="attrs"
-              v-on="on"
-              @click="
-                () => {
-                  chapter.tags.push({ key: '', tag: '' });
-                }
-              "
-            >
-              <v-icon> mdi-plus </v-icon>
-            </v-btn>
-          </template>
-          <span>{{$t('forum.new.addTag.main')}}</span>
-        </v-tooltip>
-        <div v-for="(item, index) in forum.tags" :key="item">
-          <v-text-field
-            v-model="item.key"
-            :label="$t('forum.new.addTag.key')"
-            :placeholder="$t('forum.new.addTag.key')"
-            outlined
-            dense
-            hide-details
-            prepend-inner-icon="mdi-key"
-            prepend-icon="mdi-minus"
-          >
-            <template #prepend>
-              <v-btn
-                color="error"
-                icon
-                @click="
-                  () => {
-                    chapter.tags.splice(index, 1);
-                  }
-                "
-              >
-                <v-icon>mdi-minus</v-icon>
-              </v-btn>
-            </template>
-          </v-text-field>
-          <v-text-field
-            v-model="item.tag"
-            :label="$t('forum.new.addTag.tag')"
-            :placeholder="$t('forum.new.addTag.tag')"
-            outlined
-            dense
-            hide-details
-            append-icon="mdi-tag-outline"
-          ></v-text-field>
-          <br />
-        </div>
+        </left-content>
       </v-col>
       <v-col md="9">
         <v-text-field
@@ -165,6 +90,7 @@ export default {
     Tiptap: () => import("@/components/Tiptap"),
     UpdateAlert: () => import("@/components/Alert/UpdateAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
+    LeftContent: () => import(`@/components/LeftContent.vue`),
     TiptapVuetify,
   },
   data() {
@@ -176,7 +102,7 @@ export default {
       loading: true,
       update: {
         status: false,
-        msg: "Güncelleme işlemi yaklaşık 10sn içinde gerçekleşecektir.",
+        msg: "",
         second: 100,
         type: "warning",
         func: "putApiForum",
@@ -204,6 +130,7 @@ export default {
       this.forum.status = "ModeratorAcceping";
       this.loading = true;
       this.update.item = this.forum;
+      this.update.msg = this.forum.name;
       this.update.second = 100;
       this.update.status = true;
     },

@@ -45,6 +45,11 @@ const tr = {
         m_h1: 'Başlık 1',
         m_h2: 'Başlık 2',
         m_h3: 'Başlık 3',
+        solution: 'Çözüm',
+        chapter: 'Bölüm',
+        news: 'Haber',
+        forum: 'Forum',
+        type: 'Tür'
     },
     phrases: {
         resetPassword: 'Şifre Sıfırla',
