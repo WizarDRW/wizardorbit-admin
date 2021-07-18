@@ -143,11 +143,11 @@
                   <span class="mr-1">·</span>
                   <span class="mr-1">·</span>
                   <span class="mr-1">·</span>
-                  <v-btn icon v-bind="attrs" v-on="on">
+                  <v-btn icon>
                     <v-icon class="mr-1"> mdi-share-variant </v-icon>
                   </v-btn>
                   <span class="mr-1">·</span>
-                  <v-btn icon v-bind="attrs" v-on="on">
+                  <v-btn icon>
                     <v-icon class="mr-1"> mdi-cogs </v-icon>
                   </v-btn>
                 </div>
