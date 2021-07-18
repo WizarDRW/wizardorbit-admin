@@ -53,8 +53,6 @@
               fab
               x-small
               dark
-              v-bind="attrs"
-              v-on="on"
               @click="setLang(item)"
             >
               <v-img width="0px" :src="item.icon"></v-img>

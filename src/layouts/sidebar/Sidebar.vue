@@ -37,6 +37,7 @@
                 <v-badge
                   v-if="
                     item.to == '/drafts' &&
+                    $store.getters.getUserDrafts &&
                     $store.getters.getUserDrafts.length > 0
                   "
                   bordered
