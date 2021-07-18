@@ -11,6 +11,7 @@ import { VueMasonryPlugin } from "vue-masonry";
 import { CURRENT_USER } from "./core/services/store/auth.module";
 import VueCookies from 'vue-cookies'
 import { i18n } from './core/i18n'
+import rule from './utils/rules/global.rule'
 
 Vue.config.productionTip = false
 
@@ -21,6 +22,7 @@ Vue.use(VueCookies)
 Vue.use(VueMoment, {
   moment
 });
+Vue.use(global);
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })
@@ -31,6 +33,8 @@ router.beforeEach(async (to, from, next) => {
   if (store.getters.currentUser)
     next()
 })
+
+Vue.prototype.$rule = rule;
 
 new Vue({
   vuetify,

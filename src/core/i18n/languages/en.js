@@ -1,4 +1,9 @@
 const en = {
+    inputErrorMessage: {
+        required: 'Required!',
+        min: 'Min {n} length',
+        max: 'Max {n} length'
+    },
     keywords: {
         admin: 'Administrator',
         back: 'Back',

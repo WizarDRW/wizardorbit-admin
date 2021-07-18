@@ -1,4 +1,9 @@
 const tr = {
+    inputErrorMessage: {
+        required: 'Gereklidir!',
+        min: 'Girdi en az {n} uzunluğunda olmalıdır!',
+        max: 'Girdi en çok {n} uzunluğunda olmalıdır!'
+    },
     keywords: {
         admin: 'Yetkili',
         back: 'Geri',

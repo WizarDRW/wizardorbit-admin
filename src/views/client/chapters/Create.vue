@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.back')}}</span>
+            <span>{{ $t("keywords.back") }}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.preview')}}</span>
+            <span>{{ $t("keywords.preview") }}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -43,107 +43,130 @@
                 @click="handleSave()"
                 v-bind="attrs"
                 v-on="on"
+                :disabled="disable"
               >
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.save')}}</span>
+            <span>{{ $t("keywords.save") }}</span>
           </v-tooltip>
         </div>
       </template>
     </sub-header>
-    <v-row>
-      <v-col md="3">
-        <left-content
-          _type="chapter"
-          :_content="chapter"
-          v-on:selectedCategories="(val) => (chapter.categories = val)"
-        >
-        </left-content>
-      </v-col>
-      <v-col md="9">
-        <v-text-field
-          v-model="chapter.name"
-          :label="$t('keywords.title')"
-          :placeholder="$t('keywords.title')"
-          outlined
-          dense
-          prepend-icon="mdi-format-title"
-        ></v-text-field>
-        <v-text-field
-          v-model="chapter.short_description"
-          :label="$t('keywords.description')"
-          :placeholder="$t('keywords.description')"
-          outlined
-          dense
-          prepend-icon="mdi-subtitles-outline"
-        ></v-text-field>
-        <v-hover v-if="chapter.image_path" v-slot="{ hover }">
-          <v-img
-            :aspect-ratio="16 / 9"
-            :src="chapter.image_path"
-            lazy-src="https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW"
-            max-width="500px"
+    <v-form @input="(val) => (disable = !val)">
+      <v-row>
+        <v-col md="3">
+          <left-content
+            _type="chapter"
+            :_content="chapter"
+            v-on:selectedCategories="(val) => (chapter.categories = val)"
           >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-                {{$t('phrases.loading')}}...
-              </v-row>
+          </left-content>
+        </v-col>
+        <v-col md="9">
+          <v-text-field
+            v-model="chapter.name"
+            :label="$t('keywords.title')"
+            :placeholder="$t('keywords.title')"
+            outlined
+            dense
+            :rules="[$rule.required, $rule.min(chapter.name, 10)]"
+            prepend-icon="mdi-format-title"
+            counter
+          >
+            <template #message="{ message }">
+              {{ $t(message, { n: 10 }) }}
             </template>
-            <v-fade-transition mode="out-in">
-              <div v-if="hover" class="">
-                <v-btn
-                  @click="
-                    () => {
-                      $store.dispatch('deleteApiMultipart', chapter.image_path);
-                      chapter.image_path = null;
+          </v-text-field>
+          <v-text-field
+            v-model="chapter.short_description"
+            :label="$t('keywords.description')"
+            :placeholder="$t('keywords.description')"
+            outlined
+            dense
+            :rules="[$rule.required, $rule.min(chapter.short_description, 20)]"
+            prepend-icon="mdi-subtitles-outline"
+            counter
+          >
+            <template #message="{ message }">
+              {{ $t(message, { n: 20 }) }}
+            </template>
+          </v-text-field>
+          <v-hover v-if="chapter.image_path" v-slot="{ hover }">
+            <v-img
+              :aspect-ratio="16 / 9"
+              :src="chapter.image_path"
+              lazy-src="https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW"
+              max-width="500px"
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                  {{ $t("phrases.loading") }}...
+                </v-row>
+              </template>
+              <v-fade-transition mode="out-in">
+                <div v-if="hover" class="">
+                  <v-btn
+                    @click="
+                      () => {
+                        $store.dispatch(
+                          'deleteApiMultipart',
+                          chapter.image_path
+                        );
+                        chapter.image_path = null;
+                      }
+                    "
+                    color="red"
+                    tile
+                    >{{ $t("phrases.deleteImage") }}</v-btn
+                  >
+                </div>
+              </v-fade-transition>
+            </v-img>
+          </v-hover>
+          <v-file-input
+            v-else
+            v-model="chapter.image_path"
+            :label="$t('phrases.addImage')"
+            outlined
+            :rules="[$rule.required]"
+            dense
+            ref="image"
+            accept="image/*"
+            @change="onFilePicked"
+          >
+            <template #message="{ message }">
+              {{ $t(message) }}
+            </template>
+          </v-file-input>
+          <div class="quill">
+            <v-row>
+              <v-col>
+                <!-- İçerikler -->
+                <create-content
+                  :_descriptions="chapter.descriptions"
+                ></create-content>
+                <!-- Önizleme dialoğu -->
+                <preview
+                  v-if="preview"
+                  :_dialog="preview"
+                  :_content="chapter"
+                  v-on:dialogClose="
+                    (value) => {
+                      preview = value;
                     }
                   "
-                  color="red"
-                  tile
-                  >{{$t('phrases.deleteImage')}}</v-btn
-                >
-              </div>
-            </v-fade-transition>
-          </v-img>
-        </v-hover>
-        <v-file-input
-          v-else
-          v-model="chapter.image_path"
-          :label="$t('phrases.addImage')"
-          outlined
-          dense
-          ref="image"
-          accept="image/*"
-          @change="onFilePicked"
-        ></v-file-input>
-        <div class="quill">
-          <v-row>
-            <v-col>
-              <!-- İçerikler -->
-              <create-content
-                :_descriptions="chapter.descriptions"
-              ></create-content>
-              <!-- Önizleme dialoğu -->
-              <preview
-                v-if="preview"
-                :_dialog="preview"
-                :_content="chapter"
-                v-on:dialogClose="
-                  (value) => {
-                    preview = value;
-                  }
-                "
-              ></preview>
-            </v-col>
-          </v-row>
-        </div>
-      </v-col>
-    </v-row>
+                ></preview>
+              </v-col>
+            </v-row>
+          </div>
+        </v-col>
+      </v-row>
+    </v-form>
     <div class="alerts">
       <add-alert
         v-if="add.status"
@@ -180,7 +203,7 @@
 import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 var ObjectID = require("bson-objectid");
 export default {
-  name: "Breadcrumbs",
+  name: "ClientCreateChapter",
   components: {
     Preview: () => import("@/components/Preview"),
     AddAlert: () => import("@/components/Alert/AddAlert"),
@@ -197,6 +220,8 @@ export default {
       selectionType: "leaf",
       selection: [],
       chapter: {
+        name: "",
+        short_description: "",
         descriptions: [],
         image_path: null,
         tags: [],
@@ -218,6 +243,7 @@ export default {
       },
       isSave: false,
       draftid: null,
+      disable: true
     };
   },
   async created() {

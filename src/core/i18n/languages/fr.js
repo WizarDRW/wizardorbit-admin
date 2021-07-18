@@ -1,4 +1,9 @@
 const fr = {
+    inputErrorMessage: {
+        required: 'Obligatoire!',
+        min: 'Min {n} length',
+        max: 'Max {n} length'
+    },
     keywords: {
         admin: 'Administratrice',
         biography: 'Biographie',

@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.back')}}</span>
+            <span>{{ $t("keywords.back") }}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.preview')}}</span>
+            <span>{{ $t("keywords.preview") }}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -47,7 +47,7 @@
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.save')}}</span>
+            <span>{{ $t("keywords.save") }}</span>
           </v-tooltip>
         </div>
       </template>
@@ -67,17 +67,27 @@
           :label="$t('keywords.title')"
           :placeholder="$t('keywords.title')"
           outlined
+          :rules="[$rule.required, $rule.min(chapter.name, 10)]"
           dense
           prepend-inner-icon="mdi-format-title"
-        ></v-text-field>
+        >
+          <template #message="{ message }">
+            {{ $t(message, { n: 10 }) }}
+          </template>
+        </v-text-field>
         <v-text-field
           v-model="chapter.short_description"
           :label="$t('keywords.description')"
           :placeholder="$t('keywords.description')"
           outlined
+          :rules="[$rule.required, $rule.min(chapter.short_description, 20)]"
           dense
           prepend-inner-icon="mdi-subtitles-outline"
-        ></v-text-field>
+        >
+          <template #message="{ message }">
+            {{ $t(message, { n: 20 }) }}
+          </template>
+        </v-text-field>
         <v-hover v-if="chapter.image_path" v-slot="{ hover }">
           <v-img
             :aspect-ratio="16 / 9"
@@ -95,7 +105,7 @@
                   indeterminate
                   color="grey lighten-5"
                 ></v-progress-circular>
-                {{$t('phrases.loading')}}...
+                {{ $t("phrases.loading") }}...
               </v-row>
             </template>
             <v-fade-transition mode="out-in">
@@ -113,7 +123,7 @@
                   "
                   color="red"
                   tile
-                  >{{$t('phrases.deleteImage')}}</v-btn
+                  >{{ $t("phrases.deleteImage") }}</v-btn
                 >
               </div>
             </v-fade-transition>
@@ -124,11 +134,16 @@
           v-model="chapter.image_path"
           :label="$t('phrases.addImage')"
           outlined
+          :rules="[$rule.required]"
           dense
           ref="image"
           accept="image/*"
           @change="onFilePicked"
-        ></v-file-input>
+        >
+          <template #message="{ message }">
+            {{ $t(message) }}
+          </template>
+        </v-file-input>
         <br />
         <div class="quill">
           <v-row>

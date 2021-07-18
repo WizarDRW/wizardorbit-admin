@@ -1,4 +1,9 @@
 const de = {
+    inputErrorMessage: {
+        required: 'Erforderlich!',
+        min: 'Min {n} length',
+        max: 'Max {n} length'
+    },
     message: {
         add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.',
         add_content_success: '"Inhalt Titel "{name}" wurde erfolgreich hinzugefügt',
