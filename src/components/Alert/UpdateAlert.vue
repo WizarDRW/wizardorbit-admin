@@ -7,7 +7,7 @@
   >
     <v-row align="center">
       <v-col class="grow">
-        {{ type == 'success' ? $t('message.update_content_success'):$t("message.update_content", { msg: msg }) }}
+        {{ type == 'success' ? $t('message.update_content_success', { id: msg }):$t("message.update_content", { id: msg }) }}
         <v-progress-linear
           v-if="type != 'success'"
           :buffer-value="100"
@@ -100,7 +100,6 @@ export default {
       if (!this.cancel) {
         var result = await this.$store.dispatch(this._func, this._item);
         if (result == 200) {
-          this.msg = "Değişiklikler uygulanmıştır!";
           this.type = "success";
         } else {
           this.msg = result;

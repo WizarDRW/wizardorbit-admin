@@ -115,7 +115,6 @@ export default {
   data() {
     return {
       categories: [],
-      input_categories: [],
       selectionType: "leaf",
     };
   },
@@ -130,10 +129,9 @@ export default {
   computed: {
     inputCategories: {
       get() {
-        return this.input_categories;
+        return this._content.categories;
       },
       set(value) {
-        this.input_categories = value;
         this.$emit("selectedCategories", value);
       },
     },

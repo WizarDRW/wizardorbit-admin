@@ -215,7 +215,7 @@ export default {
       preview: false,
       update: {
         status: false,
-        msg: "Güncelleme işlemi yaklaşık 10sn içinde gerçekleşecektir.",
+        msg: null,
         second: 100,
         type: "warning",
         func: "putApiChapter",
@@ -261,6 +261,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.update.item = this.chapter;
+      this.update.msg = this.chapter._id;
       this.update.second = 100;
       this.update.status = true;
     },

@@ -258,6 +258,7 @@ export default {
     handleSave() {
       this.loading = true;
       this.add.item = this.news;
+      this.add.msg = this.news.name;
       this.add.second = 100;
       this.add.status = true;
     },
