@@ -40,10 +40,13 @@ const actions = {
       password: credentials.password
     }
     return new Promise(resolve => {
-      ApiService.post("users/login", user)
-        .then(({ data }) => {
-          context.commit(SET_AUTH, data);
-          resolve(data);
+      ApiService.post("auth/dologin", user)
+        .then((x) => {
+          if (x.status == 200) {
+            context.commit(SET_AUTH);
+            context.dispatch(CURRENT_USER);
+            resolve(x);
+          }
         })
         .catch(({ response }) => {
           context.commit(SET_ERROR, response.data);
@@ -55,7 +58,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       ApiService.post(`users/google_token/`, data)
         .then(({ data }) => {
-          context.commit(SET_AUTH, data);
+          context.commit(SET_AUTH);
           resolve(data);
         })
         .catch(({ response }) => {
@@ -68,7 +71,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       ApiService.post("auth/destroysession").then(({ data }) => {
         context.commit(PURGE_AUTH);
-        window.location = '/login';
         resolve(data)
       }).catch(err => {
         reject(err)
@@ -88,14 +90,15 @@ const actions = {
         });
     });
   },
-  [VERIFY_AUTH](context) {
-    ApiService.get("auth/verify")
+  async [VERIFY_AUTH](context) {
+    await ApiService.get("auth/verify")
       .then((x) => {
-        if (!x)
-          context.commit(PURGE_AUTH);
-        else {
+        if (x.data) {
+          context.commit(SET_AUTH)
           context.dispatch(CURRENT_USER)
         }
+        else
+          context.commit(PURGE_AUTH);
       })
       .catch(() => {
         context.commit(PURGE_AUTH);
@@ -123,7 +126,6 @@ const actions = {
         })
         .catch((response) => {
           context.commit(PURGE_AUTH);
-          window.location = '/login';
           reject(response);
         });
     })

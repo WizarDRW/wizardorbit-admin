@@ -49,12 +49,7 @@
             :key="index"
             style="margin-top: 10px"
           >
-            <v-btn
-              fab
-              x-small
-              dark
-              @click="setLang(item)"
-            >
+            <v-btn fab x-small dark @click="setLang(item)">
               <v-img width="0px" :src="item.icon"></v-img>
             </v-btn>
           </div>
@@ -104,7 +99,9 @@
           <v-divider></v-divider>
           <v-list-item @click="logout()">
             <v-list-item-title
-              ><v-icon>mdi-lock</v-icon>&nbsp;{{ $t("keywords.logout") }}</v-list-item-title
+              ><v-icon>mdi-lock</v-icon>&nbsp;{{
+                $t("keywords.logout")
+              }}</v-list-item-title
             >
           </v-list-item>
         </v-list>
@@ -155,7 +152,11 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("logout");
+      this.$store.dispatch("logout").then(x => {
+        if (x) {
+          this.$router.push({name: 'Login', query: {returnPath: this.$route.path}})
+        }
+      });
     },
     firstChar(x) {
       return {

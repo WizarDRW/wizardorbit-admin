@@ -9,7 +9,7 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Yönetici paneli girişi</v-toolbar-title>
+                <v-toolbar-title>{{$t('phrases.admin_panel_login')}}</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-form>
@@ -17,7 +17,7 @@
                     prepend-icon="mdi-account"
                     v-model="user.email"
                     name="login"
-                    label="Email Adresi"
+                    :label="$t('keywords.email')"
                     type="text"
                   ></v-text-field>
                   <v-text-field
@@ -25,7 +25,7 @@
                     v-model="user.password"
                     prepend-icon="mdi-lock"
                     name="password"
-                    label="Şifre"
+                    :label="$t('keywords.password')"
                     type="password"
                   ></v-text-field>
                 </v-form>
@@ -39,7 +39,7 @@
                     color="white"
                     indeterminate
                   ></v-progress-circular>
-                  Giriş
+                  {{$t('keywords.login')}}
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -68,9 +68,6 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this.$cookies.get('connect.sid'));
-  },
   methods: {
     login() {
       const email = this.user.email;
@@ -82,9 +79,9 @@ export default {
         .dispatch(LOGIN, { email, password })
         // go to which page after successfully login
         .then((x) => {
-          if (x.token) {
+          if (x.data == true) {
             this.$store.dispatch(CURRENT_USER);
-            this.$router.push({ name: "Home" });
+            this.$router.push({ path: this.$route.query.returnPath || '/' });
           } else {
             this.error.status = true;
             this.error.message = x.data.message;

@@ -8,7 +8,6 @@ import VueMoment from 'vue-moment'
 import VueMeta from 'vue-meta'
 import Katex from 'vue-katex-auto-render'
 import { VueMasonryPlugin } from "vue-masonry";
-import { CURRENT_USER } from "./core/services/store/auth.module";
 import VueCookies from 'vue-cookies'
 import { i18n } from './core/i18n'
 import rule from './utils/rules/global.rule'
@@ -27,12 +26,6 @@ Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })
 Vue.directive('katex', Katex);
-
-router.beforeEach(async (to, from, next) => {
-  await store.dispatch(CURRENT_USER)
-  if (store.getters.currentUser)
-    next()
-})
 
 Vue.prototype.$rule = rule;
 

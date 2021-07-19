@@ -48,14 +48,6 @@ module.exports = {
           '^/service': ''
         }
       },
-      '/login': {
-        target: 'http://127.0.0.1:3000/api/v1/auth/login',
-        ws: true,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/login': ''
-        }
-      }
     }
   }
 }
