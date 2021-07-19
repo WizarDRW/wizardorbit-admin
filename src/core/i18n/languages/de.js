@@ -1,8 +1,8 @@
 const de = {
     inputErrorMessage: {
+        max: 'Max {max} length',
+        min: 'Min {min} length',
         required: 'Erforderlich!',
-        min: 'Min {n} length',
-        max: 'Max {n} length'
     },
     message: {
         add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.',

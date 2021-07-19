@@ -8,6 +8,7 @@
           v-model="item.val"
           :label="$t('phrases.card_title')"
           :placeholder="$t('phrases.card_title')"
+          :rules="[$rule.required, $rule.min(item.val, 5)]"
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
@@ -15,7 +16,11 @@
             }
           "
           solo
-        ></v-text-field>
+        >
+          <template #message="{ message }">
+            {{ $t(message, { n: 5 }) }}
+          </template>
+        </v-text-field>
       </div>
       <!-- Card Subtitle -->
       <div v-if="item.type == 'v-card-subtitle'">
@@ -23,6 +28,7 @@
           v-model="item.val"
           :label="$t('phrases.card_subtitle')"
           :placeholder="$t('phrases.card_subtitle')"
+          :rules="[$rule.required, $rule.min(item.val, 5)]"
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
@@ -30,7 +36,11 @@
             }
           "
           solo
-        ></v-text-field>
+        >
+          <template #message="{ message }">
+            {{ $t(message, { n: 5 }) }}
+          </template>
+        </v-text-field>
       </div>
       <!-- Card Text -->
       <div v-if="item.type == 'v-card-text'">
@@ -38,6 +48,7 @@
           v-model="item.val"
           :label="$t('phrases.card_text')"
           :placeholder="$t('phrases.card_text')"
+          :rules="[$rule.required, $rule.min(item.val, 5)]"
           append-icon="mdi-delete-variant"
           @click:append="
             () => {
@@ -45,7 +56,11 @@
             }
           "
           solo
-        ></v-textarea>
+        >
+          <template #message="{ message }">
+            {{ $t(message, { n: 5 }) }}
+          </template>
+        </v-textarea>
       </div>
       <!-- Markdown üst butonları -->
       <div v-if="item.type == 'markdown'">

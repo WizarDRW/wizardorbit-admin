@@ -55,6 +55,7 @@
       v-else
       v-model="image"
       :label="$t('phrases.addImage')"
+      :rules="[$rule.required]"
       outlined
       dense
       ref="image"
@@ -67,7 +68,11 @@
           $emit('delete_item');
         }
       "
-    ></v-file-input>
+    >
+      <template #message="{ message }">
+        {{ $t(message) }}
+      </template>
+    </v-file-input>
   </div>
 </template>
 

@@ -49,9 +49,9 @@
     <!-- Markdown içeriği -->
     <v-textarea
       :label="$t('phrases.content_markdown')"
+      :rules="[$rule.required, $rule.min(_content.val, 20)]"
       v-model="_content.val"
       outlined
-      hide-details
       prepend-inner-icon="mdi-information-outline"
       @click:prepend-inner="
         () => {
@@ -59,7 +59,11 @@
           info_componentId = 'Markdown';
         }
       "
-    ></v-textarea>
+    >
+      <template #message="{ message }">
+        {{ $t(message, { n: 20 }) }}
+      </template>
+    </v-textarea>
     <!-- Bilgi bankası dialoğu -->
     <info-bank
       v-if="info"

@@ -75,7 +75,7 @@
             counter
           >
             <template #message="{ message }">
-              {{ $t(message, { n: 10 }) }}
+              {{ $t(message, { min: 10 }) }}
             </template>
           </v-text-field>
           <v-text-field
@@ -89,7 +89,7 @@
             counter
           >
             <template #message="{ message }">
-              {{ $t(message, { n: 20 }) }}
+              {{ $t(message, { min: 20 }) }}
             </template>
           </v-text-field>
           <v-hover v-if="chapter.image_path" v-slot="{ hover }">
@@ -109,22 +109,30 @@
                 </v-row>
               </template>
               <v-fade-transition mode="out-in">
-                <div v-if="hover" class="">
-                  <v-btn
-                    @click="
-                      () => {
-                        $store.dispatch(
-                          'deleteApiMultipart',
-                          chapter.image_path
-                        );
-                        chapter.image_path = null;
-                      }
-                    "
-                    color="red"
-                    tile
-                    >{{ $t("phrases.deleteImage") }}</v-btn
-                  >
-                </div>
+                <v-overlay v-if="hover" :opacity="0.3" absolute color="#000000">
+                  <v-tooltip color="error" bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="
+                          () => {
+                            $store.dispatch(
+                              'deleteApiMultipart',
+                              chapter.image_path
+                            );
+                            chapter.image_path = null;
+                          }
+                        "
+                        color="red"
+                        fab
+                        small
+                        ><v-icon>mdi-delete-outline</v-icon></v-btn
+                      >
+                    </template>
+                    <span>{{ $t("keywords.delete") }}</span>
+                  </v-tooltip>
+                </v-overlay>
               </v-fade-transition>
             </v-img>
           </v-hover>
@@ -243,7 +251,7 @@ export default {
       },
       isSave: false,
       draftid: null,
-      disable: true
+      disable: true,
     };
   },
   async created() {
@@ -304,4 +312,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.img-hover {
+  background-color: #000;
+}
 </style>

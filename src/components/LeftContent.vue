@@ -43,7 +43,7 @@
         prepend-inner-icon="mdi-card-text-outline"
       ></v-text-field>
     </slot>
-    <v-tooltip color="green" bottom>
+    <v-tooltip color="green" right>
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="success"
@@ -66,9 +66,13 @@
         v-model="item.key"
         :label="$t('keywords.key')"
         :placeholder="$t('keywords.key')"
+        :rules="[
+          $rule.required,
+          $rule.min(item.key, 3),
+          $rule.max(item.key, 10),
+        ]"
         outlined
         dense
-        hide-details
         prepend-inner-icon="mdi-key"
         prepend-icon="mdi-minus"
       >
@@ -85,16 +89,27 @@
             <v-icon>mdi-minus</v-icon>
           </v-btn>
         </template>
+        <template #message="{ message }">
+          {{ $t(message, { min: 5, max: 10 }) }}
+        </template>
       </v-text-field>
       <v-text-field
         v-model="item.tag"
         :label="$t('keywords.tag')"
         :placeholder="$t('keywords.tag')"
+        :rules="[
+          $rule.required,
+          $rule.min(item.tag, 8),
+          $rule.max(item.tag, 30),
+        ]"
         outlined
         dense
-        hide-details
         append-icon="mdi-tag-outline"
-      ></v-text-field>
+      >
+        <template #message="{ message }">
+          {{ $t(message, { min: 8, max: 30 }) }}
+        </template>
+      </v-text-field>
       <br />
     </div>
   </div>

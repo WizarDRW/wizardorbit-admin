@@ -11,77 +11,94 @@
           >
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
-          <v-btn :loading="loading" icon color="green" @click="handleSave()">
+          <v-btn
+            :loading="loading"
+            :disabled="disable"
+            icon
+            color="green"
+            @click="handleSave()"
+          >
             <v-icon>mdi-content-save-outline</v-icon>
           </v-btn>
         </div>
       </template>
     </sub-header>
-    <v-row>
-      <v-col md="3">
-        <left-content
-          _type="forum"
-          :_content="forum"
-          v-on:selectedCategories="(val) => (forum.categories = val)"
-        >
-          <template #showcase>
-            <h2><v-icon>mdi-book-open-page-variant</v-icon> {{$t('keywords.showcase')}}</h2>
-            <v-treeview
-              v-model="forum.showcases"
-              :items="[
-                {
-                  id: 'Advertisement',
-                  label: {
-                    tr: 'Reklam',
-                    en: 'Advertisement',
-                    de: 'Werbung',
-                    fr: 'Publicité',
+    <v-form @input="(val) => (disable = !val)">
+      <v-row>
+        <v-col md="3">
+          <left-content
+            _type="forum"
+            :_content="forum"
+            v-on:selectedCategories="(val) => (forum.categories = val)"
+          >
+            <template #showcase>
+              <h2>
+                <v-icon>mdi-book-open-page-variant</v-icon>
+                {{ $t("keywords.showcase") }}
+              </h2>
+              <v-treeview
+                v-model="forum.showcases"
+                :items="[
+                  {
+                    id: 'Advertisement',
+                    label: {
+                      tr: 'Reklam',
+                      en: 'Advertisement',
+                      de: 'Werbung',
+                      fr: 'Publicité',
+                    },
                   },
-                },
-              ]"
-              selection-type="leaf"
-              selectable
-              :item-text="`label[${$store.getters.getLangName}]`"
-              open-all
-            >
-            </v-treeview>
-          </template>
-          <template #short_description>
-            <v-textarea
-              v-model="forum.short_description"
-              outlined
-              dense
-              hide-details
-              rows="3"
-              :label="$t('keywords.description')"
-              :placeholder="$t('keywords.description')"
-              prepend-inner-icon="mdi-card-text-outline"
-            ></v-textarea>
-          </template>
-        </left-content>
-      </v-col>
-      <v-col md="9">
-        <v-text-field
-          v-model="forum.name"
-          :label="$t('keywords.title')"
-          :placeholder="$t('keywords.title')"
-          outlined
-          dense
-          prepend-inner-icon="mdi-format-title"
-        ></v-text-field>
-        <tiptap :_content="forum">
-          <template #default="{ extensions }">
-            <tiptap-vuetify
-              v-model="forum.description"
-              :placeholder="`${$t('keywords.write')}…`"
-              :extensions="extensions"
-              :toolbar-attributes="{ color: 'black' }"
-            >
-            </tiptap-vuetify>
-          </template>
-        </tiptap>
-      </v-col>
-    </v-row>
+                ]"
+                selection-type="leaf"
+                selectable
+                :item-text="`label[${$store.getters.getLangName}]`"
+                open-all
+              >
+              </v-treeview>
+            </template>
+            <template #short_description>
+              <v-textarea
+                v-model="forum.short_description"
+                outlined
+                dense
+                hide-details
+                rows="3"
+                :label="$t('keywords.description')"
+                :placeholder="$t('keywords.description')"
+                prepend-inner-icon="mdi-card-text-outline"
+              ></v-textarea>
+            </template>
+          </left-content>
+        </v-col>
+        <v-col md="9">
+          <v-text-field
+            v-model="forum.name"
+            :label="$t('keywords.title')"
+            :placeholder="$t('keywords.title')"
+            :rules="[$rule.required, $rule.min(forum.name, 10)]"
+            outlined
+            counter
+            dense
+            prepend-inner-icon="mdi-format-title"
+          >
+            <template #message="{ message }">
+              {{ $t(message, { min: 10 }) }}
+            </template>
+          </v-text-field>
+          <tiptap :_content="forum">
+            <template #default="{ extensions }">
+              <tiptap-vuetify
+                v-model="forum.description"
+                :placeholder="`${$t('keywords.write')}…`"
+                :extensions="extensions"
+                :toolbar-attributes="{ color: 'black' }"
+              >
+              </tiptap-vuetify>
+            </template>
+          </tiptap>
+        </v-col>
+      </v-row>
+    </v-form>
     <div class="alerts">
       <add-alert
         v-if="add.status"
@@ -138,6 +155,7 @@ export default {
         item: {},
       },
       isSave: false,
+      disable: true
     };
   },
   methods: {

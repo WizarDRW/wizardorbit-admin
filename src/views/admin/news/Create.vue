@@ -16,7 +16,7 @@
                 <v-icon>mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.back')}}</span>
+            <span>{{ $t("keywords.back") }}</span>
           </v-tooltip>
           <!-- Önizleme -->
           <v-tooltip bottom>
@@ -32,7 +32,7 @@
                 <v-icon> mdi-eye </v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.preview')}}</span>
+            <span>{{ $t("keywords.preview") }}</span>
           </v-tooltip>
           <v-tooltip color="success" bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -43,122 +43,171 @@
                 @click="handleSave()"
                 v-bind="attrs"
                 v-on="on"
+                :disabled="disable"
               >
                 <v-icon>mdi-content-save-outline</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('keywords.save')}}</span>
+            <span>{{ $t("keywords.save") }}</span>
           </v-tooltip>
         </div>
       </template>
     </sub-header>
-    <v-row>
-      <v-col md="3">
-        <left-content
-          _type="news"
-          :_content="news"
-          v-on:selectedCategories="(val) => (news.categories = val)"
-        >
-          <template #showcase>
-            <h2><v-icon>mdi-book-open-page-variant</v-icon> {{$t('keywords.showcase')}}</h2>
-            <v-treeview
-              v-model="news.showcases"
-              :items="[
-                { id: 'Carousel', label: { tr: 'Slayt', en: 'Slide', fr: 'Faire glisser', de: 'Rutschen'} },
-                { id: 'Top6', label: { tr: 'En İyi 6', en: 'Top 6', fr: 'Top 6', de: 'Top 6'} },
-              ]"
-              selection-type="leaf"
-              selectable
-              :item-text="`label[${$store.getters.getLangName}]`"
-              open-all
-            >
-            </v-treeview>
-          </template>
-        </left-content>
-      </v-col>
-      <v-col md="9">
-        <v-text-field
-          v-model="news.name"
-          :label="$t('keywords.title')"
-          :placeholder="$t('keywords.title')"
-          outlined
-          dense
-          prepend-inner-icon="mdi-format-title"
-        ></v-text-field>
-        <v-text-field
-          v-model="news.short_description"
-          :label="$t('keywords.description')"
-          :placeholder="$t('keywords.description')"
-          outlined
-          dense
-          prepend-inner-icon="mdi-subtitles-outline"
-        ></v-text-field>
-        <v-hover v-if="news.image_path" v-slot="{ hover }">
-          <v-img
-            :aspect-ratio="16 / 9"
-            :src="news.image_path"
-            lazy-src="https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW"
-            max-width="500px"
+    <v-form @input="(val) => (disable = !val)">
+      <v-row>
+        <v-col md="3">
+          <left-content
+            _type="news"
+            :_content="news"
+            v-on:selectedCategories="(val) => (news.categories = val)"
           >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-                {{$t('phrases.loading')}}...
-              </v-row>
+            <template #showcase>
+              <h2>
+                <v-icon>mdi-book-open-page-variant</v-icon>
+                {{ $t("keywords.showcase") }}
+              </h2>
+              <v-treeview
+                v-model="news.showcases"
+                :items="[
+                  {
+                    id: 'Carousel',
+                    label: {
+                      tr: 'Slayt',
+                      en: 'Slide',
+                      fr: 'Faire glisser',
+                      de: 'Rutschen',
+                    },
+                  },
+                  {
+                    id: 'Top6',
+                    label: {
+                      tr: 'En İyi 6',
+                      en: 'Top 6',
+                      fr: 'Top 6',
+                      de: 'Top 6',
+                    },
+                  },
+                ]"
+                selection-type="leaf"
+                selectable
+                :item-text="`label[${$store.getters.getLangName}]`"
+                open-all
+              >
+              </v-treeview>
             </template>
-            <v-fade-transition mode="out-in">
-              <div v-if="hover" class="">
-                <v-btn
-                  @click="
-                    () => {
-                      $store.dispatch('deleteApiMultipart', chapter.image_path);
-                      news.image_path = null;
+          </left-content>
+        </v-col>
+        <v-col md="9">
+          <v-text-field
+            v-model="news.name"
+            :label="$t('keywords.title')"
+            :placeholder="$t('keywords.title')"
+            :rules="[$rule.required, $rule.min(news.name, 10)]"
+            outlined
+            counter
+            dense
+            prepend-inner-icon="mdi-format-title"
+          >
+            <template #message="{ message }">
+              {{ $t(message, { min: 10 }) }}
+            </template>
+          </v-text-field>
+          <v-text-field
+            v-model="news.short_description"
+            :label="$t('keywords.description')"
+            :placeholder="$t('keywords.description')"
+            :rules="[$rule.required, $rule.min(news.short_description, 20)]"
+            outlined
+            dense
+            prepend-inner-icon="mdi-subtitles-outline"
+          >
+            <template #message="{ message }">
+              {{ $t(message, { min: 20 }) }}
+            </template>
+          </v-text-field>
+          <v-hover v-if="news.image_path" v-slot="{ hover }">
+            <v-img
+              :aspect-ratio="16 / 9"
+              :src="news.image_path"
+              lazy-src="https://drive.google.com/uc?export=view&id=1K9QSSEMfJ4uTvixQKGDI9EDqUk_F4MjW"
+              max-width="500px"
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                  {{ $t("phrases.loading") }}...
+                </v-row>
+              </template>
+              <v-fade-transition mode="out-in">
+                <v-overlay v-if="hover" :opacity="0.3" absolute color="#000000">
+                  <v-tooltip color="error" bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        v-bind="attrs"
+                        v-on="on"
+                        @click="
+                          () => {
+                            $store.dispatch(
+                              'deleteApiMultipart',
+                              chapter.image_path
+                            );
+                            news.image_path = null;
+                          }
+                        "
+                        color="red"
+                        fab
+                        small
+                        ><v-icon>mdi-delete-outline</v-icon></v-btn
+                      >
+                    </template>
+                    <span>{{ $t("keywords.delete") }}</span>
+                  </v-tooltip>
+                </v-overlay>
+              </v-fade-transition>
+            </v-img>
+          </v-hover>
+          <v-file-input
+            v-else
+            v-model="news.image_path"
+            :label="$t('phrases.addImage')"
+            :rules="[$rule.required]"
+            outlined
+            dense
+            ref="image"
+            accept="image/*"
+            @change="onFilePicked"
+          >
+            <template #message="{ message }">
+              {{ $t(message) }}
+            </template>
+          </v-file-input>
+          <div class="quill">
+            <v-row>
+              <v-col>
+                <!-- İçerikler -->
+                <create-content
+                  :_descriptions="news.descriptions"
+                ></create-content>
+                <!-- Önizleme dialoğu -->
+                <preview
+                  v-if="preview"
+                  :_dialog="preview"
+                  :_content="news"
+                  v-on:dialogClose="
+                    (value) => {
+                      preview = value;
                     }
                   "
-                  color="red"
-                  tile
-                  >{{$t('phrases.deleteImage')}}</v-btn
-                >
-              </div>
-            </v-fade-transition>
-          </v-img>
-        </v-hover>
-        <v-file-input
-          v-else
-          v-model="news.image_path"
-          :label="$t('phrases.addImage')"
-          outlined
-          dense
-          ref="image"
-          accept="image/*"
-          @change="onFilePicked"
-        ></v-file-input>
-        <div class="quill">
-          <v-row>
-            <v-col>
-              <!-- İçerikler -->
-              <create-content
-                :_descriptions="news.descriptions"
-              ></create-content>
-              <!-- Önizleme dialoğu -->
-              <preview
-                v-if="preview"
-                :_dialog="preview"
-                :_content="news"
-                v-on:dialogClose="
-                  (value) => {
-                    preview = value;
-                  }
-                "
-              ></preview>
-            </v-col>
-          </v-row>
-        </div>
-      </v-col>
-    </v-row>
+                ></preview>
+              </v-col>
+            </v-row>
+          </div>
+        </v-col>
+      </v-row>
+    </v-form>
     <div class="alerts">
       <add-alert
         v-if="add.status"
@@ -210,6 +259,8 @@ export default {
         col: 12,
       },
       news: {
+        name: "",
+        short_description: "",
         user_id: ObjectID(this.$store.getters.currentUser._id),
         status: "ModeratorAcceping",
         descriptions: [],
@@ -226,6 +277,7 @@ export default {
         item: {},
       },
       isSave: false,
+      disable: true,
     };
   },
   async created() {
