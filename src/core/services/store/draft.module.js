@@ -82,8 +82,8 @@ export default {
             if (state.user_drafts) state.user_drafts[state.user_drafts.findIndex(x=> x._id == payload._id)] = payload;
         },
         [SET_DELETE_API_DRAFTS]:  (state, payload) => {
-            if (state.drafts) state.drafts.splice(state.drafts.findIndex(x=> x._id == payload._id), 1);
-            if (state.user_drafts) state.user_drafts.splice(state.user_drafts.findIndex(x=> x._id == payload._id), 1);
+            if (state.drafts) state.drafts.splice(state.drafts.findIndex(x=> x._id == payload), 1);
+            if (state.user_drafts) state.user_drafts.splice(state.user_drafts.findIndex(x=> x._id == payload), 1);
         },
     }
 }

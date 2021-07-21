@@ -9,6 +9,8 @@ const en = {
         back: 'Back',
         biography: 'Biyografi',
         block: 'Block',
+        book: 'Book',
+        books: 'Books',
         cancel: 'Cancel',
         category: 'Category',
         chapter: 'Chapter',
@@ -150,7 +152,8 @@ const en = {
                 my: "My books",
                 new: "Create new book",
                 edit: "({edit}) Edit your book",
-                delete: "({0}) Delete the book"
+                delete: "({0}) Delete the book",
+                detail: "({edit}) Details"
             },
             draft: "Draft",
             userOption: "User Options",

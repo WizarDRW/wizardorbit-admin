@@ -35,7 +35,8 @@
               ? 'color: #fcba03;'
               : item.type == 'forum'
               ? 'color: #f5141b'
-              : ''
+              : item.type == 'book'
+              ? 'color: #30cbff' : ''
           }`"
         >
           {{
@@ -45,6 +46,8 @@
               ? $t('keywords.news')
               : item.type == "forum"
               ? $t('keywords.forum')
+              : item.type == 'book'
+              ? $t('keywords.book')
               : item.type
           }}
         </div>

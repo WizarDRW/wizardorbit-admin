@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <sub-header>
+    <sub-header :edit_title="library.name">
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
           <v-btn icon color="red" @click="$router.push({ path: '/library' })">

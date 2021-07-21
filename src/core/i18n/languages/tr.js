@@ -9,6 +9,8 @@ const tr = {
         back: 'Geri',
         biography: 'Biyografi',
         block: 'Blokla',
+        book: 'Kitap',
+        books: 'Kitaplar',
         cancel: 'İptal',
         category: 'Kategori',
         class: 'Sınıf',
@@ -149,7 +151,8 @@ const tr = {
                 my: "Kitaplarım",
                 new: "Yeni kitap oluştur",
                 edit: "({edit}) Kitabını düzenle",
-                delete: "({0}) Kitabı sil"
+                delete: "({0}) Kitabı sil",
+                detail: "({edit}) Detayları"
             },
             draft: "Taslaklar",
             userOption: "Kullanıcı seçenekleri",

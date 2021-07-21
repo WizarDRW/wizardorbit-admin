@@ -22,6 +22,8 @@ const de = {
         back: 'Zurück',
         biography: 'Biografie',
         block: 'Den Block setzen!',
+        book: 'Buch',
+        books: 'Bücher',
         cancel: 'Stornieren',
         category: 'Kategorie',
         chapter: 'Kapitel',
@@ -149,7 +151,8 @@ const de = {
                 my: "Meine Bücher",
                 new: "Neues Buch erstellen.",
                 edit: "({edit}) Bearbeiten Sie Ihr Buch",
-                delete: "({0}) Das Buch löschen"
+                delete: "({0}) Das Buch löschen",
+                detail: "({edit}) Einzelheiten"
             },
             draft: "Entwurf",
             userOption: "Benutzeroptionen",

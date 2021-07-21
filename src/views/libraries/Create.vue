@@ -41,6 +41,7 @@
                 <v-btn
                   @click="
                     () => {
+                      $store.dispatch('deleteApiMultipart', library.image_path);
                       library.image_path = null;
                     }
                   "
@@ -217,20 +218,11 @@ export default {
       this.isSave = true;
       this.$router.push({ name: "Library" });
     },
-    onFilePicked() {
-      const files = this.library.image_path;
-      if (files !== undefined) {
-        if (files.name.lastIndexOf(".") <= 0) {
-          return;
-        }
-        const fr = new FileReader();
-        fr.readAsDataURL(files);
-        fr.addEventListener("load", () => {
-          this.library.image_path = fr.result;
-        });
-      } else {
-        this.library.image_path = "";
-      }
+    async onFilePicked(e) {
+      var formData = new FormData();
+      formData.append("photo", e);
+      var id = await this.$store.dispatch("postApiMultipart", formData);
+      this.library.image_path = `https://drive.google.com/uc?export=view&id=${id}`;
     },
   },
   watch: {
