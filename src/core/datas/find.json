@@ -1,0 +1,33 @@
+[
+  {
+    "name": "sideMenus.chapters",
+    "finds": "Chapters|Bölümler",
+    "path": "/chapter",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "icon": "mdi-post",
+    "color": "green"
+  },
+  {
+    "name": "chapter.new",
+    "finds": "New Chapter|Yeni Bölüm",
+    "path": "/new-chapter",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "color": "green"
+  },
+  {
+    "name": "sideMenus.news",
+    "finds": "News|Haberler",
+    "path": "/news",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "icon": "mdi-newspaper",
+    "color": "orange"
+  },
+  {
+    "name": "sideMenus.forums",
+    "finds": "Forums|Forumlar",
+    "path": "/forum",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "icon": "mdi-head-question-outline",
+    "color": "red"
+  }
+]

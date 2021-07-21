@@ -12,6 +12,9 @@
 
       <v-spacer></v-spacer>
 
+      <div class="auto-complete">
+        <auto-complete :_items="finds"></auto-complete>
+      </div>
       <div class="theme-mode navbar-nav">
         <v-btn
           name="themeBtn"
@@ -26,13 +29,6 @@
           }}</v-icon>
         </v-btn>
       </div>
-      <v-btn icon>
-        <v-icon color="header_theme_btn">mdi-heart</v-icon>
-      </v-btn>
-
-      <v-btn icon>
-        <v-icon color="header_theme_btn">mdi-magnify</v-icon>
-      </v-btn>
 
       <div class="lang">
         <!-- I18N -->
@@ -119,9 +115,11 @@
 </template>
 
 <script>
+import finds from "@/core/datas/find.json";
 export default {
   components: {
     ResetPassword: () => import("@/views/auth/ResetPassword"),
+    AutoComplete: () => import(`@/components/Autocomplete.vue`),
   },
   data() {
     return {
@@ -145,6 +143,7 @@ export default {
           icon: require("../../assets/vendor/svg/tr.svg"),
         },
       ],
+      finds: finds
     };
   },
   mounted() {
@@ -152,9 +151,12 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch("logout").then(x => {
+      this.$store.dispatch("logout").then((x) => {
         if (x) {
-          this.$router.push({name: 'Login', query: {returnPath: this.$route.path}})
+          this.$router.push({
+            name: "Login",
+            query: { returnPath: this.$route.path },
+          });
         }
       });
     },
@@ -178,5 +180,8 @@ export default {
 <style scoped>
 .lang {
   margin-right: 10px;
+}
+.auto-complete{
+  width: 400px;
 }
 </style>

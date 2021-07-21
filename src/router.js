@@ -5,9 +5,6 @@ import store from '@/core/services/store/store'
 Vue.use(Router);
 
 async function isAuth(to, from, next) {
-  await store.dispatch('verifyAuth')
-  if (!store.getters.isAuthenticated)
-    next({ path: '/login', query: { returnPath: to.path } });
   next();
 }
 

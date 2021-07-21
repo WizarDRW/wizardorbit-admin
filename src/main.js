@@ -33,9 +33,9 @@ router.beforeEach(async (to, from, next) => {
     if (store.getters.isAuthenticated)
       next();
     else
-      next({ name: 'Login' })
+      next({ name: 'Login', query: { returnPath: to.path } })
   } else
-    next(to.query.returnPath);
+    next(from.query.returnPath);
 })
 
 Vue.prototype.$rule = rule;
