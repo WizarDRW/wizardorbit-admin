@@ -27,6 +27,17 @@ Vue.use(VueMeta, {
 })
 Vue.directive('katex', Katex);
 
+router.beforeEach(async (to, from, next) => {
+  await store.dispatch('verifyAuth')
+  if (to.name != 'Login') {
+    if (store.getters.isAuthenticated)
+      next();
+    else
+      next({ name: 'Login' })
+  } else
+    next(to.query.returnPath);
+})
+
 Vue.prototype.$rule = rule;
 
 new Vue({

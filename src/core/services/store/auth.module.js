@@ -90,19 +90,21 @@ const actions = {
         });
     });
   },
-  async [VERIFY_AUTH](context) {
-    await ApiService.get("auth/verify")
-      .then((x) => {
-        if (x.data) {
-          context.commit(SET_AUTH)
-          context.dispatch(CURRENT_USER)
-        }
-        else
+  [VERIFY_AUTH](context) {
+    return new Promise((resolve) => {
+      ApiService.get("auth/verify")
+        .then((x) => {
+          if (x.data) {
+            context.commit(SET_AUTH)
+            context.dispatch(CURRENT_USER)
+            resolve(x.data)
+          }
+        })
+        .catch(() => {
           context.commit(PURGE_AUTH);
-      })
-      .catch(() => {
-        context.commit(PURGE_AUTH);
-      });
+          resolve(false)
+        });
+    })
   },
   [UPDATE_USER](context, payload) {
     const { email, username, password, image, bio } = payload;

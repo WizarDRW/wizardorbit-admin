@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('library.new')}}</span>
+            <span>{{ $t("library.new") }}</span>
           </v-tooltip>
         </div>
       </template>
@@ -29,6 +29,7 @@
     </v-row>
     <v-row v-else v-masonry>
       <v-col
+        v-masonry-tile
         v-for="(item, index) in libraries"
         :key="index"
         cols="12"
@@ -66,7 +67,7 @@
           </v-carousel>
           <v-card-title> {{ item.name }} </v-card-title>
           <div v-if="item.chapters.length > 0">
-            <v-card-text>{{$t('keywords.chapters')}}</v-card-text>
+            <v-card-text>{{ $t("keywords.chapters") }}</v-card-text>
             <v-row dense no-gutters>
               <v-col
                 v-for="(content_item, content_index) in item.chapters.slice(
@@ -91,7 +92,7 @@
             </v-row>
           </div>
           <div v-if="item.news.length > 0">
-            <v-card-text>{{$t('keywords.the_news')}}</v-card-text>
+            <v-card-text>{{ $t("keywords.the_news") }}</v-card-text>
             <v-row dense no-gutters>
               <v-col
                 v-for="(content_item, content_index) in item.news.slice(0, 7)"
@@ -127,7 +128,7 @@
                   <v-icon>mdi-circle-edit-outline</v-icon>
                 </v-btn>
               </template>
-              <span> {{$t('keywords.edit')}} </span>
+              <span> {{ $t("keywords.edit") }} </span>
             </v-tooltip>
             <v-tooltip color="red" bottom>
               <template v-slot:activator="{ on, attrs }">
@@ -146,7 +147,7 @@
                   <v-icon>mdi-delete-outline</v-icon>
                 </v-btn>
               </template>
-              <span> {{$t('keywords.delete')}} </span>
+              <span> {{ $t("keywords.delete") }} </span>
             </v-tooltip>
           </v-card-actions>
         </v-card>

@@ -6,7 +6,7 @@
           <v-btn icon color="red" @click="$router.push({ path: '/library' })">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
-          <v-btn icon color="green" @click="save()">
+          <v-btn :loading="loading" icon color="green" @click="handleSave()">
             <v-icon>mdi-content-save-outline</v-icon>
           </v-btn>
         </div>
@@ -113,18 +113,37 @@
         </v-item-group>
       </v-col>
     </v-row>
+    <div class="alerts">
+      <add-alert
+        v-if="add.status"
+        v-on:input="
+          (val) => {
+            loading = val;
+            add.status = val;
+          }
+        "
+        :_msg="add.msg"
+        :_type="add.type"
+        :_second="add.second"
+        :_alert="add.status"
+        :_func="add.func"
+        :_item="add.item"
+        v-on:added="save"
+      ></add-alert>
+    </div>
   </v-container>
 </template>
 
 <script>
-import { POST_API_LIBRARY } from "../../core/services/store/library.module";
 import { GET_API_USER_THE_NEWS } from "../../core/services/store/news.module";
 import { GET_API_USER_CHAPTERS } from "../../core/services/store/chapter.module";
+var ObjectID = require("bson-objectid");
 export default {
   name: "my-library-create",
   components: {
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SkeletonLoader: () => import("@/components/SkeletonLoader"),
+    AddAlert: () => import("@/components/Alert/AddAlert"),
   },
   data() {
     return {
@@ -136,6 +155,17 @@ export default {
       datas: [],
       loading: true,
       model: null,
+      add: {
+        status: false,
+        msg: null,
+        second: 100,
+        type: "warning",
+        func: "postApiLibrary",
+        item: {},
+      },
+      isSave: false,
+      draftid: null,
+      disable: true,
     };
   },
   async created() {
@@ -167,11 +197,25 @@ export default {
     if (this.datas) {
       this.loading = false;
     }
+    if (this.$route.params.draftid) {
+      this.draftid = this.$route.params.draftid;
+      if (!this.$store.getters.getDraft)
+        await this.$store.dispatch("getApiDraft", this.draftid);
+      this.library = this.$store.getters.getDraft.data;
+    }
   },
   methods: {
+    handleSave() {
+      this.loading = true;
+      this.add.item = this.library;
+      this.add.msg = this.library.name;
+      this.add.second = 100;
+      this.add.status = true;
+    },
     async save() {
-      var result = await this.$store.dispatch(POST_API_LIBRARY, this.library);
-      if (result == 201) this.$router.push({ name: "Library" });
+      if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);
+      this.isSave = true;
+      this.$router.push({ name: "Library" });
     },
     onFilePicked() {
       const files = this.library.image_path;
@@ -196,6 +240,19 @@ export default {
         this.library.contents.push(this.datas[el]._id);
       });
     },
+  },
+  destroyed() {
+    if (this.draftid) {
+      this.$store.getters.getDraft.data = this.library;
+      this.$store.dispatch("putApiDraft", this.$store.getters.getDraft);
+    } else if (!this.isSave) {
+      var data = {
+        user_id: ObjectID(this.$store.getters.currentUser._id),
+        type: "book",
+        data: this.library,
+      };
+      this.$store.dispatch("postApiDraft", data);
+    }
   },
 };
 </script>
