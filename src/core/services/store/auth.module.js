@@ -95,8 +95,8 @@ const actions = {
       ApiService.get("auth/verify")
         .then((x) => {
           if (x.data) {
+            context.commit(SET_CURRENT_USER, x.data)
             context.commit(SET_AUTH)
-            context.dispatch(CURRENT_USER)
             resolve(x.data)
           }
         })
