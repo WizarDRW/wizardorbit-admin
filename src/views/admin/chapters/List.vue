@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('chapter.new')}}</span>
+            <span>{{ $t("chapter.new") }}</span>
           </v-tooltip>
         </div>
       </template>
@@ -29,97 +29,145 @@
       :no-data-text="$t('phrases.noDataAvailable')"
       :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
+      hide-default-header
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
-      <template #[`header.name`]="{ header }">
-        {{ $t(`${header.text}`) }}
+      <template #header="{ isMobile, props }">
+        <table-header
+          v-model="sortBy"
+          :headers="props.headers"
+          :isMobile="isMobile"
+        ></table-header>
       </template>
-      <template #[`header.user_data`]="{ header }">
-        {{ $t(`${header.text}`) }}
-      </template>
-      <template #[`header.create_date`]="{ header }">
-        {{ $t(`${header.text}`) }}
-      </template>
-      <template #[`header.status`]="{ header }">
-        {{ $t(`${header.text}`) }}
-      </template>
-      <template #[`item.user_data`]="{ item }">
-        {{ item.user_data.first_name + " " + item.user_data.last_name }} ({{
-          item.user_data.email
-        }})
-      </template>
-      <template #[`item.create_date`]="{ item }">
-        {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
-      </template>
-      <template #[`item.status`]="{ item }">
-        <div
-          :class="`${
-            item.status == 'Published'
-              ? 'success--text'
-              : item.status == 'ModeratorAcceping'
-              ? 'warning--text'
-              : item.status == 'Block'
-              ? 'error--text'
-              : ''
-          }`"
+      <template #body="{ isMobile, items, headers }">
+        <table-body
+          :isMobile="isMobile"
+          :items="items"
+          :headers="headers"
+          :loading="loading"
+          :sortBy="sortBy"
         >
-          {{
-            item.status == "Published"
-              ? $t("phrases.published")
-              : item.status == "ModeratorAcceping"
-              ? $t("phrases.moderatorApproval")
-              : item.status == "Block"
-              ? $t("phrases.blocked")
-              : item.status
-          }}
-        </div>
-      </template>
-      <template #[`item.actions`]="{ item }">
-        <v-tooltip color="purple" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon
-              small
-              v-bind="attrs"
-              v-on="on"
-              class="mr-2"
-              @click="
-                () => {
-                  preview = true;
-                  chapter = item;
-                }
-              "
-            >
-              mdi-eye
-            </v-icon>
+          <!-- Web View -->
+          <template #user_data="{ item }">
+            {{ item.user_data.first_name + " " + item.user_data.last_name }}
+            ({{ item.user_data.email }})
           </template>
-          <span>{{ $t("keywords.preview") }}</span>
-        </v-tooltip>
-        <v-tooltip color="blue" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon
-              small
-              v-bind="attrs"
-              v-on="on"
-              class="mr-2"
-              @click="editItem(item)"
-            >
-              mdi-pencil
-            </v-icon>
+          <template #create_date="{ item, moment }">
+            {{ moment(item.create_date, $store.getters.getLangName, isMobile) }}
           </template>
-          <span>{{ $t("keywords.edit") }}</span>
-        </v-tooltip>
-        <v-tooltip color="red" bottom>
-          <template v-slot:activator="{ on, attrs }">
+          <template #status="{ item }">
+            <span
+              :style="`${
+                item.status == 'Published'
+                  ? 'color: #18f523;'
+                  : item.status == 'ModeratorAcceping'
+                  ? 'color: #fcba03;'
+                  : item.status == 'Block'
+                  ? 'color: #f5141b'
+                  : ''
+              }`"
+            >
+              {{
+                item.status == "Published"
+                  ? $t("phrases.published")
+                  : item.status == "ModeratorAcceping"
+                  ? $t("phrases.moderatorApproval")
+                  : item.status == "Block"
+                  ? $t("phrases.blocked")
+                  : item.status
+              }}
+            </span>
+          </template>
+          <template #actions="{ item }">
+            <v-tooltip color="purple" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  @click="
+                    () => {
+                      preview(item);
+                    }
+                  "
+                >
+                  mdi-eye
+                </v-icon>
+              </template>
+              <span>{{ $t("keywords.preview") }}</span>
+            </v-tooltip>
+            <v-tooltip color="blue" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  @click="edit(item)"
+                >
+                  mdi-pencil
+                </v-icon>
+              </template>
+              <span>{{ $t("keywords.edit") }}</span>
+            </v-tooltip>
+            <v-tooltip color="red" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  v-if="item.status != 'Published'"
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="handleDelete(item._id)"
+                >
+                  mdi-delete
+                </v-icon>
+              </template>
+              <span>{{ $t("keywords.delete") }}</span>
+            </v-tooltip>
+          </template>
+          <!-- Mobile View -->
+          <template #[`mobile.user_data`]="{ item }">
+            {{ item.user_data.first_name + " " + item.user_data.last_name }}
+            ({{ item.user_data.username }})
+          </template>
+          <template #[`mobile.create_date`]="{ item, moment }">
+            {{ moment(item.create_date, $store.getters.getLangName, isMobile) }}
+          </template>
+          <template #[`mobile.status`]="{ item }">
+            <span
+              :style="`${
+                item.status == 'Published'
+                  ? 'color: #18f523;'
+                  : item.status == 'ModeratorAcceping'
+                  ? 'color: #fcba03;'
+                  : item.status == 'Block'
+                  ? 'color: #f5141b'
+                  : ''
+              }`"
+            >
+              {{
+                item.status == "Published"
+                  ? $t("phrases.published")
+                  : item.status == "ModeratorAcceping"
+                  ? $t("phrases.moderatorApproval")
+                  : item.status == "Block"
+                  ? $t("phrases.blocked")
+                  : item.status
+              }}
+            </span>
+          </template>
+          <template #[`mobile.actions`]="{ item }">
+            <v-icon class="mr-2" @click="preview(item)"> mdi-eye </v-icon>
+            <v-icon class="mr-2" @click="edit(item)"> mdi-pencil </v-icon>
             <v-icon
               v-if="item.status != 'Published'"
               small
-              v-bind="attrs"
-              v-on="on"
               @click="
-                () => {
-                  deleteDialog = true;
+                (item) => {
+                  dialog_delete = true;
                   deleteRes.id = item._id;
                 }
               "
@@ -127,27 +175,26 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>{{ $t("keywords.delete") }}</span>
-        </v-tooltip>
+        </table-body>
       </template>
     </v-data-table>
     <div class="text-center pt-2">
       <v-pagination v-model="page" :length="pageCount"></v-pagination>
     </div>
     <delete
-      :_dialog="deleteDialog"
+      :_dialog="dialog_delete"
       :_id="deleteRes.id"
       v-on:handleDelete="handleDelete"
-      v-on:dialogClose="(value) => (deleteDialog = value)"
+      v-on:dialogClose="(value) => (dialog_delete = value)"
     ></delete>
     <preview
-      :_dialog="preview"
+      :_dialog="dialog_preview"
       :_content="chapter"
       _created
       _api="putApiChapter"
       v-on:dialogClose="
         (value) => {
-          preview = value;
+          dialog_preview = value;
           chapter = {};
         }
       "
@@ -171,10 +218,6 @@
 
 
 <script>
-import {
-  CHAPTER,
-  GET_API_CHAPTERS,
-} from "@/core/services/store/chapter.module";
 export default {
   name: "AdminChapterList",
   components: {
@@ -182,6 +225,8 @@ export default {
     Delete: () => import("@/components/Delete"),
     Preview: () => import("@/components/Preview"),
     DeleteAlert: () => import("@/components/Alert/DeleteAlert"),
+    TableHeader: () => import("@/components/Table/Header.vue"),
+    TableBody: () => import("@/components/Table/Body.vue"),
   },
   data() {
     return {
@@ -192,54 +237,64 @@ export default {
         {
           text: "keywords.title",
           value: "name",
+          width: "25%",
         },
         {
           text: "phrases.create_user",
           value: "user_data",
+          width: "25%",
         },
         {
           text: "phrases.create_date",
           value: "create_date",
           sortable: true,
+          width: "20%",
         },
         {
           text: "keywords.status",
           value: "status",
           sortable: true,
+          width: "20%",
         },
         {
           text: "",
           value: "actions",
           align: "end",
           sortable: false,
+          width: "10%",
         },
       ],
       data: [],
       loading: true,
-      deleteDialog: false,
+      dialog_delete: false,
       deleteRes: {
         name: "",
         id: "",
         index: -1,
       },
       deleteItems: [],
-      preview: false,
+      dialog_preview: false,
       chapter: {},
+      sortBy: "name",
     };
   },
   async created() {
     if (!this.$store.getters.getChapters)
-      await this.$store.dispatch(GET_API_CHAPTERS);
+      await this.$store.dispatch("getApiChapters");
     this.data = this.$store.getters.getChapters;
     this.loading = this.data ? false : true;
   },
   methods: {
-    editItem(item) {
-      this.$store.dispatch(CHAPTER, item);
+    edit(item) {
+      this.$store.dispatch("chapter", item);
       this.$router.push({
         name: `AdminEditChapter`,
         params: { id: item._id },
       });
+    },
+    preview(item) {
+      this.dialog_preview = true;
+      this.chapter = item;
     },
     handleDelete(itemid) {
       this.deleteItems.push({
@@ -266,4 +321,7 @@ export default {
 
 
 <style lang="scss" scoped>
+.v-application .align-end {
+  justify-content: flex-end;
+}
 </style>

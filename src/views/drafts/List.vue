@@ -10,75 +10,54 @@
       :no-data-text="$t('phrases.noDataAvailable')"
       :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
+      hide-default-header
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
-      <template #[`header.data.name`]="{ header }">
-        {{ $t(`${header.text}`) }}
+      <template #header="{ isMobile, props }">
+        <table-header
+          v-model="sortBy"
+          :headers="props.headers"
+          :isMobile="isMobile"
+        ></table-header>
       </template>
-      <template #[`header.create_date`]="{ header }">
-        {{ $t(`${header.text}`) }}
-      </template>
-      <template #[`header.type`]="{ header }">
-        {{ $t(`${header.text}`) }}
-      </template>
-      <template #[`item.create_date`]="{ item }">
-        {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
-      </template>
-      <template #[`item.type`]="{ item }">
-        <div
-          :style="`${
-            item.type == 'chapter'
-              ? 'color: #18f523;'
-              : item.type == 'news'
-              ? 'color: #fcba03;'
-              : item.type == 'forum'
-              ? 'color: #f5141b'
-              : item.type == 'book'
-              ? 'color: #30cbff' : ''
-          }`"
+      <template #body="{ isMobile, items, headers }">
+        <table-body
+          :isMobile="isMobile"
+          :items="items"
+          :headers="headers"
+          :loading="loading"
+          :sortBy="sortBy"
+          v-on:edit="edit"
         >
-          {{
-            item.type == "chapter"
-              ? $t('keywords.chapter')
-              : item.type == "news"
-              ? $t('keywords.news')
-              : item.type == "forum"
-              ? $t('keywords.forum')
-              : item.type == 'book'
-              ? $t('keywords.book')
-              : item.type
-          }}
-        </div>
-      </template>
-      <template #[`item.actions`]="{ item }">
-        <v-tooltip color="primary" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon
-              color="primary"
-              small
-              v-bind="attrs"
-              v-on="on"
-              class="mr-2"
-              @click="toEdit(item, item.type)"
-            >
-              mdi-pencil
-            </v-icon>
+          <template #extra-btn="{ item }">
+            <v-tooltip color="orange" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  @click="
+                    () => {
+                      dialog_delete = true;
+                      deleteRes.id = item._id;
+                    }
+                  "
+                >
+                  mdi-delete
+                </v-icon>
+              </template>
+              <span>{{ $t("keywords.delete") }}</span>
+            </v-tooltip>
           </template>
-          <span>{{ $t("keywords.edit") }}</span>
-        </v-tooltip>
-        <v-tooltip color="error" bottom>
-          <template v-slot:activator="{ on, attrs }">
+          <template #mobile-extra-btn="{ item }">
             <v-icon
-              color="error"
-              small
-              v-bind="attrs"
-              v-on="on"
               class="mr-2"
               @click="
                 () => {
-                  deleteDialog = true;
+                  dialog_delete = true;
                   deleteRes.id = item._id;
                 }
               "
@@ -86,15 +65,14 @@
               mdi-delete
             </v-icon>
           </template>
-          <span>{{ $t("keywords.delete") }}</span>
-        </v-tooltip>
+        </table-body>
       </template>
     </v-data-table>
     <delete
-      :_dialog="deleteDialog"
+      :_dialog="dialog_delete"
       :_id="deleteRes.id"
       v-on:handleDelete="handleDelete"
-      v-on:dialogClose="(value) => (deleteDialog = value)"
+      v-on:dialogClose="(value) => (dialog_delete = value)"
     ></delete>
     <div class="alerts">
       <delete-alert
@@ -130,33 +108,38 @@ export default {
           text: "keywords.title",
           value: "data.name",
           sortable: true,
+          width: "40%",
         },
         {
           text: "phrases.create_date",
           value: "create_date",
           sortable: true,
+          width: "25%",
         },
         {
           text: "keywords.type",
           value: "type",
           sortable: true,
+          width: "25%",
         },
         {
           text: "",
           value: "actions",
           align: "right",
           sortable: false,
+          width: "10%",
         },
       ],
       drafts: [],
       loading: true,
-      deleteDialog: false,
+      dialog_delete: false,
       deleteRes: {
         name: "",
         id: "",
         index: -1,
       },
       deleteItems: [],
+      sortBy: "name"
     };
   },
   async created() {
@@ -169,7 +152,7 @@ export default {
     if (this.drafts) this.loading = false;
   },
   methods: {
-    toEdit(item, type) {
+    edit(item, type) {
       this.$store.dispatch("draft", item);
       this.$router.push({
         name:

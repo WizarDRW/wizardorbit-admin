@@ -7,7 +7,7 @@ export const GET_API_CHAPTER = "getApiChapter"
 export const CHAPTERS = "chapters";
 export const GET_API_CHAPTERS = "getApiChapters"
 export const USER_CHAPTERS = "userChapter"
-export const GET_API_USER_CHAPTERS = "getApiUserChapter"
+export const GET_API_USER_CHAPTERS = "getApiUserChapters"
 // action types -> CHAPTER<POST>
 export const POST_API_CHAPTER = "postApiChapter"
 // action types -> CHAPTER<PUT>

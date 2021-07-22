@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <sub-header>
       <template v-slot:buttons>
         <div style="width: 100%; text-align: right">
@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('forum.new')}}</span>
+            <span>{{ $t("forum.new") }}</span>
           </v-tooltip>
         </div>
       </template>
@@ -29,74 +29,117 @@
       :no-data-text="$t('phrases.noDataAvailable')"
       :loading-text="`${$t('phrases.loading')}...`"
       hide-default-footer
+      hide-default-header
       class="elevation-1"
       style="background-color: var(--v-v_datatable_backgound-base)"
       @page-count="pageCount = $event"
     >
-      <template #[`header.name`]="{ header }">
-        {{ $t(`${header.text}`) }}
+      <template #header="{ isMobile, props }">
+        <table-header
+          v-model="sortBy"
+          :headers="props.headers"
+          :isMobile="isMobile"
+        ></table-header>
       </template>
-      <template #[`header.create_date`]="{ header }">
-        {{ $t(`${header.text}`) }}
-      </template>
-      <template #[`header.status`]="{ header }">
-        {{ $t(`${header.text}`) }}
-      </template>
-      <template #[`item.create_date`]="{ item }">
-        {{ item.create_date | moment("DD MMMM YYYY HH:mm") }}
-      </template>
-      <template #[`item.status`]="{ item }">
-        <div
-          :style="`${
-            item.status == 'Published'
-              ? 'color: #18f523;'
-              : item.status == 'ModeratorAcceping'
-              ? 'color: #fcba03;'
-              : item.status == 'Block'
-              ? 'color: #f5141b'
-              : ''
-          }`"
+      <template #body="{ isMobile, items, headers }">
+        <table-body
+          :isMobile="isMobile"
+          :items="items"
+          :headers="headers"
+          :loading="loading"
+          :sortBy="sortBy"
         >
-          {{
-            item.status == "Published"
-              ? $t("phrases.published")
-              : item.status == "ModeratorAcceping"
-              ? $t("phrases.moderatorApproval")
-              : item.status == "Block"
-              ? $t("phrases.blocked")
-              : item.status
-          }}
-        </div>
-      </template>
-      <template #[`item.actions`]="{ item }">
-        <v-tooltip color="blue" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon
-              small
-              v-bind="attrs"
-              v-on="on"
-              class="mr-2"
-              @click="toEditItem(item)"
-            >
-              mdi-pencil
-            </v-icon>
+          <!-- Web View -->
+          <template #create_date="{ item, moment }">
+            {{ moment(item.create_date, $store.getters.getLangName, isMobile) }}
           </template>
-          <span>{{ $t("keywords.edit") }}</span>
-        </v-tooltip>
-        <v-tooltip color="orange" bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon
-              small
-              v-bind="attrs"
-              v-on="on"
-              class="mr-2"
-              @click="toDetailItem(item)"
+          <template #status="{ item }">
+            <span
+              :style="`${
+                item.status == 'Published'
+                  ? 'color: #18f523;'
+                  : item.status == 'ModeratorAcceping'
+                  ? 'color: #fcba03;'
+                  : item.status == 'Block'
+                  ? 'color: #f5141b'
+                  : ''
+              }`"
             >
+              {{
+                item.status == "Published"
+                  ? $t("phrases.published")
+                  : item.status == "ModeratorAcceping"
+                  ? $t("phrases.moderatorApproval")
+                  : item.status == "Block"
+                  ? $t("phrases.blocked")
+                  : item.status
+              }}
+            </span>
+          </template>
+          <template #actions="{ item }">
+            <v-tooltip color="orange" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  @click="toDetailItem(item)"
+                >
+                  mdi-comment-multiple-outline
+                </v-icon>
+              </template>
+              <span>{{ $t("keywords.comments") }}</span>
+            </v-tooltip>
+            <v-tooltip color="blue" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  @click="edit(item)"
+                >
+                  mdi-pencil
+                </v-icon>
+              </template>
+              <span>{{ $t("keywords.edit") }}</span>
+            </v-tooltip>
+          </template>
+          <!-- Mobile View -->
+          <template #[`mobile.create_date`]="{ item, moment }">
+            {{ moment(item.create_date, $store.getters.getLangName, isMobile) }}
+          </template>
+          <template #[`mobile.status`]="{ item }">
+            <span
+              :style="`${
+                item.status == 'Published'
+                  ? 'color: #18f523;'
+                  : item.status == 'ModeratorAcceping'
+                  ? 'color: #fcba03;'
+                  : item.status == 'Block'
+                  ? 'color: #f5141b'
+                  : ''
+              }`"
+            >
+              {{
+                item.status == "Published"
+                  ? $t("phrases.published")
+                  : item.status == "ModeratorAcceping"
+                  ? $t("phrases.moderatorApproval")
+                  : item.status == "Block"
+                  ? $t("phrases.blocked")
+                  : item.status
+              }}
+            </span>
+          </template>
+          <template #[`mobile.actions`]="{ item }">
+            <v-icon small class="mr-2" @click="toDetailItem(item)">
               mdi-comment-multiple-outline
             </v-icon>
+            <v-icon class="mr-2" @click="edit(item)"> mdi-pencil </v-icon>
           </template>
-          <span>{{ $t("keywords.comments") }}</span>
-        </v-tooltip>
+        </table-body>
       </template>
     </v-data-table>
     <div class="text-center pt-2">
@@ -107,9 +150,12 @@
 
 
 <script>
-import { FORUM, GET_API_USER_FORUMS } from "@/core/services/store/forum.module";
-import SubHeader from "@/layouts/header/SubHeader";
 export default {
+  components: {
+    SubHeader: () => import("@/layouts/header/SubHeader"),
+    TableHeader: () => import("@/components/Table/Header.vue"),
+    TableBody: () => import("@/components/Table/Body.vue"),
+  },
   data() {
     return {
       page: 1,
@@ -119,34 +165,35 @@ export default {
         {
           text: "keywords.title",
           value: "name",
+          width: "50%",
         },
         {
           text: "phrases.create_date",
           value: "create_date",
           sortable: true,
+          width: "20%",
         },
         {
           text: "keywords.status",
           value: "status",
           sortable: true,
+          width: "20%",
         },
         {
           text: "",
           value: "actions",
           sortable: false,
+          width: "10%",
         },
       ],
       forums: [],
       loading: true,
     };
   },
-  components: {
-    SubHeader,
-  },
   async created() {
     if (!this.$store.getters.getUserForums) {
       await this.$store.dispatch(
-        GET_API_USER_FORUMS,
+        "getApiUserForums",
         this.$store.getters.currentUser._id
       );
     }
@@ -155,14 +202,14 @@ export default {
   },
   methods: {
     toEditItem(item) {
-      this.$store.dispatch(FORUM, item);
+      this.$store.dispatch("forum", item);
       this.$router.push({
         name: `EditForum`,
         params: { id: item._id },
       });
     },
     toDetailItem(item) {
-      this.$store.dispatch(FORUM, item);
+      this.$store.dispatch("forum", item);
       this.$router.push({
         name: `DetailForum`,
         params: { id: item._id },

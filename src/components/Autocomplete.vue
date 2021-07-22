@@ -1,6 +1,5 @@
 <template>
   <v-autocomplete
-    v-model="select"
     :items="items"
     :loading="isLoading"
     :search-input.sync="search"
@@ -9,7 +8,6 @@
     hide-details
     hide-selected
     item-text="finds"
-    item-value="icon"
     :label="$t('keywords.find')"
     solo
   >
@@ -77,7 +75,6 @@ export default {
     isLoading: false,
     items: [],
     search: null,
-    select: null,
   }),
   methods: {
     handleClick(path) {

@@ -1,7 +1,7 @@
 [
   {
     "name": "sideMenus.chapters",
-    "finds": "Chapters|Bölümler",
+    "finds": "Chapters|Bölümler|Kapitel|Chapitres|章节|チャプター|فصول|Главы|Capitoli|Capítulos",
     "path": "/chapter",
     "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
     "icon": "mdi-post",
@@ -9,25 +9,62 @@
   },
   {
     "name": "chapter.new",
-    "finds": "New Chapter|Yeni Bölüm",
+    "finds": "New Chapter|Yeni Bölüm|Neues Kapitel|Nouveau Chapitre|新章节|新しい章|جزء جديد|Новая глава|Nuovo capitolo|Nuevo capitulo",
     "path": "/new-chapter",
     "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
     "color": "green"
   },
   {
     "name": "sideMenus.news",
-    "finds": "News|Haberler",
+    "finds": "News|Haberler|Nachrichten|Nouvelles|消息|ニュース|أخبار|Новости|notizia|Noticias",
     "path": "/news",
     "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
     "icon": "mdi-newspaper",
     "color": "orange"
   },
   {
+    "name": "news.new",
+    "finds": "New News|Yeni Bölüm|Neue news|Nouvelles informations|新消息|新しいニュース|اخبار جديدة|Новые новости|Nuove notizie|Nuevas noticias",
+    "path": "/new-news",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "color": "orange"
+  },
+  {
     "name": "sideMenus.forums",
-    "finds": "Forums|Forumlar",
+    "finds": "Forums|Forumlar|Foren|forums|论坛|フォーラム|المنتديات|Форумы|Forum|Foros",
     "path": "/forum",
     "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
     "icon": "mdi-head-question-outline",
     "color": "red"
+  },
+  {
+    "name": "forum.new",
+    "finds": "New Forum|Yeni Bölüm|Neues Forum|Nouveau forum|新论坛|新しいフォーラム|منتدى جديد|Новый форум|Nuovo forum|Nuevo Foro",
+    "path": "/new-forum",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "color": "red"
+  },
+  {
+    "name": "sideMenus.libraries",
+    "finds": "Libraries|Kütüphaneler|Bibliotheken|Bibliothèques|图书馆|ライブラリ|المكتبات|Библиотеки|Biblioteche|Bibliotecas",
+    "path": "/library",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "icon": "mdi-bookmark-multiple-outline",
+    "color": "blue"
+  },
+  {
+    "name": "library.new",
+    "finds": "New Book|Yeni Kitap|Neues Buch|Nouveau livre|新书|新しい本|كتاب جديد|Новая книга|Nuovo libro|Nuevo libro",
+    "path": "/library/new-book",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "color": "blue"
+  },
+  {
+    "name": "sideMenus.drafts",
+    "finds": "Drafts|Taslaklar|Entwürfe|Brouillons|草稿|草案|المسودات|Черновики|bozze|Borradores",
+    "path": "/drafts",
+    "desc": "Lorem Ipsum, masaüstü yayıncılık ve basın yayın sektöründe kullanılan taklit yazı bloğu olarak tanımlanır. Lipsum, oluşturulacak şablon ve taslaklarda içerik yerine geçerek yazı bloğunu doldurmak için kullanılır.",
+    "icon": "mdi-file",
+    "color": "grey"
   }
 ]
