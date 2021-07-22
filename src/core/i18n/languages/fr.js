@@ -102,6 +102,7 @@ const fr = {
     },
     phrases: {
         addImage: 'Ajouter une image',
+        admin_panel_login: "Connexion au panneau d'administration",
         blocked: 'Bloquée',
         card_subtitle: 'Sous-titre de la carte',
         card_text: 'Texte de carte',
@@ -111,9 +112,9 @@ const fr = {
         create_user: "Former l'utilisateur",
         deleteImage: "Supprimer l'image",
         loading: 'Chargement',
-        admin_panel_login: "Connexion au panneau d'administration",
         moderatorApproval: 'Approbation du modérateur',
         noDataAvailable: 'Pas de données disponibles',
+        page_of: 'Page {page} sur {numberOfPages}',
         published: 'Publié',
         resetPassword: 'Réinitialisation du mot de passe',
         reverse_full_name: 'Nom complet inverse',

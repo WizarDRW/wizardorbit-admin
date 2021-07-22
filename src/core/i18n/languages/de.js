@@ -102,6 +102,7 @@ const de = {
     },
     phrases: {
         addImage: 'Bild hinzufügen',
+        admin_panel_login: 'Anmeldung im Admin-Panel',
         blocked: 'verstopft',
         card_subtitle: 'Kartenuntertitel',
         card_text: 'Kartentext',
@@ -111,9 +112,9 @@ const de = {
         create_user: 'Benutzer bilden',
         deleteImage: "Foto Löschen",
         loading: 'Wird geladen',
-        admin_panel_login: 'Anmeldung im Admin-Panel',
         moderatorApproval: 'Moderatorgenehmigung.',
         noDataAvailable: 'Keine Daten verfügbar',
+        page_of: 'Seite {page} von {numberOfPages}',
         published: 'Veröffentlicht',
         resetPassword: 'Passwort zurücksetzen',
         reverse_full_name: 'Umgekehrter vollständiger Name',

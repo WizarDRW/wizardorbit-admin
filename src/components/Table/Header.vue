@@ -12,7 +12,7 @@
     flat
     solo
     hide-details
-    :items="headers"
+    :items="headers.filter((x) => x.sortable)"
     item-value="value"
     prepend-inner-icon="mdi-magnify"
     label="Sort by"

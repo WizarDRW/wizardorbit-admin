@@ -26,9 +26,10 @@
     v-else
     :items="items"
     :items-per-page.sync="itemsPerPage"
+    :page.sync="page"
     hide-default-footer
     :sort-by="sortBy.toLowerCase()"
-    :sort-desc="true"
+    :sort-desc="false"
   >
     <template v-slot:default="props">
       <v-row>
@@ -70,6 +71,46 @@
         </v-col>
       </v-row>
     </template>
+    <template v-slot:footer>
+      <div class="text-center pt-2 pb-2" justify="center">
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              dark
+              text
+              color="primary"
+              class="ml-2"
+              v-bind="attrs"
+              v-on="on"
+            >
+              {{ itemsPerPage }}
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item
+              v-for="(number, index) in itemsPerPageArray"
+              :key="index"
+              @click="updateItemsPerPage(number)"
+            >
+              <v-list-item-title>{{ number }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <span class="mr-4 grey--text">
+          {{
+            $t("phrases.page_of", { page: page, numberOfPages: numberOfPages })
+          }}
+        </span>
+        <v-btn fab dark color="blue darken-3" class="mr-1" @click="formerPage">
+          <v-icon>mdi-chevron-left</v-icon>
+        </v-btn>
+        <v-btn fab dark color="blue darken-3" class="ml-1" @click="nextPage">
+          <v-icon>mdi-chevron-right</v-icon>
+        </v-btn>
+      </div>
+    </template>
   </v-data-iterator>
 </template>
 
@@ -77,34 +118,19 @@
 import moment from "moment";
 export default {
   props: {
-    loading: {
-      type: Boolean,
-      default: true,
-    },
-    items: {
-      type: Array,
-      default: () => [],
-    },
-    headers: {
-      type: Array,
-      default: () => [],
-    },
-    isMobile: {
-      type: Boolean,
-      default: false,
-    },
-    sortBy: {
-      type: String,
-      default: "name",
-    },
-    role: {
-      type: String,
-      default: "client",
-    },
-    itemsPerPage: {
-      type: Number,
-      default: 3,
-    },
+    loading: { type: Boolean, default: true },
+    items: { type: Array, default: () => [] },
+    headers: { type: Array, default: () => [] },
+    isMobile: { type: Boolean, default: false },
+    sortBy: { type: String, default: "name" },
+    role: { type: String, default: "client" },
+    itemsPerPage: { type: Number, default: 3 },
+    itemsPerPageArray: { type: Array, default: () => [3, 8, 12] },
+  },
+  data() {
+    return {
+      page: 1,
+    };
   },
   methods: {
     edit(item) {
@@ -120,6 +146,23 @@ export default {
     },
     preview(item) {
       this.$emit("preview", item);
+    },
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    },
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
+    },
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
+    },
+  },
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
     },
   },
 };

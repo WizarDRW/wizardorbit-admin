@@ -102,6 +102,7 @@ const tr = {
     },
     phrases: {
         addImage: 'Resim Ekle',
+        admin_panel_login: 'Yönetici Paneli Girişi',
         blocked: 'Engellendi',
         card_subtitle: 'Kart Destek Başlığı',
         card_text: 'Kart Metni',
@@ -111,9 +112,9 @@ const tr = {
         create_user: 'Oluşturan Kullanıcı',
         deleteImage: "Resmi Sil",
         loading: 'Yükleniyor',
-        admin_panel_login: 'Yönetici Paneli Girişi',
         moderatorApproval: 'Moderatör Onayında',
         noDataAvailable: 'Veri yok',
+        page_of: 'Sayfa {page} / {numberOfPages}',
         published: 'Yayında',
         resetPassword: 'Şifre Sıfırla',
         reverse_full_name: 'Tam adı ters yaz',

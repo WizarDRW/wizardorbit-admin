@@ -29,12 +29,58 @@
           :headers="headers"
           :loading="loading"
           :sortBy="sortBy"
-          v-on:edit="edit"
         >
-          <template #extra-btn="{ item }">
-            <v-tooltip color="orange" bottom>
+          <!-- Web View -->
+          <template #create_date="{ item, moment }">
+            {{ moment(item.create_date, $store.getters.getLangName, isMobile) }}
+          </template>
+          <template #type="{ item }">
+            <span
+              :style="`${
+                item.type == 'chapter'
+                  ? 'color: #18f523;'
+                  : item.type == 'news'
+                  ? 'color: #fcba03;'
+                  : item.type == 'forum'
+                  ? 'color: #f5141b'
+                  : item.type == 'book'
+                  ? 'color: #30cbff'
+                  : ''
+              }`"
+            >
+              {{
+                item.type == "chapter"
+                  ? $t("keywords.chapter")
+                  : item.type == "news"
+                  ? $t("keywords.news")
+                  : item.type == "forum"
+                  ? $t("keywords.forum")
+                  : item.type == "book"
+                  ? $t("keywords.book")
+                  : item.type
+              }}
+            </span>
+          </template>
+          <template #actions="{ item }">
+            <v-tooltip color="blue" bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  class="mr-2"
+                  color="primary"
+                  @click="edit(item)"
+                >
+                  mdi-pencil
+                </v-icon>
+              </template>
+              <span>{{ $t("keywords.edit") }}</span>
+            </v-tooltip>
+            <v-tooltip color="error" bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  color="error"
                   small
                   v-bind="attrs"
                   v-on="on"
@@ -52,8 +98,41 @@
               <span>{{ $t("keywords.delete") }}</span>
             </v-tooltip>
           </template>
-          <template #mobile-extra-btn="{ item }">
+          <!-- Mobile View -->
+          <template #[`mobile.create_date`]="{ item, moment }">
+            {{ moment(item.create_date, $store.getters.getLangName, isMobile) }}
+          </template>
+          <template #[`mobile.type`]="{ item }">
+            <span
+              :style="`${
+                item.type == 'chapter'
+                  ? 'color: #18f523;'
+                  : item.type == 'news'
+                  ? 'color: #fcba03;'
+                  : item.type == 'forum'
+                  ? 'color: #f5141b'
+                  : item.type == 'book'
+                  ? 'color: #30cbff'
+                  : ''
+              }`"
+            >
+              {{
+                item.type == "chapter"
+                  ? $t("keywords.chapter")
+                  : item.type == "news"
+                  ? $t("keywords.news")
+                  : item.type == "forum"
+                  ? $t("keywords.forum")
+                  : item.type == "book"
+                  ? $t("keywords.book")
+                  : item.type
+              }}
+            </span>
+          </template>
+          <template #[`mobile.actions`]="{ item }">
+            <v-icon class="mr-2" @click="edit(item)"> mdi-pencil </v-icon>
             <v-icon
+              color="error"
               class="mr-2"
               @click="
                 () => {
@@ -97,6 +176,8 @@ export default {
     SubHeader: () => import(`@/layouts/header/SubHeader.vue`),
     DeleteAlert: () => import("@/components/Alert/DeleteAlert"),
     Delete: () => import("@/components/Delete"),
+    TableHeader: () => import("@/components/Table/Header.vue"),
+    TableBody: () => import("@/components/Table/Body.vue"),
   },
   data() {
     return {
@@ -108,7 +189,7 @@ export default {
           text: "keywords.title",
           value: "data.name",
           sortable: true,
-          width: "40%",
+          width: "25%",
         },
         {
           text: "phrases.create_date",
@@ -127,7 +208,7 @@ export default {
           value: "actions",
           align: "right",
           sortable: false,
-          width: "10%",
+          width: "25%",
         },
       ],
       drafts: [],
@@ -139,7 +220,7 @@ export default {
         index: -1,
       },
       deleteItems: [],
-      sortBy: "name"
+      sortBy: 'name'
     };
   },
   async created() {

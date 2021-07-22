@@ -102,6 +102,7 @@ const en = {
     },
     phrases: {
         addImage: 'Add a Picture',
+        admin_panel_login: 'Admin Panel Login',
         blocked: 'Blocked',
         card_subtitle: 'Card Subtitle',
         card_text: 'Card Text',
@@ -111,9 +112,9 @@ const en = {
         create_user: 'Forming User',
         deleteImage: "Delete Picture",
         loading: 'Loading',
-        admin_panel_login: 'Admin Panel Login',
         moderatorApproval: 'Moderator Approval',
         noDataAvailable: 'No data available',
+        page_of: 'Page {page} of {numberOfPages}',
         published: 'Published',
         resetPassword: 'Reset Password',
         reverse_full_name: 'Reverse Full Name',
