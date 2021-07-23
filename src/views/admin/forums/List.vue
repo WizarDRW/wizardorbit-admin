@@ -134,7 +134,12 @@
                   small
                   v-bind="attrs"
                   v-on="on"
-                  @click="handleDelete(item._id)"
+                  @click="
+                    () => {
+                      dialog_delete = true;
+                      deleteRes.id = item._id;
+                    }
+                  "
                 >
                   mdi-delete
                 </v-icon>
@@ -183,7 +188,7 @@
               v-if="item.status != 'Published'"
               small
               @click="
-                (item) => {
+                () => {
                   dialog_delete = true;
                   deleteRes.id = item._id;
                 }
@@ -304,7 +309,7 @@ export default {
     },
     preview(item) {
       this.dialog_preview = true;
-      this.chapter = item;
+      this.forum = item;
     },
   },
 };

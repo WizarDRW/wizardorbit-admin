@@ -19,9 +19,9 @@
                 ? $t('phrases.blocked')
                 : $t('phrases.moderatorApproval')
             "
-            >{{$t('keywords.preview')}}
+            >{{ $t("keywords.preview") }}
           </v-badge>
-          <div v-else>{{$t('keywords.preview')}}</div>
+          <div v-else>{{ $t("keywords.preview") }}</div>
         </v-card-title>
 
         <slot>
@@ -53,7 +53,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <slot name="buttons">
-            <v-btn :disabled="loading" color="warning" text @click="dialog = false"> Kapat </v-btn>
+            <v-btn
+              :disabled="loading"
+              color="warning"
+              text
+              @click="dialog = false"
+            >
+              Kapat
+            </v-btn>
             <div v-if="_created">
               <v-btn
                 v-if="_content.status == 'Published'"
@@ -62,7 +69,7 @@
                 text
                 @click="handleProcess('Block')"
               >
-                {{$t('keywords.block')}}!
+                {{ $t("keywords.block") }}!
               </v-btn>
               <v-btn
                 v-else-if="_content.status == 'Block'"
@@ -71,7 +78,7 @@
                 text
                 @click="handleProcess('Published')"
               >
-                {{$t('keywords.unblock')}}
+                {{ $t("keywords.unblock") }}
               </v-btn>
               <v-btn
                 v-else-if="_content.status == 'ModeratorAcceping'"
@@ -80,31 +87,13 @@
                 text
                 @click="handleProcess('Published')"
               >
-                {{$t('keywords.publish')}}
+                {{ $t("keywords.publish") }}
               </v-btn>
             </div>
           </slot>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div class="alerts">
-      <update-alert
-        v-if="update.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            update.status = val;
-          }
-        "
-        :_msg="update.msg"
-        :_type="update.type"
-        :_second="update.second"
-        :_alert="update.status"
-        :_func="update.func"
-        :_item="update.item"
-        v-on:updated="save"
-      ></update-alert>
-    </div>
   </div>
 </template>
 
@@ -114,7 +103,6 @@ import marked from "marked";
 export default {
   components: {
     CodeBlock: () => import("./Code"),
-    UpdateAlert: () => import("./Alert/UpdateAlert"),
   },
   props: {
     _dialog: {
@@ -145,16 +133,9 @@ export default {
         msg: "Başarı ile değiştirildi.",
         type: "success",
       },
-      update: {
-        status: false,
-        msg: "",
-        second: 100,
-        type: "warning",
-        func: "",
-        item: {},
-      },
       proc: "",
-      loading: false
+      loading: false,
+      interval: {},
     };
   },
   computed: {
@@ -163,6 +144,7 @@ export default {
         return this._dialog;
       },
       set(value) {
+        clearInterval(this.interval);
         this.$emit("dialogClose", value);
       },
     },
@@ -180,22 +162,31 @@ export default {
     compiledMarkdown(item) {
       return marked(item.val);
     },
-    handleProcess(value) {
+    async handleProcess(value) {
       this.proc = value;
       var data = {
         ...this._content,
         status: value,
       };
       this.loading = true;
-      this.update.item = data;
-      this.update.msg = data._id;
-      this.update.second = 100;
-      this.update.func = this._api;
-      this.update.status = true;
+      var id = await this.$store.dispatch("update", {
+        msg: data._id,
+        func: this._api,
+        item: data,
+      });
+      this.save(id);
     },
-    async save() {
-      this._content.status = this.proc;
-      this.loading = false;
+    save(id) {
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length > 0
+        ) {
+          this.$store.commit('destroyResultQueue', id);
+          this._content.status = this.proc;
+          this.loading = false;
+          clearInterval(this.interval);
+        }
+      }, 1000);
     },
   },
 };
@@ -212,7 +203,7 @@ export default {
   width: 100%;
   padding: 0 20px;
 }
-.alerts{
+.alerts {
   z-index: 999;
 }
 </style>

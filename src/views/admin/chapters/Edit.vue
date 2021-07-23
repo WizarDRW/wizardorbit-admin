@@ -285,19 +285,28 @@ export default {
     getFiles(files) {
       this.chapter.image_path = files.base64;
     },
-    handleSave() {
+    async handleSave() {
       this.loading = true;
-      var queue = this.$store.dispatch("update", {
+      var id = await this.$store.dispatch("update", {
         msg: this.chapter._id,
         func: "putApiChapter",
         item: this.chapter,
       });
-      if (queue) this.save();
+      this.save(id);
     },
-    async save() {
-      this.isSave = true;
-      this.loading = false;
-      this.$router.push({ name: "AdminChapter" });
+    save(id) {
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.loading = false;
+          this.isSave = true;
+          this.$router.push({ name: "AdminChapter" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
     async onFilePicked(e) {
       var formData = new FormData();

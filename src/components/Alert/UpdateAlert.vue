@@ -38,7 +38,7 @@ export default {
       type: Object,
       default: () => {},
     },
-    _queue_index: {
+    _queue_id: {
       type: Number,
       default: -1,
     },
@@ -76,6 +76,10 @@ export default {
         var result = await this.$store.dispatch(this._content.func, this._content.item);
         if (result == 200) {
           this.type = "success";
+          await this.$store.dispatch("resultQueue", {
+            id: this._queue_id,
+            result: true,
+          });
         } else {
           this.msg = result;
           this.type = "error";

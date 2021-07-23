@@ -132,19 +132,28 @@ export default {
     };
   },
   methods: {
-    handleSave() {
+    async handleSave() {
       this.loading = true;
-      var queue = this.$store.dispatch("add", {
+      var id = await this.$store.dispatch("add", {
         msg: this.forum.name,
         func: "postApiForum",
         item: this.forum,
       });
-      if (queue) this.save();
+      this.save(id);
     },
-    async save() {
-      this.loading = false;
-      this.isSave = true;
-      this.$router.push({ name: "AdminForum" });
+    async save(id) {
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.loading = false;
+          this.isSave = true;
+          this.$router.push({ name: "AdminForum" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
   },
   destroyed() {

@@ -55,8 +55,6 @@ export default {
   },
   created() {
     this.msg = this._content.msg;
-    this.alert = this._content.alert;
-    this.value = this._content.second;
     this.interval = setInterval(async () => {
       if (this.value === 0) {
         this.loading = true;

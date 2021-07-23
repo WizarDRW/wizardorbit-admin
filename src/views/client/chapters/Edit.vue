@@ -229,14 +229,14 @@ export default {
       !this.$store.getters.getCategory ||
       this.$store.getters.getCategory.type !== "chapter"
     )
-      await this.$store.dispatch('getApiCategory', "chapter");
+      await this.$store.dispatch("getApiCategory", "chapter");
     this.categories = this.$store.getters.getCategory.categories;
     this.getChapter();
   },
   methods: {
     async getChapter() {
       if (!this.$store.getters.getChapter)
-        await this.$store.dispatch('getApiChapter', this.$route.params.id);
+        await this.$store.dispatch("getApiChapter", this.$route.params.id);
       this.chapter = this.$store.getters.getChapter;
       this.defaultImage = this.chapter.image_path;
       this.defaultImages = this.chapter.descriptions
@@ -256,19 +256,29 @@ export default {
     getFiles(files) {
       this.chapter.image_path = files.base64;
     },
-    handleSave() {
+    async handleSave() {
       this.loading = true;
-      var queue = this.$store.dispatch("update", {
+      var id = await this.$store.dispatch("update", {
         msg: this.chapter._id,
         func: "putApiChapter",
         item: this.chapter,
       });
-      if (queue) this.save();
+      this.save(id);
     },
-    async save() {
-      this.isSave = true;
-      this.loading = false;
-      this.$router.push({ path: "/chapter" });
+    save(id) {
+      if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.loading = false;
+          this.isSave = true;
+          this.$router.push({ path: "/chapter" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
     async onFilePicked(e) {
       var formData = new FormData();

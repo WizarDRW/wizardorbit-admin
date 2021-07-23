@@ -72,9 +72,16 @@ export default {
     },
     async post() {
       if (!this.cancel) {
-        var result = await this.$store.dispatch(this._content.func, this._content.item);
+        var result = await this.$store.dispatch(
+          this._content.func,
+          this._content.item
+        );
         if (result == 201) {
           this.type = "success";
+          await this.$store.dispatch("resultQueue", {
+            id: this._queue_id,
+            result: true,
+          });
         } else {
           this.msg = result;
           this.type = "error";

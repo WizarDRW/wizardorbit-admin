@@ -249,17 +249,10 @@ export default {
       },
       loading: false,
       preview: false,
-      add: {
-        status: false,
-        msg: null,
-        second: 100,
-        type: "warning",
-        func: "postApiChapter",
-        item: {},
-      },
       imageFile: null,
       isSave: false,
       disable: true,
+      interval: {},
     };
   },
   methods: {
@@ -269,18 +262,28 @@ export default {
     getFiles(files) {
       this.chapter.image_path = files.base64;
     },
-    handleSave() {
+    async handleSave() {
       this.loading = true;
-      var queue = this.$store.dispatch("add", {
+      var id = await this.$store.dispatch("add", {
         msg: this.chapter.name,
         func: "postApiChapter",
         item: this.chapter,
       });
-      if (queue) this.save();
+      this.save(id);
     },
-    async save() {
-      this.isSave = true;
-      this.$router.push({ name: "AdminChapter" });
+    save(id) {
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.loading = false;
+          this.isSave = true;
+          this.$router.push({ name: "AdminChapter" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
     async onFilePicked(e) {
       var formData = new FormData();
@@ -298,6 +301,7 @@ export default {
       };
       this.$store.dispatch("postApiDraft", data);
     }
+    clearInterval(this.interval);
   },
 };
 </script>

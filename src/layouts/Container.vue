@@ -4,7 +4,7 @@
     <app-sidebar :_hide="!hide"></app-sidebar>
     <router-view :key="$route.path"></router-view>
     <div class="alerts">
-      <div v-for="(item) in $store.getters.getAllQueue" :key="item.id">
+      <div v-for="(item) in $store.getters.getAllQueues" :key="item.id">
         <add-alert
           v-if="item.type == 'add'"
           :_content="item"

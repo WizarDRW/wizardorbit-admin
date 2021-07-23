@@ -104,7 +104,7 @@ export default {
       loading: true,
       isSave: false,
       draftid: null,
-      disable: true
+      disable: true,
     };
   },
   async created() {
@@ -112,7 +112,7 @@ export default {
       !this.$store.getters.getCategory ||
       this.$store.getters.getCategory.type !== "forum"
     )
-      await this.$store.dispatch('getApiCategory', "forum");
+      await this.$store.dispatch("getApiCategory", "forum");
     this.categories = this.$store.getters.getCategory.categories;
     if (this.categories) this.loading = false;
 
@@ -124,19 +124,29 @@ export default {
     }
   },
   methods: {
-    handleSave() {
+    async handleSave() {
       this.loading = true;
-      var queue = this.$store.dispatch("add", {
+      var id = await this.$store.dispatch("add", {
         msg: this.forum.name,
         func: "postApiForum",
         item: this.forum,
       });
-      if (queue) this.save();
+      this.save(id);
     },
-    async save() {
+    save(id) {
       if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);
-      this.isSave = true;
-      this.$router.push({ name: "Forum" });
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.loading = false;
+          this.isSave = true;
+          this.$router.push({ name: "Forum" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
   },
   destroyed() {

@@ -103,7 +103,8 @@ export default {
     return {
       forum: {},
       loading: true,
-      disable: true
+      disable: true,
+      isSave: false
     };
   },
   async mounted() {
@@ -116,19 +117,29 @@ export default {
       this.forum = this.$store.getters.getForum;
       if (this.forum) this.loading = false;
     },
-    handleSave() {
+    async handleSave() {
       this.forum.status = "ModeratorAcceping";
       this.loading = true;
-      var queue = this.$store.dispatch("update", {
+      var id = await this.$store.dispatch("update", {
         msg: this.forum._id,
         func: "putApiForum",
         item: this.forum,
       });
-      if (queue) this.save();
+      this.save(id);
     },
-    async save() {
-      this.loading = false;
-      this.$router.push({ name: "AdminForum" });
+    save(id) {
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.loading = false;
+          this.isSave = true;
+          this.$router.push({ name: "AdminForum" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
   },
 };

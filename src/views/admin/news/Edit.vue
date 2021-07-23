@@ -252,7 +252,7 @@ export default {
       isSave: false,
       defaultImage: null,
       defaultImages: null,
-      disable: true
+      disable: true,
     };
   },
   async mounted() {
@@ -261,7 +261,7 @@ export default {
   methods: {
     async getNews() {
       if (!this.$store.getters.getNews)
-        await this.$store.dispatch('getApiNews', this.$route.params.id);
+        await this.$store.dispatch("getApiNews", this.$route.params.id);
       this.news = this.$store.getters.getNews;
       this.defaultImage = this.news.image_path;
       this.defaultImages = this.news.descriptions
@@ -281,19 +281,28 @@ export default {
     getFiles(files) {
       this.news.image_path = files.base64;
     },
-    handleSave() {
+    async handleSave() {
       this.loading = true;
-      var queue = this.$store.dispatch("update", {
+      var id = await this.$store.dispatch("update", {
         msg: this.news._id,
         func: "putApiNews",
         item: this.news,
       });
-      if (queue) this.save();
+      this.save(id);
     },
-    async save() {
-      this.isSave = true;
-      this.loading = false;
-      this.$router.push({ name: "AdminNews" });
+    save(id) {
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.loading = false;
+          this.isSave = true;
+          this.$router.push({ name: "AdminNews" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
     async onFilePicked(e) {
       var formData = new FormData();

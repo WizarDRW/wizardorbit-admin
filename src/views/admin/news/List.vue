@@ -15,7 +15,7 @@
                 <v-icon>mdi-plus</v-icon>
               </v-btn>
             </template>
-            <span>{{$t('news.new')}}</span>
+            <span>{{ $t("news.new") }}</span>
           </v-tooltip>
         </div>
       </template>
@@ -120,7 +120,12 @@
                   small
                   v-bind="attrs"
                   v-on="on"
-                  @click="handleDelete(item._id)"
+                  @click="
+                    () => {
+                      dialog_delete = true;
+                      deleteRes.id = item._id;
+                    }
+                  "
                 >
                   mdi-delete
                 </v-icon>
@@ -206,7 +211,7 @@
 <script>
 export default {
   components: {
-    SubHeader: () => import('@/layouts/header/SubHeader'),
+    SubHeader: () => import("@/layouts/header/SubHeader"),
     Delete: () => import("@/components/Delete"),
     Preview: () => import("@/components/Preview"),
     TableHeader: () => import("@/components/Table/Header.vue"),
@@ -261,13 +266,13 @@ export default {
   },
   async created() {
     if (!this.$store.getters.getTheNews)
-      await this.$store.dispatch('getApiTheNews');
+      await this.$store.dispatch("getApiTheNews");
     this.thenews = this.$store.getters.getTheNews;
     if (this.thenews) this.loading = false;
   },
   methods: {
     edit(item) {
-      this.$store.dispatch('news', item);
+      this.$store.dispatch("news", item);
       this.$router.push({
         name: `AdminEditNews`,
         params: { id: item._id },
