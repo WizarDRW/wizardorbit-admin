@@ -217,31 +217,15 @@
     >
       <div v-html="forum.description"></div>
     </preview>
-    <div class="alerts">
-      <delete-alert
-        v-for="(item, index) in deleteItems"
-        :key="index"
-        v-model="item.status"
-        :_msg="item.msg"
-        :_type="item.type"
-        :_second="item.second"
-        :_alert="item.status"
-        :_func="item.func"
-        :_itemid="item.itemid"
-        v-on:deleted="deleteProcess"
-      ></delete-alert>
-    </div>
   </v-container>
 </template>
 
 <script>
-import moment from "moment";
 export default {
   components: {
     SubHeader: () => import("@/layouts/header/SubHeader"),
     Delete: () => import("@/components/Delete"),
     Preview: () => import("@/components/Preview"),
-    DeleteAlert: () => import("@/components/Alert/DeleteAlert"),
     TableHeader: () => import("@/components/Table/Header.vue"),
     TableBody: () => import("@/components/Table/Body.vue"),
   },
@@ -287,7 +271,6 @@ export default {
         id: "",
         index: -1,
       },
-      deleteItems: [],
       dialog_preview: false,
       forum: {},
       sortBy: "name",
@@ -313,32 +296,15 @@ export default {
       });
     },
     handleDelete(itemid) {
-      this.deleteItems.push({
+      this.$store.dispatch("delete", {
         msg: itemid,
-        type: "error",
-        second: 100,
         func: "deleteApiForum",
-        status: true,
         itemid: itemid,
       });
     },
     preview(item) {
       this.dialog_preview = true;
       this.chapter = item;
-    },
-    deleteProcess() {
-      var count = 0;
-      this.deleteItems.forEach((el) => {
-        count += el.status ? 0 : 1;
-      });
-      if (count == this.deleteItems.length) {
-        this.deleteItems = [];
-      }
-    },
-    moment(date, lang, mobile) {
-      return moment(date)
-        .locale(lang)
-        .format(mobile ? "DD/MM/YY HH:mm" : "DD MMM YYYY HH:mm");
     },
   },
 };

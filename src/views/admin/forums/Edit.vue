@@ -86,24 +86,6 @@
         </v-col>
       </v-row>
     </v-form>
-    <div class="alerts">
-      <update-alert
-        v-if="update.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            update.status = val;
-          }
-        "
-        :_msg="update.msg"
-        :_type="update.type"
-        :_second="update.second"
-        :_alert="update.status"
-        :_func="update.func"
-        :_item="update.item"
-        v-on:updated="save"
-      ></update-alert>
-    </div>
   </v-container>
 </template>
 
@@ -113,7 +95,6 @@ import { GET_API_FORUM } from "@/core/services/store/forum.module";
 export default {
   components: {
     Tiptap: () => import("@/components/Tiptap"),
-    UpdateAlert: () => import("@/components/Alert/UpdateAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     LeftContent: () => import(`@/components/LeftContent.vue`),
     TiptapVuetify,
@@ -122,14 +103,6 @@ export default {
     return {
       forum: {},
       loading: true,
-      update: {
-        status: false,
-        msg: "",
-        second: 100,
-        type: "warning",
-        func: "putApiForum",
-        item: {},
-      },
       disable: true
     };
   },
@@ -146,10 +119,12 @@ export default {
     handleSave() {
       this.forum.status = "ModeratorAcceping";
       this.loading = true;
-      this.update.item = this.forum;
-      this.update.msg = this.forum.name;
-      this.update.second = 100;
-      this.update.status = true;
+      var queue = this.$store.dispatch("update", {
+        msg: this.forum._id,
+        func: "putApiForum",
+        item: this.forum,
+      });
+      if (queue) this.save();
     },
     async save() {
       this.loading = false;

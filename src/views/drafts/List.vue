@@ -3,7 +3,7 @@
     <sub-header></sub-header>
     <v-data-table
       :headers="headers"
-      :items="drafts"
+      :items="list_drafts"
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
@@ -153,20 +153,6 @@
       v-on:handleDelete="handleDelete"
       v-on:dialogClose="(value) => (dialog_delete = value)"
     ></delete>
-    <div class="alerts">
-      <delete-alert
-        v-for="(item, index) in deleteItems"
-        :key="index"
-        v-model="item.status"
-        :_msg="item.msg"
-        :_type="item.type"
-        :_second="item.second"
-        :_alert="item.status"
-        :_func="item.func"
-        :_itemid="item.itemid"
-        v-on:deleted="deleteProcess"
-      ></delete-alert>
-    </div>
   </v-container>
 </template>
 
@@ -174,7 +160,6 @@
 export default {
   components: {
     SubHeader: () => import(`@/layouts/header/SubHeader.vue`),
-    DeleteAlert: () => import("@/components/Alert/DeleteAlert"),
     Delete: () => import("@/components/Delete"),
     TableHeader: () => import("@/components/Table/Header.vue"),
     TableBody: () => import("@/components/Table/Body.vue"),
@@ -219,8 +204,7 @@ export default {
         id: "",
         index: -1,
       },
-      deleteItems: [],
-      sortBy: 'name'
+      sortBy: "name",
     };
   },
   async created() {
@@ -229,8 +213,18 @@ export default {
         "getApiUserDrafts",
         this.$store.getters.currentUser._id
       );
-    this.drafts = this.$store.getters.getUserDrafts;
-    if (this.drafts) this.loading = false;
+    this.list_drafts = this.$store.getters.getUserDrafts;
+  },
+  computed: {
+    list_drafts: {
+      get() {
+        return this.drafts;
+      },
+      set(value) {
+        this.drafts = value;
+        if (value) this.loading = false;
+      },
+    },
   },
   methods: {
     edit(item, type) {
@@ -246,23 +240,12 @@ export default {
       });
     },
     handleDelete(itemid) {
-      this.deleteItems.push({
+      this.$store.dispatch("delete", {
         msg: itemid,
-        type: "error",
         second: 100,
         func: "deleteApiDraft",
-        status: true,
         itemid: itemid,
       });
-    },
-    deleteProcess() {
-      var count = 0;
-      this.deleteItems.forEach((el) => {
-        count += el.status ? 0 : 1;
-      });
-      if (count == this.deleteItems.length) {
-        this.deleteItems = [];
-      }
     },
   },
 };

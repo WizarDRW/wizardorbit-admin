@@ -180,24 +180,6 @@
         </v-col>
       </v-row>
     </v-form>
-    <div class="alerts">
-      <update-alert
-        v-if="update.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            update.status = val;
-          }
-        "
-        :_msg="update.msg"
-        :_type="update.type"
-        :_second="update.second"
-        :_alert="update.status"
-        :_func="update.func"
-        :_item="update.item"
-        v-on:updated="save"
-      ></update-alert>
-    </div>
     <!-- Content ekleme butonu -->
     <speed-dial
       :_bottom="true"
@@ -213,13 +195,10 @@
 
 
 <script>
-import { GET_API_CHAPTER } from "@/core/services/store/chapter.module";
-import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 export default {
   name: "ChapterEdit",
   components: {
     Preview: () => import("@/components/Preview"),
-    UpdateAlert: () => import("@/components/Alert/UpdateAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
     CreateContent: () => import(`@/components/CreateContent.vue`),
@@ -240,14 +219,6 @@ export default {
       valueConsistsOf: "BRANCH_PRIORITY",
       htmlVision: false,
       preview: false,
-      update: {
-        status: false,
-        msg: null,
-        second: 100,
-        type: "warning",
-        func: "putApiChapter",
-        item: {},
-      },
       isSave: false,
       defaultImage: null,
       defaultImages: null,
@@ -258,14 +229,14 @@ export default {
       !this.$store.getters.getCategory ||
       this.$store.getters.getCategory.type !== "chapter"
     )
-      await this.$store.dispatch(GET_API_CATEGORY, "chapter");
+      await this.$store.dispatch('getApiCategory', "chapter");
     this.categories = this.$store.getters.getCategory.categories;
     this.getChapter();
   },
   methods: {
     async getChapter() {
       if (!this.$store.getters.getChapter)
-        await this.$store.dispatch(GET_API_CHAPTER, this.$route.params.id);
+        await this.$store.dispatch('getApiChapter', this.$route.params.id);
       this.chapter = this.$store.getters.getChapter;
       this.defaultImage = this.chapter.image_path;
       this.defaultImages = this.chapter.descriptions
@@ -287,10 +258,12 @@ export default {
     },
     handleSave() {
       this.loading = true;
-      this.update.item = this.chapter;
-      this.update.msg = this.chapter._id;
-      this.update.second = 100;
-      this.update.status = true;
+      var queue = this.$store.dispatch("update", {
+        msg: this.chapter._id,
+        func: "putApiChapter",
+        item: this.chapter,
+      });
+      if (queue) this.save();
     },
     async save() {
       this.isSave = true;

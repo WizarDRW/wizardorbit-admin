@@ -89,8 +89,10 @@ const en = {
     },
     message: {
         add_content: 'Adding content titled "{name}".',
+        add_content_error: 'Error encountered; {error}',
         add_content_success: '"Content titled "{name}" has been successfully added',
         delete_content: 'Content with ID {id} is being deleted.',
+        delete_content_error: 'Error encountered; {error}',
         delete_content_success: 'Content with ID {id} has been deleted successfully.',
         delete_message: `If you confirm the deletion, you have done a transaction to be reverse
         You will be.Your post is your database from our database
@@ -98,6 +100,7 @@ const en = {
         reset_password_monthly: 'We recommend that you reset your password monthly.',
         theme_select: "You can only select only 1 of the dark mode and bright mode.",
         update_content: 'Updating content with ID {id}.',
+        update_content_error: 'Error encountered; {error}',
         update_content_success: 'The content with ID {id} has been successfully updated.',
     },
     phrases: {

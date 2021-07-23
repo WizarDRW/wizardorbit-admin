@@ -1,13 +1,17 @@
 <template>
-  <v-alert
-    v-if="alert"
-    :type="type"
-    elevation="2"
-    transition="scale-transition"
-  >
+  <v-alert :type="type" elevation="2" transition="scale-transition">
     <v-row align="center">
       <v-col class="grow">
-        {{ $t("message.delete_content", { id: msg }) }}
+        {{
+          $t(
+            type == "warning"
+              ? "message.delete_content"
+              : type == "success"
+              ? "message.delete_content_success"
+              : "message.delete_content_error",
+            { id: msg, error: msg }
+          )
+        }}
         <v-progress-linear
           v-if="type != 'success'"
           :buffer-value="100"
@@ -30,29 +34,13 @@
 <script>
 export default {
   props: {
-    _msg: {
-      type: String,
-      default: "Değişiklikler yaklaşık 10sn içerisinde uygulanacaktır.",
+    _content: {
+      type: Object,
+      default: () => {},
     },
-    _type: {
-      type: String,
-      default: "warning",
-    },
-    _second: {
+    _queue_id: {
       type: Number,
-      default: 100,
-    },
-    _alert: {
-      type: Boolean,
-      default: false,
-    },
-    _func: {
-      type: String,
-      default: "",
-    },
-    _itemid: {
-      type: String,
-      default: "",
+      default: -1,
     },
   },
   data() {
@@ -62,14 +50,13 @@ export default {
       value: 100,
       type: "warning",
       msg: "",
-      loading: false
+      loading: false,
     };
   },
   created() {
-    this.msg = this._msg;
-    this.type = this._type;
-    this.alert = this._alert;
-    this.value = this._second;
+    this.msg = this._content.msg;
+    this.alert = this._content.alert;
+    this.value = this._content.second;
     this.interval = setInterval(async () => {
       if (this.value === 0) {
         this.loading = true;
@@ -94,20 +81,21 @@ export default {
     clear() {
       this.cancel = true;
       clearInterval(this.interval);
-      this.alert = false;
+      this.$store.dispatch("outQueue", this._queue_id);
     },
     async deleteAsync() {
       if (!this.cancel) {
-        var result = await this.$store.dispatch(this._func, this._itemid);
+        var result = await this.$store.dispatch(
+          this._content.func,
+          this._content.itemid
+        );
         if (result == 200) {
-          this.msg = "Değişiklikler uygulanmıştır!";
           this.type = "success";
         } else {
           this.msg = result.message;
           this.type = "error";
         }
         setTimeout(() => {
-          this.$emit("deleted");
           this.clear();
         }, 2000);
       }

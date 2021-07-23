@@ -89,8 +89,10 @@ const fr = {
     },
     message: {
         add_content: 'Ajout de contenu intitulé "{name}".',
+        add_content_error: 'Erreur rencontrée; {error}',
         add_content_success: 'Le contenu intitulé "{name}" a été ajouté avec succès.',
         delete_content: "Le contenu avec l'ID {id} est en cours de suppression.",
+        delete_content_error: 'Erreur rencontrée; {error}',
         delete_content_success: "Le contenu avec l'ID {id} a été supprimé avec succès.",
         delete_message: `Si vous confirmez la suppression, vous avez effectué une transaction à inverser
         Vous serez.Votre message est votre base de données de notre base de données
@@ -98,6 +100,7 @@ const fr = {
         reset_password_monthly: 'Nous vous recommandons de réinitialiser votre mot de passe mensuellement.',
         theme_select: "Vous ne pouvez sélectionner que 1 seulement du mode noir et du mode lumineux.",
         update_content: "Mise à jour du contenu avec l'ID {id}.",
+        update_content_error: 'Erreur rencontrée; {error}',
         update_content_success: "Le contenu avec l'ID {id} a été mis à jour avec succès.",
     },
     phrases: {

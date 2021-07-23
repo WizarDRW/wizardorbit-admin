@@ -68,35 +68,14 @@
         </v-col>
       </v-row>
     </v-form>
-    <div class="alerts">
-      <update-alert
-        v-if="update.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            update.status = val;
-          }
-        "
-        :_msg="update.msg"
-        :_type="update.type"
-        :_second="update.second"
-        :_alert="update.status"
-        :_func="update.func"
-        :_item="update.item"
-        v-on:updated="save"
-      ></update-alert>
-    </div>
   </v-container>
 </template>
 
 <script>
 import { TiptapVuetify } from "tiptap-vuetify";
-import { GET_API_FORUM } from "@/core/services/store/forum.module";
-import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 export default {
   components: {
     Tiptap: () => import("@/components/Tiptap"),
-    UpdateAlert: () => import("@/components/Alert/UpdateAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     LeftContent: () => import(`@/components/LeftContent.vue`),
     TiptapVuetify,
@@ -108,14 +87,6 @@ export default {
       selection: [],
       categories: [],
       loading: true,
-      update: {
-        status: false,
-        msg: "",
-        second: 100,
-        type: "warning",
-        func: "putApiForum",
-        item: {},
-      },
       disable: true
     };
   },
@@ -124,24 +95,26 @@ export default {
       !this.$store.getters.getCategory ||
       this.$store.getters.getCategory.type !== "forum"
     )
-      await this.$store.dispatch(GET_API_CATEGORY, "forum");
+      await this.$store.dispatch('getApiCategory', "forum");
     this.categories = this.$store.getters.getCategory.categories;
     this.getForum();
   },
   methods: {
     async getForum() {
       if (!this.$store.getters.getForum)
-        await this.$store.dispatch(GET_API_FORUM, this.$route.params.id);
+        await this.$store.dispatch('getApiForum', this.$route.params.id);
       this.forum = this.$store.getters.getForum;
       if (this.forum) this.loading = false;
     },
     handleSave() {
       this.forum.status = "ModeratorAcceping";
       this.loading = true;
-      this.update.item = this.forum;
-      this.update.msg = this.forum.name;
-      this.update.second = 100;
-      this.update.status = true;
+      var queue = this.$store.dispatch("update", {
+        msg: this.forum._id,
+        func: "putApiForum",
+        item: this.forum,
+      });
+      if (queue) this.save();
     },
     async save() {
       this.loading = false;

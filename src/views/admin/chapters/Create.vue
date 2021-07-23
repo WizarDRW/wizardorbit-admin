@@ -209,24 +209,6 @@
         </v-col>
       </v-row>
     </v-form>
-    <div class="alerts">
-      <add-alert
-        v-if="add.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            add.status = val;
-          }
-        "
-        :_msg="add.msg"
-        :_type="add.type"
-        :_second="add.second"
-        :_alert="add.status"
-        :_func="add.func"
-        :_item="chapter"
-        v-on:added="save"
-      ></add-alert>
-    </div>
     <!-- Content ekleme butonu -->
     <speed-dial
       :_bottom="true"
@@ -246,7 +228,6 @@ export default {
   name: "AdminChapterCreate",
   components: {
     Preview: () => import("@/components/Preview"),
-    AddAlert: () => import("@/components/Alert/AddAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
     CreateContent: () => import(`@/components/CreateContent.vue`),
@@ -278,7 +259,7 @@ export default {
       },
       imageFile: null,
       isSave: false,
-      disable: true
+      disable: true,
     };
   },
   methods: {
@@ -290,10 +271,12 @@ export default {
     },
     handleSave() {
       this.loading = true;
-      this.add.item = this.chapter;
-      this.add.msg = this.chapter.name;
-      this.add.second = 100;
-      this.add.status = true;
+      var queue = this.$store.dispatch("add", {
+        msg: this.chapter.name,
+        func: "postApiChapter",
+        item: this.chapter,
+      });
+      if (queue) this.save();
     },
     async save() {
       this.isSave = true;

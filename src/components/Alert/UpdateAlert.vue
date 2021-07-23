@@ -1,15 +1,19 @@
 <template>
-  <v-alert
-    v-if="alert"
-    :type="type"
-    elevation="2"
-    transition="scale-transition"
-  >
+  <v-alert :type="type" elevation="2" transition="scale-transition">
     <v-row align="center">
       <v-col class="grow">
-        {{ type == 'success' ? $t('message.update_content_success', { id: msg }):$t("message.update_content", { id: msg }) }}
+        {{
+          $t(
+            type == "warning"
+              ? "message.update_content"
+              : type == "success"
+              ? "message.update_content_success"
+              : "message.update_content_error",
+            { id: msg, error: msg }
+          )
+        }}
         <v-progress-linear
-          v-if="type != 'success'"
+          v-if="type == 'warning'"
           :buffer-value="100"
           :value="value"
           :width="100"
@@ -30,46 +34,27 @@
 <script>
 export default {
   props: {
-    _msg: {
-      type: String,
-      default: "Değişiklikler yaklaşık 10sn içerisinde uygulanacaktır.",
-    },
-    _type: {
-      type: String,
-      default: "warning",
-    },
-    _second: {
-      type: Number,
-      default: 100,
-    },
-    _alert: {
-      type: Boolean,
-      default: false,
-    },
-    _func: {
-      type: String,
-      default: "",
-    },
-    _item: {
+    _content: {
       type: Object,
       default: () => {},
+    },
+    _queue_index: {
+      type: Number,
+      default: -1,
     },
   },
   data() {
     return {
       interval: null,
       cancel: false,
-      value: 0,
-      type: "",
+      value: 100,
+      type: "warning",
       msg: "",
-      loading: false
+      loading: false,
     };
   },
   created() {
-    this.msg = this._msg;
-    this.type = this._type;
-    this.alert = this._alert;
-    this.value = this._second;
+    this.msg = this._content.msg;
     this.interval = setInterval(() => {
       if (this.value === 0) {
         this.loading = true;
@@ -80,25 +65,15 @@ export default {
     }, 1000);
     this.cancel = false;
   },
-  computed: {
-    alert: {
-      get() {
-        return this._alert;
-      },
-      set(val) {
-        this.$emit("input", val);
-      },
-    },
-  },
   methods: {
     clear() {
       this.cancel = true;
       clearInterval(this.interval);
-      this.alert = false;
+      this.$store.dispatch("outQueue", this._queue_id);
     },
     async updateAsync() {
       if (!this.cancel) {
-        var result = await this.$store.dispatch(this._func, this._item);
+        var result = await this.$store.dispatch(this._content.func, this._content.item);
         if (result == 200) {
           this.type = "success";
         } else {
@@ -106,7 +81,6 @@ export default {
           this.type = "error";
         }
         setTimeout(() => {
-          if (result == 200) this.$emit("updated");
           this.clear();
         }, 2000);
       }

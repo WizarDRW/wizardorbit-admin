@@ -186,24 +186,6 @@
         </v-col>
       </v-row>
     </v-form>
-    <div class="alerts">
-      <add-alert
-        v-if="add.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            add.status = val;
-          }
-        "
-        :_msg="add.msg"
-        :_type="add.type"
-        :_second="add.second"
-        :_alert="add.status"
-        :_func="add.func"
-        :_item="add.item"
-        v-on:added="save"
-      ></add-alert>
-    </div>
     <!-- Content ekleme butonu -->
     <speed-dial
       :_bottom="true"
@@ -219,13 +201,11 @@
 
 
 <script>
-import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 var ObjectID = require("bson-objectid");
 export default {
   name: "NewsCreate",
   components: {
     Preview: () => import("@/components/Preview"),
-    AddAlert: () => import("@/components/Alert/AddAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
     CreateContent: () => import(`@/components/CreateContent.vue`),
@@ -253,14 +233,6 @@ export default {
       valueConsistsOf: "BRANCH_PRIORITY",
       tags: [],
       preview: false,
-      add: {
-        status: false,
-        msg: "Ekleme işlemi yaklaşık 5sn içinde gerçekleşecektir.",
-        second: 100,
-        type: "warning",
-        func: "postApiNews",
-        item: {},
-      },
       isSave: false,
       draftid: null,
       disable: true
@@ -271,7 +243,7 @@ export default {
       !this.$store.getters.getCategory ||
       this.$store.getters.getCategory.type !== "news"
     )
-      await this.$store.dispatch(GET_API_CATEGORY, "news");
+      await this.$store.dispatch('getApiCategory', "news");
     this.categories = this.$store.getters.getCategory.categories;
     if (this.categories) this.loading = false;
 
@@ -291,10 +263,12 @@ export default {
     },
     handleSave() {
       this.loading = true;
-      this.add.item = this.news;
-      this.add.msg = this.news.name;
-      this.add.second = 100;
-      this.add.status = true;
+      var queue = this.$store.dispatch("add", {
+        msg: this.news.name,
+        func: "postApiNews",
+        item: this.news,
+      });
+      if (queue) this.save();
     },
     async save() {
       if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);

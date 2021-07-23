@@ -205,24 +205,6 @@
         </v-col>
       </v-row>
     </v-form>
-    <div class="alerts">
-      <update-alert
-        v-if="update.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            update.status = val;
-          }
-        "
-        :_msg="update.msg"
-        :_type="update.type"
-        :_second="update.second"
-        :_alert="update.status"
-        :_func="update.func"
-        :_item="update.item"
-        v-on:updated="save"
-      ></update-alert>
-    </div>
     <!-- Content ekleme butonu -->
     <speed-dial
       :_bottom="true"
@@ -238,13 +220,10 @@
 
 
 <script>
-import { GET_API_NEWS } from "@/core/services/store/news.module";
-import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 export default {
   name: "EditNews",
   components: {
     Preview: () => import("@/components/Preview"),
-    UpdateAlert: () => import("@/components/Alert/UpdateAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SpeedDial: () => import(`@/components/SpeedDial.vue`),
     CreateContent: () => import(`@/components/CreateContent.vue`),
@@ -266,14 +245,6 @@ export default {
       categories: [],
       valueConsistsOf: "BRANCH_PRIORITY",
       preview: false,
-      update: {
-        status: false,
-        msg: null,
-        second: 100,
-        type: "warning",
-        func: "putApiNews",
-        item: {},
-      },
       isSave: false,
       defaultImage: null,
       defaultImages: null,
@@ -284,14 +255,14 @@ export default {
       !this.$store.getters.getCategory ||
       this.$store.getters.getCategory.type !== "news"
     )
-      await this.$store.dispatch(GET_API_CATEGORY, "news");
+      await this.$store.dispatch('getApiCategory', "news");
     this.categories = this.$store.getters.getCategory.categories;
     this.getNews();
   },
   methods: {
     async getNews() {
       if (!this.$store.getters.getNews)
-        await this.$store.dispatch(GET_API_NEWS, this.$route.params.id);
+        await this.$store.dispatch('getApiNews', this.$route.params.id);
       this.news = this.$store.getters.getNews;
       this.defaultImage = this.news.image_path;
       this.defaultImages = this.news.descriptions
@@ -313,10 +284,12 @@ export default {
     },
     handleSave() {
       this.loading = true;
-      this.update.item = this.news;
-      this.update.msg = this.news._id;
-      this.update.second = 100;
-      this.update.status = true;
+      var queue = this.$store.dispatch("update", {
+        msg: this.news._id,
+        func: "putApiNews",
+        item: this.news,
+      });
+      if (queue) this.save();
     },
     async save() {
       this.isSave = true;

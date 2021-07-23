@@ -87,18 +87,21 @@ const tr = {
         width: 'Genişlik',
         write: 'Yaz',
     },
-    messages: {
+    message: {
         add_content: '"{name}" başlıklı içerik ekleniyor.',
+        add_content_error: 'Hata ile karşılaşıldı; {error}',
         add_content_success: '"{name}" başlıklı içerik başarı ile eklenmiştir.',
         delete_content: '{id} ID numaralı içerik siliniyor.',
+        delete_content_error: 'Hata ile karşılaşıldı; {error}',
         delete_content_success: '{id} ID numaralı içerik başarı ile silinmiştir.',
         delete_message: `Silme işlemini onaylarsanız geriye dönüşü olmana bir işlem yapmış
         olacaksınız. Yazdığınız yazınız veritabanımızdan anlık
         silinmektedir.`,
-        update_content: '{id} ID numaralı içerik güncelleniyor.',
-        update_content_success: '{id} ID numaralı içerik başarı ile güncellenmiştir.',
         reset_password_monthly: 'Şifrenizi aylık olarak sıfırlamanızı öneririz.',
-        theme_select: "Karanlık mod ve aydınlık moddan sadece 1'er adet seçebilirsiniz."
+        theme_select: "Karanlık mod ve aydınlık moddan sadece 1'er adet seçebilirsiniz.",
+        update_content: '{id} ID numaralı içerik güncelleniyor.',
+        update_content_error: 'Hata ile karşılaşıldı; {error}',
+        update_content_success: '{id} ID numaralı içerik başarı ile güncellenmiştir.',
     },
     phrases: {
         addImage: 'Resim Ekle',

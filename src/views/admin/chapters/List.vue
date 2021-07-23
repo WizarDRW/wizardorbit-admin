@@ -22,7 +22,7 @@
     </sub-header>
     <v-data-table
       :headers="headers"
-      :items="data"
+      :items="chapters"
       :page.sync="page"
       :items-per-page="itemsPerPage"
       :loading="loading"
@@ -120,7 +120,12 @@
                   small
                   v-bind="attrs"
                   v-on="on"
-                  @click="handleDelete(item._id)"
+                  @click="
+                    () => {
+                      dialog_delete = true;
+                      deleteRes.id = item._id;
+                    }
+                  "
                 >
                   mdi-delete
                 </v-icon>
@@ -264,7 +269,7 @@ export default {
           width: "10%",
         },
       ],
-      data: [],
+      chapters: [],
       loading: true,
       dialog_delete: false,
       deleteRes: {
@@ -281,8 +286,8 @@ export default {
   async created() {
     if (!this.$store.getters.getChapters)
       await this.$store.dispatch("getApiChapters");
-    this.data = this.$store.getters.getChapters;
-    this.loading = this.data ? false : true;
+    this.chapters = this.$store.getters.getChapters;
+    this.loading = this.chapters ? false : true;
   },
   methods: {
     edit(item) {
@@ -297,23 +302,11 @@ export default {
       this.chapter = item;
     },
     handleDelete(itemid) {
-      this.deleteItems.push({
+      this.$store.dispatch("delete", {
         msg: itemid,
-        type: "error",
-        second: 100,
         func: "deleteApiChapter",
-        status: true,
         itemid: itemid,
       });
-    },
-    deleteProcess() {
-      var count = 0;
-      this.deleteItems.forEach((el) => {
-        count += el.status ? 0 : 1;
-      });
-      if (count == this.deleteItems.length) {
-        this.deleteItems = [];
-      }
     },
   },
 };

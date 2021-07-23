@@ -16,6 +16,7 @@ import theme from './theme.module.js';
 import multipart from './multipart.module.js';
 import about from './about.module.js';
 import i18n from './i18n.module.js';
+import crudqm from './crudqm.module.js';
 
 Vue.use(Vuex);
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
     multipart,
     draft,
     about,
-    i18n
+    i18n,
+    crudqm
   }
 });

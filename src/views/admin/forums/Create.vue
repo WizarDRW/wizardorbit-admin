@@ -99,24 +99,6 @@
         </v-col>
       </v-row>
     </v-form>
-    <div class="alerts">
-      <add-alert
-        v-if="add.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            add.status = val;
-          }
-        "
-        :_msg="add.msg"
-        :_type="add.type"
-        :_second="add.second"
-        :_alert="add.status"
-        :_func="add.func"
-        :_item="add.item"
-        v-on:added="save"
-      ></add-alert>
-    </div>
   </v-container>
 </template>
 
@@ -126,7 +108,6 @@ var ObjectID = require("bson-objectid");
 export default {
   components: {
     Tiptap: () => import("@/components/Tiptap"),
-    AddAlert: () => import("@/components/Alert/AddAlert"),
     SubHeader: () => import("@/layouts/header/SubHeader"),
     LeftContent: () => import(`@/components/LeftContent.vue`),
     TiptapVuetify,
@@ -146,14 +127,6 @@ export default {
       categories: [],
       tags: [],
       loading: false,
-      add: {
-        status: false,
-        msg: "",
-        second: 100,
-        type: "warning",
-        func: "postApiForum",
-        item: {},
-      },
       isSave: false,
       disable: true
     };
@@ -161,10 +134,12 @@ export default {
   methods: {
     handleSave() {
       this.loading = true;
-      this.add.item = this.forum;
-      this.add.msg = this.forum.name;
-      this.add.second = 100;
-      this.add.status = true;
+      var queue = this.$store.dispatch("add", {
+        msg: this.forum.name,
+        func: "postApiForum",
+        item: this.forum,
+      });
+      if (queue) this.save();
     },
     async save() {
       this.loading = false;

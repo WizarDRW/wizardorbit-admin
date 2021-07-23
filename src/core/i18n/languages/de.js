@@ -4,19 +4,6 @@ const de = {
         min: 'Min {min} length',
         required: 'Erforderlich!',
     },
-    message: {
-        add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.',
-        add_content_success: '"Inhalt Titel "{name}" wurde erfolgreich hinzugefügt',
-        delete_content: 'Inhalt mit ID {ID} wird gelöscht.',
-        delete_content_success: 'Inhalt mit ID {ID} wurde erfolgreich gelöscht.',
-        delete_message: `Wenn Sie den Löschvorgang bestätigen, haben Sie eine Transaktion durchgeführt, um umgekehrt zu sein
-        Sie werden sein. Ihr Beitrag ist Ihre Datenbank aus unserer Datenbank
-        wird gelöscht.`,
-        update_content: 'Inhalt mit ID {ID} aktualisieren.',
-        update_content_success: 'Der Inhalt mit ID {ID} wurde erfolgreich aktualisiert.',
-        reset_password_monthly: 'Wir empfehlen, dass Sie Ihr Passwort monatlich zurücksetzen.',
-        theme_select: "Sie können nur nur 1 des dunklen Modus und des hellen Modus auswählen."
-    },
     keywords: {
         admin: 'Administratorin',
         back: 'Zurück',
@@ -99,6 +86,22 @@ const de = {
         warning: 'Beachtung',
         width: 'Breite',
         write: 'Sommer',
+    },
+    message: {
+        add_content: 'Inhalt mit der ID-Nummer {id} wird hinzugefügt.',
+        add_content_error: 'Fehler aufgetreten; {error}',
+        add_content_success: '"Inhalt Titel "{name}" wurde erfolgreich hinzugefügt',
+        delete_content: 'Inhalt mit ID {ID} wird gelöscht.',
+        delete_content_error: 'Fehler aufgetreten; {error}',
+        delete_content_success: 'Inhalt mit ID {ID} wurde erfolgreich gelöscht.',
+        delete_message: `Wenn Sie den Löschvorgang bestätigen, haben Sie eine Transaktion durchgeführt, um umgekehrt zu sein
+        Sie werden sein. Ihr Beitrag ist Ihre Datenbank aus unserer Datenbank
+        wird gelöscht.`,
+        reset_password_monthly: 'Wir empfehlen, dass Sie Ihr Passwort monatlich zurücksetzen.',
+        theme_select: "Sie können nur nur 1 des dunklen Modus und des hellen Modus auswählen.",
+        update_content: 'Inhalt mit ID {ID} aktualisieren.',
+        update_content_error: 'Fehler aufgetreten; {error}',
+        update_content_success: 'Der Inhalt mit ID {ID} wurde erfolgreich aktualisiert.',
     },
     phrases: {
         addImage: 'Bild hinzufügen',
