@@ -114,37 +114,16 @@
         </v-item-group>
       </v-col>
     </v-row>
-    <div class="alerts">
-      <add-alert
-        v-if="add.status"
-        v-on:input="
-          (val) => {
-            loading = val;
-            add.status = val;
-          }
-        "
-        :_msg="add.msg"
-        :_type="add.type"
-        :_second="add.second"
-        :_alert="add.status"
-        :_func="add.func"
-        :_item="add.item"
-        v-on:added="save"
-      ></add-alert>
-    </div>
   </v-container>
 </template>
 
 <script>
-import { GET_API_USER_THE_NEWS } from "../../core/services/store/news.module";
-import { GET_API_USER_CHAPTERS } from "../../core/services/store/chapter.module";
 var ObjectID = require("bson-objectid");
 export default {
   name: "my-library-create",
   components: {
     SubHeader: () => import("@/layouts/header/SubHeader"),
     SkeletonLoader: () => import("@/components/SkeletonLoader"),
-    AddAlert: () => import("@/components/Alert/AddAlert"),
   },
   data() {
     return {
@@ -156,23 +135,16 @@ export default {
       datas: [],
       loading: true,
       model: null,
-      add: {
-        status: false,
-        msg: null,
-        second: 100,
-        type: "warning",
-        func: "postApiLibrary",
-        item: {},
-      },
       isSave: false,
       draftid: null,
       disable: true,
+      saveLoading: false,
     };
   },
   async created() {
     if (!this.$store.getters.getUserChapters)
       await this.$store.dispatch(
-        GET_API_USER_CHAPTERS,
+        "getApiUserChapters",
         this.$store.getters.currentUser._id
       );
     const chapters = this.$store.getters.getUserChapters.map((x) => {
@@ -184,7 +156,7 @@ export default {
     });
     if (!this.$store.getters.getUserTheNews)
       await this.$store.dispatch(
-        GET_API_USER_THE_NEWS,
+        "getApiUserTheNews",
         this.$store.getters.currentUser._id
       );
     const news = this.$store.getters.getUserTheNews.map((x) => {
@@ -206,17 +178,29 @@ export default {
     }
   },
   methods: {
-    handleSave() {
-      this.loading = true;
-      this.add.item = this.library;
-      this.add.msg = this.library.name;
-      this.add.second = 100;
-      this.add.status = true;
+    async handleSave() {
+      this.saveLoading = true;
+      var id = await this.$store.dispatch("add", {
+        msg: this.library._id,
+        func: "postApiLibrary",
+        item: this.library,
+      });
+      this.save(id);
     },
-    async save() {
+    save(id) {
       if (this.draftid) this.$store.dispatch("deleteApiDraft", this.draftid);
-      this.isSave = true;
-      this.$router.push({ name: "Library" });
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.saveLoading = false;
+          this.isSave = true;
+          this.$router.push({ name: "Library" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
     async onFilePicked(e) {
       var formData = new FormData();

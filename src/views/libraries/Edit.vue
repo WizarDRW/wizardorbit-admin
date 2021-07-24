@@ -6,7 +6,7 @@
           <v-btn icon color="red" @click="$router.push({ path: '/library' })">
             <v-icon>mdi-arrow-left</v-icon>
           </v-btn>
-          <v-btn icon color="green" @click="save()">
+          <v-btn :loading="saveLoading" icon color="green" @click="handleSave()">
             <v-icon>mdi-content-save-outline</v-icon>
           </v-btn>
         </div>
@@ -117,12 +117,6 @@
 </template>
 
 <script>
-import { GET_API_USER_THE_NEWS } from "@/core/services/store/news.module";
-import { GET_API_USER_CHAPTERS } from "@/core/services/store/chapter.module";
-import {
-  PUT_API_LIBRARY,
-  GET_API_LIBRARY,
-} from "@/core/services/store/library.module";
 export default {
   name: "my-library-create",
   components: {
@@ -138,13 +132,15 @@ export default {
       },
       datas: [],
       loading: true,
+      saveLoading: false,
+      isSave: false,
       model: [],
     };
   },
   async created() {
     if (!this.$store.getters.getUserChapters)
       await this.$store.dispatch(
-        GET_API_USER_CHAPTERS,
+        'getApiUserChapters',
         this.$store.getters.currentUser._id
       );
     const chapters = this.$store.getters.getUserChapters.map((x) => {
@@ -156,7 +152,7 @@ export default {
     });
     if (!this.$store.getters.getUserTheNews)
       await this.$store.dispatch(
-        GET_API_USER_THE_NEWS,
+        'getApiUserTheNews',
         this.$store.getters.currentUser._id
       );
     const news = this.$store.getters.getUserTheNews.map((x) => {
@@ -168,7 +164,7 @@ export default {
     });
     this.datas = [...chapters, ...news];
     if (!this.$store.getters.getLibrary) {
-      await this.$store.dispatch(GET_API_LIBRARY, this.$route.params.id);
+      await this.$store.dispatch('getApiLibrary', this.$route.params.id);
     }
     this.library = this.$store.getters.getLibrary;
     this.library.chapters.forEach((x) => {
@@ -182,9 +178,28 @@ export default {
     }
   },
   methods: {
-    async save() {
-      var result = await this.$store.dispatch(PUT_API_LIBRARY, this.library);
-      if (result == 200) this.$router.push({ name: "Library" });
+    async handleSave() {
+      this.saveLoading = true;
+      var id = await this.$store.dispatch("update", {
+        msg: this.library._id,
+        func: "putApiLibrary",
+        item: this.library,
+      });
+      this.save(id);
+    },
+    save(id) {
+      this.interval = setInterval(() => {
+        if (
+          this.$store.getters.getResultQueues.filter((x) => x.id == id).length >
+          0
+        ) {
+          this.$store.commit("destroyResultQueue", id);
+          this.saveLoading = false;
+          this.isSave = true;
+          this.$router.push({ name: "Library" });
+          clearInterval(this.interval);
+        }
+      }, 500);
     },
     onFilePicked() {
       const files = this.library.image_path;

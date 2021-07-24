@@ -60,24 +60,12 @@ export default {
         [SET_USER_LIBRARIES]: (state, payload) => state.user_libraries = payload,
         [SET_POST_LIBRARY]: (state, payload) => state.libraries ? state.libraries.push(payload) : state.user_libraries ? state.user_libraries.push(payload) : null,
         [SET_PUT_LIBRARY]: (state, payload) => {
-            var index = 0;
-            if (state.libraries) {
-                index = state.libraries.indexOf(x => x._id == payload._id);
-                state.libraries[index] = payload;
-            } else if (state.user_libraries) {
-                index = state.user_libraries.indexOf(x => x._id == payload._id);
-                state.user_libraries[index] = payload;
-            }
+            if (state.libraries) state.libraries[state.libraries.findIndex(x => x._id == payload._id)] = payload;
+            else if (state.user_libraries) state.user_libraries[state.user_libraries.findIndex(x => x._id == payload._id)] = payload;
         },
         [SET_DELETE_LIBRARY]: (state, payload) => {
-            var index = 0;
-            if (state.libraries) {
-                index = state.libraries.indexOf(x => x._id == payload);
-                state.libraries.splice(index, 1)
-            } else if (state.user_libraries) {
-                index = state.user_libraries.indexOf(x => x._id == payload);
-                state.user_libraries.splice(index, 1)
-            }
+            if (state.libraries) state.libraries.splice(state.libraries.findIndex(x => x._id == payload), 1)
+            else if (state.user_libraries) state.user_libraries.splice(state.user_libraries.findIndex(x => x._id == payload), 1)
         },
     }
 };

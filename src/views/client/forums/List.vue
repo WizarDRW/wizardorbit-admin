@@ -188,6 +188,7 @@ export default {
       ],
       forums: [],
       loading: true,
+      sortBy: 'name'
     };
   },
   async created() {
@@ -198,7 +199,7 @@ export default {
       );
     }
     this.forums = this.$store.getters.getUserForums;
-    this.loading = this.forums.length > 0 ? false : true;
+    this.loading = this.forums ? false : true;
   },
   methods: {
     toEditItem(item) {

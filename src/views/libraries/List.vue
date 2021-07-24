@@ -30,7 +30,7 @@
     <v-row v-else v-masonry>
       <v-col
         v-masonry-tile
-        v-for="(item, index) in libraries"
+        v-for="(item, index) in libraries.slice(0, 8)"
         :key="index"
         cols="12"
         sm="6"
@@ -139,7 +139,7 @@
                   icon
                   @click="
                     () => {
-                      deleteDialog = true;
+                      dialog_delete = true;
                       deleteRes.id = item._id;
                     }
                   "
@@ -154,39 +154,20 @@
       </v-col>
     </v-row>
     <delete
-      :_dialog="deleteDialog"
+      :_dialog="dialog_delete"
       :_id="deleteRes.id"
       v-on:handleDelete="handleDelete"
-      v-on:dialogClose="(value) => (deleteDialog = value)"
+      v-on:dialogClose="(value) => (dialog_delete = value)"
     ></delete>
-    <div class="alerts">
-      <delete-alert
-        v-for="(item, index) in deleteItems"
-        :key="index"
-        v-model="item.status"
-        :_msg="item.msg"
-        :_type="item.type"
-        :_second="item.second"
-        :_alert="item.status"
-        :_func="item.func"
-        :_itemid="item.itemid"
-        v-on:deleted="deleteProcess"
-      ></delete-alert>
-    </div>
   </v-container>
 </template>
 
 <script>
-import {
-  LIBRARY,
-  GET_API_USER_LIBRARIES,
-} from "@/core/services/store/library.module";
 export default {
   name: "library-list",
   components: {
     SubHeader: () => import("@/layouts/header/SubHeader"),
     Delete: () => import("@/components/Delete"),
-    DeleteAlert: () => import("@/components/Alert/DeleteAlert"),
   },
   data() {
     return {
@@ -195,19 +176,18 @@ export default {
         status: false,
         count: 1,
       },
-      deleteDialog: false,
+      dialog_delete: false,
       deleteRes: {
         name: "",
         id: "",
       },
-      deleteItems: [],
     };
   },
   async mounted() {
     this.loading.status = true;
     if (!this.$store.getters.getUserLibraries)
       await this.$store.dispatch(
-        GET_API_USER_LIBRARIES,
+        "getApiUserLibraries",
         this.$store.getters.currentUser._id
       );
     this.libraries = this.$store.getters.getUserLibraries;
@@ -218,27 +198,15 @@ export default {
       return Math.random() * (max - min) + min;
     },
     content(item) {
-      this.$store.dispatch(LIBRARY, item);
+      this.$store.dispatch("library", item);
       this.$router.push({ path: `/library/content/${item._id}` });
     },
     handleDelete(itemid) {
-      this.deleteItems.push({
+      this.$store.dispatch("delete", {
         msg: itemid,
-        type: "error",
         func: "deleteApiLibrary",
-        second: 100,
-        status: true,
         itemid: itemid,
       });
-    },
-    deleteProcess() {
-      var count = 0;
-      this.deleteItems.forEach((el) => {
-        count += el.status ? 0 : 1;
-      });
-      if (count == this.deleteItems.length) {
-        this.deleteItems = [];
-      }
     },
   },
 };
