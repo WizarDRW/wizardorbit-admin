@@ -19,6 +19,7 @@
                     name="login"
                     :label="$t('keywords.email')"
                     type="text"
+                    @keypress.enter="login()"
                   ></v-text-field>
                   <v-text-field
                     id="password"
@@ -27,6 +28,7 @@
                     name="password"
                     :label="$t('keywords.password')"
                     type="password"
+                    @keypress.enter="login()"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
