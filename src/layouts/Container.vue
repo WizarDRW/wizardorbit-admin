@@ -3,6 +3,7 @@
     <app-header v-on:hide="hideSidebar"></app-header>
     <app-sidebar :_hide="!hide"></app-sidebar>
     <router-view :key="$route.path"></router-view>
+    <app-footer></app-footer>
     <div class="alerts">
       <div v-for="(item) in $store.getters.getAllQueues" :key="item.id">
         <add-alert
@@ -30,6 +31,7 @@ export default {
   components: {
     AppHeader: () => import("./header/Header"),
     AppSidebar: () => import("./sidebar/Sidebar"),
+    AppFooter: () => import("./footer/Footer.vue"),
     AddAlert: () => import("@/components/Alert/AddAlert"),
     DeleteAlert: () => import("@/components/Alert/DeleteAlert"),
     UpdateAlert: () => import("@/components/Alert/UpdateAlert"),

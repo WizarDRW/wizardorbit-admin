@@ -9,7 +9,7 @@
     :transition="_transition"
   >
     <template v-slot:activator>
-      <v-btn v-model="fab" dark fab>
+      <v-btn v-model="fab" fab>
         <v-icon v-if="fab"> mdi-close </v-icon>
         <v-icon v-else> mdi-plus </v-icon>
       </v-btn>
@@ -210,9 +210,23 @@ export default {
 <style scoped>
 .v-speed-dial {
   position: fixed;
+  bottom: 50px;
 }
 
 .v-btn--floating {
   position: relative;
+}
+
+@media only screen and (max-width: 947px) {
+  .v-speed-dial {
+    position: fixed;
+    bottom: 70px;
+  }
+}
+@media only screen and (max-width: 527px) {
+  .v-speed-dial {
+    position: fixed;
+    bottom: 90px;
+  }
 }
 </style>

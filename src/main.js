@@ -11,6 +11,7 @@ import { VueMasonryPlugin } from "vue-masonry";
 import VueCookies from 'vue-cookies'
 import { i18n } from './core/i18n'
 import rule from './utils/rules/global.rule'
+import browserDetect from "vue-browser-detect-plugin";
 
 Vue.config.productionTip = false
 
@@ -25,6 +26,7 @@ Vue.use(global);
 Vue.use(VueMeta, {
   refreshOnceOnNavigation: true
 })
+Vue.use(browserDetect);
 Vue.directive('katex', Katex);
 
 router.beforeEach(async (to, from, next) => {
