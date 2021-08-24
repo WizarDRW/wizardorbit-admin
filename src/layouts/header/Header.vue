@@ -3,7 +3,7 @@
     <v-app-bar color="header" app>
       <v-app-bar-nav-icon
         color="header_theme_btn"
-        @click.stop="$emit('hide')"
+        @click.stop="$store.dispatch('changeSidebar', !$store.getters['getShowSidebar'])"
       ></v-app-bar-nav-icon>
 
       <v-toolbar-title class="header_theme_btn--text">

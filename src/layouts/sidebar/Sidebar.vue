@@ -1,6 +1,6 @@
 <template>
-  <v-navigation-drawer color="sidebar_menu_background" tile app v-model="_hide">
-    <v-layout style="margin-top: 5px;" align-center justify-center wrap>
+  <v-navigation-drawer color="sidebar_menu_background" tile app v-model="hide">
+    <v-layout style="margin-top: 5px" align-center justify-center wrap>
       <div>
         <v-img src="@/assets/logo.png" width="50px" :alt="$t('title')"></v-img>
       </div>
@@ -73,17 +73,11 @@
 import nav from "./_nav";
 export default {
   name: "Sidebar",
-  props: {
-    _hide: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       user: {},
       draftCount: 0,
-      navigation: [],
+      navigation: []
     };
   },
   async beforeMount() {
@@ -95,6 +89,16 @@ export default {
         this.$store.getters.currentUser._id
       );
   },
+  computed: {
+    hide: {
+      get() {
+        return this.$store.getters.getShowSidebar;
+      },
+      set(value) {
+        this.$store.dispatch('changeSidebar', value)
+      }
+    }
+  }
 };
 </script>
 
