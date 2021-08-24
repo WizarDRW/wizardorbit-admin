@@ -121,7 +121,7 @@ const actions = {
   [CURRENT_USER](context) {
     return new Promise((resolve, reject) => {
       ApiService.setHeader();
-      ApiService.get("users/whoami")
+      ApiService.get("auth/whoami")
         .then(({ data }) => {
           context.commit(SET_CURRENT_USER, data);
           resolve(data);
