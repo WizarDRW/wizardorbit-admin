@@ -81,6 +81,7 @@
 <script>
 import markdowns from "@/utils/markdowns";
 export default {
+  name: "MarkDown",
   components: {
     InfoBank: () => import("@/views/infobanks/InfoBank.vue"),
   },

@@ -165,6 +165,7 @@
 
 <script>
 export default {
+  name: "SpeedDial",
   props: {
     _top: {
       type: Boolean,

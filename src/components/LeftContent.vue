@@ -117,6 +117,7 @@
 
 <script>
 export default {
+  name: "LeftContent",
   props: {
     _type: {
       type: String,

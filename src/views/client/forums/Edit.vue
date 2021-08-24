@@ -88,7 +88,9 @@ export default {
   },
   data() {
     return {
-      forum: {},
+      forum: {
+        name: ""
+      },
       selectionType: "leaf",
       selection: [],
       categories: [],

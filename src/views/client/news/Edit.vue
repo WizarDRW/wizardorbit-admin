@@ -238,6 +238,8 @@ export default {
       selectionType: "leaf",
       selection: [],
       news: {
+        name: "",
+        short_description: "",
         descriptions: [],
         status: "ModeratorAcceping",
       },

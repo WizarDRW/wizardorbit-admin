@@ -113,6 +113,7 @@
 
 <script>
 export default {
+  name: "CreateContent",
   props: {
     _descriptions: {
       type: Array,

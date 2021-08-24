@@ -212,6 +212,8 @@ export default {
       selectionType: "leaf",
       selection: [],
       chapter: {
+        name: "",
+        short_description: "",
         status: "ModeratorAcceping",
       },
       loading: true,

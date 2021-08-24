@@ -42,6 +42,7 @@ import "@/utils/prismjs";
 import "prismjs/themes/prism-tomorrow.css";
 
 export default {
+  name: "CodeEditor",
   components: {
     PrismEditor,
   },

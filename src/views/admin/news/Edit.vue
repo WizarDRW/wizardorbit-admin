@@ -244,6 +244,8 @@ export default {
         col: 12,
       },
       news: {
+        name: "",
+        short_description: "",
         descriptions: [],
         status: "ModeratorAcceping",
       },

@@ -88,7 +88,6 @@
                     },
                   },
                 ]"
-                :selection-type="selectionType"
                 selectable
                 :item-text="`label[${$store.getters.getLangName}]`"
                 open-all
@@ -245,6 +244,8 @@ export default {
         col: 12,
       },
       chapter: {
+        name: "",
+        short_description: "",
         status: "ModeratorAcceping",
         seo: {
           title: "",

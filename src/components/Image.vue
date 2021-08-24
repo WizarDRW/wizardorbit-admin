@@ -78,6 +78,7 @@
 
 <script>
 export default {
+  name: "ImageContent",
   props: {
     _content: {
       type: Object,

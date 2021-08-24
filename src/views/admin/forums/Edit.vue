@@ -101,7 +101,9 @@ export default {
   },
   data() {
     return {
-      forum: {},
+      forum: {
+        name: ""
+      },
       loading: true,
       disable: true,
       isSave: false
