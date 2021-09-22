@@ -1,4 +1,4 @@
-import ApiService from '../api.service'
+import ApiService from '@/core/services/api.service'
 
 export const ABOUT = "about";
 export const GET_API_ABOUT = "getApiAbout";

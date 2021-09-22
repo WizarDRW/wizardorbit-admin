@@ -3,7 +3,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router'
 import ApiService from './core/services/api.service'
-import store from './core/services/store/store'
+import store from './core/services/store'
 import VueMoment from 'vue-moment'
 import VueMeta from 'vue-meta'
 import Katex from 'vue-katex-auto-render'

@@ -1,4 +1,4 @@
-import ApiService from '../api.service';
+import ApiService from '@/core/services/api.service';
 
 export const GET_API_THEME = "getApiTheme";
 export const GET_API_THEMES = "getApiThemes";
