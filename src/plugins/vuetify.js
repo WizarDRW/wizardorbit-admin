@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
-import store from "@/core/services/store/store"
+import store from "@/core/services/store"
 import themes from "../core/themes"
 // import plugin
 import { TiptapVuetifyPlugin } from 'tiptap-vuetify'
