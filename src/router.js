@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import store from '@/core/services/store/store'
+import store from '@/core/services/store'
 
 Vue.use(Router);
 
