@@ -2,6 +2,8 @@ import Vue from "vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import JwtService from "@/core/services/jwt.service";
+import interceptor from "./interceptor/axios.interceptor"
+
 
 /**
  * Service to call HTTP request via Axios
@@ -11,6 +13,7 @@ const ApiService = {
     Vue.use(VueAxios, axios);
     Vue.axios.defaults.baseURL = "/service/api/v1/";
     //Vue.axios.defaults.baseURL = "http://localhost:3000/api/v1/";
+    interceptor(Vue.axios)
   },
 
   /**
