@@ -1,5 +1,5 @@
 import Vuetify from '@/plugins/vuetify';
-import themes from '../../themes'
+import themes from '@/core/themes'
 
 // action types
 export const THEME = "theme";

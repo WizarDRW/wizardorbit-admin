@@ -1,4 +1,4 @@
-import { loadLanguageAsync } from '../../i18n'
+import { loadLanguageAsync } from '@/core/i18n'
 export const LANG = "lang";
 
 const SET_LANG = "setLang";

@@ -1,4 +1,4 @@
-import ApiService from '../api.service'
+import ApiService from "@/core/services/api.service";
 
 export const DRAFT = "draft";
 export const GET_API_DRAFT = "getApiDraft";

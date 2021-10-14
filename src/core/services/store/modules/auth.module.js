@@ -41,6 +41,7 @@ export default {
       return new Promise(resolve => {
         ApiService.post("auth/dologin", user)
           .then((x) => {
+            console.log(x);
             if (x.status == 200) {
               context.commit(SET_AUTH);
               context.dispatch(CURRENT_USER);
@@ -48,7 +49,8 @@ export default {
             }
           })
           .catch(({ response }) => {
-            context.commit(SET_ERROR, response.data);
+            console.log(response);
+            context.commit(SET_ERROR, response);
             resolve(response)
           });
       });
@@ -96,8 +98,8 @@ export default {
             if (x.data) {
               context.commit(SET_CURRENT_USER, x.data)
               context.commit(SET_AUTH)
-              resolve(x.data)
             }
+            resolve(x.data)
           })
           .catch(() => {
             context.commit(PURGE_AUTH);
