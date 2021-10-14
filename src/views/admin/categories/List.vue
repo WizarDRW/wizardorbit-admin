@@ -124,11 +124,6 @@
 
 
 <script>
-import {
-  GET_API_CATEGORY,
-  SELECT_CATEGORIES,
-} from "@/core/services/store/category.module";
-import { LOG, POST_API_LOG } from "../../../core/services/store/log.module";
 export default {
   name: "SuperUserCategoryList",
   components: {
@@ -186,7 +181,7 @@ export default {
   },
   async mounted() {
     if (this.$store.getters.getCategory.type !== this._url)
-      await this.$store.dispatch(GET_API_CATEGORY, this._url);
+      await this.$store.dispatch("getApiCategory", this._url);
     this.datas = { ...this.$store.getters.getCategory };
     this.orjDatas = { ...this.$store.getters.getCategory };
     if (this.datas) this.loading = false;
@@ -265,7 +260,7 @@ export default {
         data: item,
       });
       this.log.sort((a, b) => b.date - a.date);
-      this.$store.dispatch(LOG, this.log);
+      this.$store.dispatch("log", this.log);
     },
     /**
      * Geri alma işlemleri
@@ -384,7 +379,7 @@ export default {
         return this.select;
       },
       set(value) {
-        this.$store.dispatch(SELECT_CATEGORIES, value);
+        this.$store.dispatch("selectCategories", value);
         this.select = value;
       },
     },
@@ -404,7 +399,7 @@ export default {
         title: `${this._url}category`,
         datas: [...this.log],
       };
-      this.$store.dispatch(POST_API_LOG, data);
+      this.$store.dispatch("postApiLog", data);
     }
   },
 };
