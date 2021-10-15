@@ -45,10 +45,6 @@
 </template>
 
 <script>
-import {
-  GET_API_CATEGORY,
-  PUT_API_CATEGORY,
-} from "@/core/services/store/category.module";
 export default {
   data() {
     return {
@@ -66,7 +62,7 @@ export default {
   },
   async created() {
     if (!this.$store.getters.getCategory)
-      await this.$store.dispatch(GET_API_CATEGORY, "news");
+      await this.$store.dispatch("getApiCategory", "news");
     this.componentId = "List";
   },
   methods: {
@@ -78,7 +74,7 @@ export default {
       this.interval = setInterval(async () => {
         if (this.value === 0) {
           if (!this.cancel) {
-            var result = await this.$store.dispatch(PUT_API_CATEGORY, payload);
+            var result = await this.$store.dispatch("putApiCategory", payload);
             if (result == 200) {
               this.alertMessage = "Değişiklikler uygulanmıştır!";
               this.alertType = "success";

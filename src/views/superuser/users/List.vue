@@ -195,7 +195,6 @@
 
 
 <script>
-import { USER, GET_API_USERS } from "@/core/services/store/user.module";
 export default {
   components: {
     SubHeader: () => import(`@/layouts/header/SubHeader`),
@@ -260,13 +259,13 @@ export default {
   },
   async created() {
     if (!this.$store.getters.getUsers)
-      await this.$store.dispatch(GET_API_USERS);
+      await this.$store.dispatch('getApiUser');
     this.users = this.$store.getters.getUsers;
     this.loading = this.users ? false : true;
   },
   methods: {
     editItem(item) {
-      this.$store.dispatch(USER, item);
+      this.$store.dispatch('user', item);
       this.$router.push({
         name: `UserEdit`,
         params: { id: item._id },

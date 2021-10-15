@@ -42,8 +42,6 @@
 
 
 <script>
-import { GET_API_FORUM } from "@/core/services/store/forum.module";
-import { GET_API_CATEGORY } from "@/core/services/store/category.module";
 export default {
   components: {
     Comment: () => import("./components/Comment"),
@@ -69,14 +67,14 @@ export default {
   },
   async created() {
     if (!this.$store.getters.getCategory)
-      await this.$store.dispatch(GET_API_CATEGORY, "forum");
+      await this.$store.dispatch("getApiCategory", "forum");
     this.categories = this.$store.getters.getCategory;
     this.getForum();
   },
   methods: {
     async getForum() {
       if (!this.$store.getters.getForum)
-        await this.$store.dispatch(GET_API_FORUM, this.$route.params.id);
+        await this.$store.dispatch("getApiForum", this.$route.params.id);
       this.forum = this.$store.getters.getForum;
       if (this.forum) this.loading = false;
     },

@@ -47,8 +47,6 @@
 </template>
 
 <script>
-import { LIBRARY, GET_API_LIBRARY } from "@/core/services/store/library.module";
-import { CHAPTER } from "@/core/services/store/chapter.module";
 export default {
   components: {
     SubHeader: () => import("@/layouts/header/SubHeader"),
@@ -60,17 +58,17 @@ export default {
   },
   async created() {
     if (!this.$store.getters.getLibrary) {
-      await this.$store.dispatch(GET_API_LIBRARY, this.$route.params.id);
+      await this.$store.dispatch("getApiLibrary", this.$route.params.id);
     }
     this.library = this.$store.getters.getLibrary;
   },
   methods: {
     chapter(item) {
-      this.$store.dispatch(CHAPTER, item);
+      this.$store.dispatch('chapter', item);
       this.$router.push({ name: `EditChapter`, params: { id: item._id } });
     },
     edit(){
-      this.$store.dispatch(LIBRARY, this.library);
+      this.$store.dispatch("library", this.library);
       this.$router.push({ path: `/library/edit/${this.library._id}` })
     }
   },

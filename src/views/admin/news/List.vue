@@ -262,6 +262,7 @@ export default {
       },
       dialog_preview: false,
       news: {},
+      sortBy: null
     };
   },
   async created() {

@@ -91,7 +91,6 @@
 
 <script>
 import { TiptapVuetify } from "tiptap-vuetify";
-import { GET_API_FORUM } from "@/core/services/store/forum.module";
 export default {
   components: {
     Tiptap: () => import("@/components/Tiptap"),
@@ -115,7 +114,7 @@ export default {
   methods: {
     async getForum() {
       if (!this.$store.getters.getForum)
-        await this.$store.dispatch(GET_API_FORUM, this.$route.params.id);
+        await this.$store.dispatch("getApiForum", this.$route.params.id);
       this.forum = this.$store.getters.getForum;
       if (this.forum) this.loading = false;
     },
