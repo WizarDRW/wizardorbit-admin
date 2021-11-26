@@ -50,14 +50,14 @@
             v-model="forum.name"
             :label="$t('keywords.title')"
             :placeholder="$t('keywords.title')"
-            :rules="[$rule.required, $rule.min(forum.name, 10)]"
+            :rules="[$rule.required, $rule.min(forum.name, 15)]"
             outlined
             counter
             dense
             prepend-inner-icon="mdi-format-title"
           >
             <template #message="{ message }">
-              {{ $t(message, { min: 10 }) }}
+              {{ $t(message, { min: 15 }) }}
             </template>
           </v-text-field>
           <tiptap :_content="forum">
